@@ -32,11 +32,10 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "navbar-scrolled py-3"
-          : "bg-transparent py-5"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+        ? "navbar-scrolled py-3"
+        : "bg-transparent py-5"
+        }`}
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
         <a
@@ -52,19 +51,17 @@ export default function Navbar() {
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className={`text-sm font-medium transition-all duration-300 hover:text-blue-400 relative group ${
-                activeSection === item.toLowerCase()
-                  ? "text-blue-400"
-                  : isDark ? "text-gray-400" : "text-gray-600"
-              }`}
+              className={`text-sm font-medium transition-all duration-300 hover:text-blue-400 relative group ${activeSection === item.toLowerCase()
+                ? "text-blue-400"
+                : isDark ? "text-gray-400" : "text-gray-600"
+                }`}
             >
               {item}
               <span
-                className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 transition-all duration-300 ${
-                  activeSection === item.toLowerCase()
-                    ? "w-full"
-                    : "w-0 group-hover:w-full"
-                }`}
+                className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 transition-all duration-300 ${activeSection === item.toLowerCase()
+                  ? "w-full"
+                  : "w-0 group-hover:w-full"
+                  }`}
               />
             </a>
           ))}
@@ -75,45 +72,10 @@ export default function Navbar() {
           >
             Download CV
           </a>
-
-          {/* Dark / Light Toggle */}
-          <button
-            onClick={toggle}
-            aria-label="Toggle theme"
-            className={`relative w-12 h-6 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
-              isDark ? "bg-blue-600" : "bg-gray-300"
-            }`}
-          >
-            <span
-              className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all duration-300 flex items-center justify-center text-[10px] shadow ${
-                isDark
-                  ? "translate-x-6 bg-white text-yellow-500"
-                  : "translate-x-0 bg-white text-gray-600"
-              }`}
-            >
-              {isDark ? "☀" : "🌙"}
-            </span>
-          </button>
         </div>
 
         {/* Mobile: theme toggle + hamburger */}
         <div className="flex items-center gap-3 md:hidden">
-          <button
-            onClick={toggle}
-            aria-label="Toggle theme"
-            className={`w-10 h-5 rounded-full relative transition-all duration-300 ${
-              isDark ? "bg-blue-600" : "bg-gray-300"
-            }`}
-          >
-            <span
-              className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full transition-all duration-300 flex items-center justify-center text-[9px] shadow bg-white ${
-                isDark ? "translate-x-5 text-yellow-500" : "text-gray-600"
-              }`}
-            >
-              {isDark ? "☀" : "🌙"}
-            </span>
-          </button>
-
           <button
             className={`transition-colors p-2 ${isDark ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
             onClick={() => setMenuOpen(!menuOpen)}
@@ -136,26 +98,23 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden transition-all duration-300 overflow-hidden ${
-          menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-        }`}
+        className={`md:hidden transition-all duration-300 overflow-hidden ${menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          }`}
       >
         <div
-          className={`backdrop-blur-xl border-t px-6 py-4 flex flex-col gap-4 ${
-            isDark
-              ? "bg-[#030712]/95 border-gray-800/50"
-              : "bg-white/95 border-gray-200/80"
-          }`}
+          className={`backdrop-blur-xl border-t px-6 py-4 flex flex-col gap-4 ${isDark
+            ? "bg-[#030712]/95 border-gray-800/50"
+            : "bg-white/95 border-gray-200/80"
+            }`}
         >
           {navLinks.map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className={`transition-colors text-sm font-medium py-1 ${
-                isDark
-                  ? "text-gray-300 hover:text-blue-400"
-                  : "text-gray-600 hover:text-blue-600"
-              }`}
+              className={`transition-colors text-sm font-medium py-1 ${isDark
+                ? "text-gray-300 hover:text-blue-400"
+                : "text-gray-600 hover:text-blue-600"
+                }`}
               onClick={() => setMenuOpen(false)}
             >
               {item}

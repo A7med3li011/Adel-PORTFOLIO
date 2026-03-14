@@ -12,10 +12,16 @@ type Project = {
   highlight: boolean;
 };
 
+const INITIAL_COUNT = 3;
+
 export default function ProjectsSection({ projects }: { projects: Project[] }) {
   const [lightbox, setLightbox] = useState<{ pi: number; ii: number } | null>(
     null,
   );
+  const [showAll, setShowAll] = useState(false);
+
+  const visibleProjects = showAll ? projects : projects.slice(0, INITIAL_COUNT);
+  const hasMore = projects.length > INITIAL_COUNT;
 
   const open = (pi: number) => setLightbox({ pi, ii: 0 });
   const close = () => setLightbox(null);
@@ -55,14 +61,18 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
     <>
       {/* ── Grid ─────────────────────────────────────────── */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((project, pi) => (
+        {visibleProjects.map((project, pi) => (
           <div
-            key={pi}
+            key={project.name}
             className={`group relative rounded-2xl overflow-hidden border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
               project.highlight
                 ? "bg-linear-to-br from-blue-500/10 to-purple-500/10 border-blue-500/30 hover:border-blue-400/50 hover:shadow-blue-500/10"
                 : "bg-[#0f172a]/50 border-gray-800/50 hover:border-gray-700 hover:shadow-black/20"
             }`}
+            style={{
+              animation: `fadeInUp 0.5s ease both`,
+              animationDelay: `${(pi % INITIAL_COUNT) * 80}ms`,
+            }}
           >
             {project.highlight && (
               <span className="absolute top-4 right-4 z-10 px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 text-xs font-medium border border-blue-500/30">
@@ -112,26 +122,67 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
               <p className="text-gray-500 text-sm leading-relaxed mb-4">
                 {project.description}
               </p>
-              {/* <div className="flex flex-wrap gap-2 mb-5">
-                {project.tech.map((t) => (
-                  <span key={t} className="px-2 py-1 rounded-md bg-gray-800/80 text-gray-400 text-xs border border-gray-700/50">
-                    {t}
-                  </span>
-                ))}
-              </div>*/}
-              {/*<a
-                href={project.demo}
-                className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors group/link"
-              >
-                Live Demo
-                <svg className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>*/}
             </div>
           </div>
         ))}
       </div>
+
+      {/* ── Show More / Show Less Button ─────────────────── */}
+      {hasMore && (
+        <div className="mt-10 flex justify-center">
+          <button
+            onClick={() => setShowAll((p) => !p)}
+            className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-white text-sm overflow-hidden transition-all duration-300 hover:-translate-y-1"
+            style={{
+              background: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
+              boxShadow:
+                "0 8px 32px rgba(59,130,246,0.35), 0 2px 8px rgba(139,92,246,0.20)",
+            }}
+          >
+            {/* Animated shimmer */}
+            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
+
+            {showAll ? (
+              <>
+                <svg
+                  className="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 15l7-7 7 7"
+                  />
+                </svg>
+                Show Less
+              </>
+            ) : (
+              <>
+                Show More Projects
+                <svg
+                  className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+                <span className="ml-1 px-2 py-0.5 rounded-full bg-white/15 text-xs font-bold">
+                  +{projects.length - INITIAL_COUNT}
+                </span>
+              </>
+            )}
+          </button>
+        </div>
+      )}
 
       {/* ── Lightbox ─────────────────────────────────────── */}
       {lightbox && active && (
