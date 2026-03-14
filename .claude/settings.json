@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \":*)",
+      "Bash(powershell -Command \":*)",
+      "Bash(grep -E \"[A-Za-z]{4,}\")",
+      "Bash(grep -oP '[A-Za-z0-9@.+\\\\-]{3,}')",
+      "Bash(grep -oE '[A-Za-z0-9@.+\\\\-]{3,}')"
+    ]
+  }
+}
