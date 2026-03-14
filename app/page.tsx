@@ -102,15 +102,28 @@ const projects = [
     highlight: true,
   },
   {
-    name: "T-Chat",
+    name: "Request",
     description:
-      "Task management and team collaboration app with shared tasks, calendar view, and performance analytics.",
-    tech: ["React.js", "Node.js", "MongoDB", "Socket.io"],
+      "Contractors and project management app with budget tracking, team collaboration, and performance analytics.",
+    tech: ["React.js", "Node.js", "MongoDB"],
     images: [
-      "/assets/images/chat/Chat1.png",
-      "/assets/images/chat/Chat2.png",
-      "/assets/images/chat/Chat3.png",
-      "/assets/images/chat/Chat4.png",
+      "/assets/images/request/req1.png",
+      "/assets/images/request/req2.png",
+      "/assets/images/request/req3.png",
+      "/assets/images/request/req4.png",
+    ],
+    demo: "#",
+    highlight: true,
+  },
+  {
+    name: "Patria",
+    description:
+      "A comprehensive cafe and restaurant app for easy ordering, special offers, and location-based selection. Built for iOS and Android.",
+    tech: ["Flutter", "Dart", "Firebase"],
+    images: [
+      "/assets/images/patria/patria3.png",
+      "/assets/images/patria/patria1.png",
+      "/assets/images/patria/patria2.png",
     ],
     demo: "#",
     highlight: true,
@@ -126,6 +139,20 @@ const projects = [
       "/assets/images/tasniq/3.png",
       "/assets/images/tasniq/4.png",
       "/assets/images/tasniq/5.png",
+    ],
+    demo: "#",
+    highlight: true,
+  },
+  {
+    name: "T-Chat",
+    description:
+      "Task management and team collaboration app with shared tasks, calendar view, and performance analytics.",
+    tech: ["React.js", "Node.js", "MongoDB", "Socket.io"],
+    images: [
+      "/assets/images/chat/Chat1.png",
+      "/assets/images/chat/Chat2.png",
+      "/assets/images/chat/Chat3.png",
+      "/assets/images/chat/Chat4.png",
     ],
     demo: "#",
     highlight: true,
@@ -166,20 +193,7 @@ const projects = [
     demo: "#",
     highlight: true,
   },
-  {
-    name: "Request",
-    description:
-      "Contractors and project management app with budget tracking, team collaboration, and performance analytics.",
-    tech: ["React.js", "Node.js", "MongoDB"],
-    images: [
-      "/assets/images/request/req1.png",
-      "/assets/images/request/req2.png",
-      "/assets/images/request/req3.png",
-      "/assets/images/request/req4.png",
-    ],
-    demo: "#",
-    highlight: true,
-  },
+
   {
     name: "Space",
     description:
