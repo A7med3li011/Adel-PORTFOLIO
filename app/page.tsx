@@ -15,7 +15,7 @@ const experience = [
     type: "Full-time",
     url: "https://coladaapp.io/en/",
     points: [
-      "Built and maintained the Colada consumer app — an exclusive restaurant and cafe offers platform with 1,000+ active deals and cashback rewards across Riyadh.",
+      "Built and maintained the Colada consumer app — an exclusive restaurant and cafe offers platform with 10,000+ active deals and cashback rewards across Riyadh.",
       "Integrated dynamic offer feeds, deep links, and real-time deal updates using Flutter and REST APIs.",
     ],
   },
@@ -90,7 +90,7 @@ const projects = [
   {
     name: "Colada",
     description:
-      "Exclusive restaurant & cafe offers app with 1,000+ active deals and cashback rewards across Riyadh. Built with Flutter, featuring deep links and real-time deal updates.",
+      "Exclusive restaurant & cafe offers app with 10,000+ active deals and cashback rewards across Riyadh. Built with Flutter, featuring deep links and real-time deal updates.",
     tech: ["Flutter", "Dart", "REST APIs", "Deep Links"],
     images: [
       "/assets/images/colada/colada2.jpg",
@@ -377,7 +377,7 @@ export default function Home() {
             >
               Flutter developer with 3+ years of experience building
               cross-platform iOS &amp; Android apps for clients across Egypt,
-              UAE, Saudi Arabia, and the USA. Top Rated on Upwork.
+              UAE, Saudi Arabia, and the USA. <span className={`font-bold ${isDark ? "text-white" : "text-gray-900"}`}>Top Rated on Upwork.</span>
             </p>
 
             {/* CTA Buttons */}
@@ -387,6 +387,13 @@ export default function Home() {
                 className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5"
               >
                 View Projects
+              </a>
+              <a
+                href="/assets/images/Adel_Mostafa_Software Engineer (2).pdf"
+                download
+                className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5"
+              >
+                Download CV
               </a>
               <a
                 href="#contact"
@@ -706,46 +713,6 @@ export default function Home() {
                 </div>
               );
             })}
-          </div>
-
-          {/* Languages */}
-          <div className="mt-8 gradient-border rounded-2xl p-6">
-            <span
-              className="inline-block px-3 py-1 rounded-full text-xs font-semibold border mb-4"
-              style={{
-                color: "var(--text-secondary)",
-                borderColor: "var(--border-color)",
-              }}
-            >
-              Languages
-            </span>
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { lang: "Arabic", level: "Native", pct: 100 },
-                { lang: "English", level: "Fluent", pct: 90 },
-              ].map(({ lang, level, pct }) => (
-                <div key={lang}>
-                  <div className="flex justify-between text-sm mb-2">
-                    <span
-                      className="font-medium"
-                      style={{ color: "var(--text-primary)" }}
-                    >
-                      {lang}
-                    </span>
-                    <span style={{ color: "var(--text-muted)" }}>{level}</span>
-                  </div>
-                  <div
-                    className="h-1.5 rounded-full overflow-hidden"
-                    style={{ background: "var(--border-color)" }}
-                  >
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-600"
-                      style={{ width: `${pct}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>

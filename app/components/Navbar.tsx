@@ -65,13 +65,6 @@ export default function Navbar() {
               />
             </a>
           ))}
-          <a
-            href="/assets/images/Adel_Mostafa_Software Engineer (2).pdf"
-            download
-            className="px-4 py-2 rounded-lg text-sm font-medium border border-blue-500/50 text-blue-400 hover:bg-blue-500/10 transition-all duration-300 hover:border-blue-400"
-          >
-            Download CV
-          </a>
         </div>
 
         {/* Mobile: theme toggle + hamburger */}
@@ -120,13 +113,6 @@ export default function Navbar() {
               {item}
             </a>
           ))}
-          <a
-            href="/assets/images/Adel_Mostafa_Software Engineer (2).pdf"
-            download
-            className="px-4 py-2 rounded-lg text-sm font-medium border border-blue-500/50 text-blue-400 hover:bg-blue-500/10 transition-all duration-300 text-center mt-2"
-          >
-            Download CV
-          </a>
         </div>
       </div>
     </nav>
