@@ -12,23 +12,12 @@ const experience = [
     role: "Flutter Developer",
     period: "January 2026 – Present",
     location: "Saudi Arabia (Remote)",
-    type: "Full-time",
+    type: "Contract",
     url: "https://coladaapp.io/en/",
     points: [
-      "Built and maintained the Colada consumer app — an exclusive restaurant and cafe offers platform with 10,000+ active deals and cashback rewards across Riyadh.",
-      "Integrated dynamic offer feeds, deep links, and real-time deal updates using Flutter and REST APIs.",
-    ],
-  },
-  {
-    company: "MemoryChat",
-    role: "Flutter Developer",
-    period: "June 2025 – Present",
-    location: "Alexandria, Egypt",
-    type: "Full-time",
-    url: "https://memorychat.app/ar/",
-    points: [
-      "Architected an offline-first chat application using Drift ORM for local storage and PowerSync for bidirectional sync with Supabase (PostgreSQL) backends.",
-      "Implemented real-time messaging with Supabase Realtime subscriptions and conflict-free data handling.",
+      "Build and maintain the Colada consumer app — an exclusive restaurant and cafe offers platform serving 50,000+ active deals and cashback rewards across Riyadh.",
+      "Integrated dynamic offer feeds, deep links, and real-time deal updates using Flutter and REST APIs; app live on App Store and Google Play.",
+      "Optimized list rendering and image caching to reduce deal-feed load time and improve scroll performance on low-end Android devices.",
     ],
   },
   {
@@ -39,8 +28,9 @@ const experience = [
     type: "Part-time",
     url: "https://pricelessmed.com/",
     points: [
-      "Delivered new features including DeepLinks, in-app Subscriptions, and Stripe payment integration for the UAE's first smart healthcare savings platform.",
-      "Maintained and optimized the app serving clinics and hospitals across the UAE.",
+      "Delivered revenue-critical features including Deep Links, in-app Subscriptions, and Stripe payment integration for the UAE's first smart healthcare savings platform, serving 30+ partner clinics and hospitals.",
+      "Maintained and optimized the production app, debugging payment edge cases and improving subscription retention flows.",
+      "Collaborated async with a distributed team, shipping features on a weekly release cadence.",
     ],
   },
   {
@@ -48,11 +38,25 @@ const experience = [
     role: "Flutter Developer",
     period: "June 2025 – September 2025",
     location: "USA, California (Remote)",
-    type: "Full-time",
+    type: "Contract",
     url: "https://topproz.com/",
     points: [
-      "Developed and maintained cross-platform mobile applications using Flutter for Android and iOS.",
-      "Built responsive UIs, integrated RESTful APIs, and collaborated with product managers and designers to deliver new features.",
+      "Developed cross-platform iOS and Android features for a US-market service and project management app using Flutter and MVVM architecture.",
+      "Built responsive UIs, integrated RESTful APIs, and collaborated with product managers and designers on new feature delivery.",
+      "Contributed to code reviews and established component patterns reused across multiple screens.",
+    ],
+  },
+  {
+    company: "MemoryChat",
+    role: "Flutter Developer",
+    period: "June 2025 – Present",
+    location: "Alexandria, Egypt",
+    type: "Side Project",
+    url: "https://memorychat.app/ar/",
+    points: [
+      "Architected an offline-first chat and note-taking application using Drift ORM for local storage and PowerSync for bidirectional sync with a Supabase (PostgreSQL) backend.",
+      "Implemented real-time messaging with Supabase Realtime subscriptions and conflict-free data handling for concurrent edits.",
+      "Designed a resilient sync layer that queues operations offline and reconciles automatically on reconnect.",
     ],
   },
   {
@@ -63,7 +67,10 @@ const experience = [
     type: "Full-time",
     url: "https://www.mdarj.org/ar",
     points: [
-      "Led mobile development across multiple client projects, applying MVVM and BLoC to deliver apps on time and within budget.",
+      "Led mobile development across multiple client projects, applying MVVM and BLoC patterns to deliver apps on time and within scope.",
+      "Contributed to the Tansieq project for the Saudi Ministry of Hajj — a drone/visual detection system for reporting camp, tent, and infrastructure issues.",
+      "Mentored junior developers on state management, clean architecture, and Git workflows.",
+      "Standardized project scaffolding and reusable widgets across teams, reducing new-project setup time.",
     ],
   },
   {
@@ -88,9 +95,25 @@ const experience = [
 
 const projects = [
   {
+    name: "MemoryChat",
+    description:
+      "Offline-first chat and note-taking application. Built with Flutter, Drift ORM, and PowerSync for bidirectional sync with a Supabase (PostgreSQL) backend. Real-time messaging with conflict-free local storage.",
+    tech: ["Flutter", "Drift ORM", "PowerSync", "Supabase"],
+    images: [
+      "/assets/images/memorychat/memory1.png",
+      "/assets/images/memorychat/memory2.png",
+      "/assets/images/memorychat/memory3.png",
+      "/assets/images/memorychat/memory4.png",
+    ],
+    demo: "https://memorychat.app/ar/",
+    demoAndroid:
+      "https://play.google.com/store/apps/details?id=app.memorychat.app&hl=en",
+    highlight: true,
+  },
+  {
     name: "Colada",
     description:
-      "Exclusive restaurant & cafe offers app with 10,000+ active deals and cashback rewards across Riyadh. Built with Flutter, featuring deep links and real-time deal updates.",
+      "Exclusive restaurant & cafe offers app with 50,000+ active deals and cashback rewards across Riyadh. Built with Flutter, featuring deep links and real-time deal updates.",
     tech: ["Flutter", "Dart", "REST APIs", "Deep Links"],
     images: [
       "/assets/images/colada/colada2.jpg",
@@ -99,6 +122,27 @@ const projects = [
       "/assets/images/colada/colada4.jpg",
     ],
     demo: "https://coladaApp.io/en/",
+    demoAndroid:
+      "https://play.google.com/store/apps/details?id=com.colada.coladaapp&hl=en",
+    demoIos:
+      "https://apps.apple.com/us/app/colada-%D9%83%D9%88%D9%84%D8%A7%D8%AF%D8%A7/id1608914841",
+    highlight: true,
+  },
+  {
+    name: "Priceless Medical",
+    description:
+      "UAE's first smart healthcare savings platform. Delivered Deep Links, in-app Subscriptions, and Stripe payment integration. Serves 30+ partner clinics and hospitals across the UAE.",
+    tech: ["Flutter", "Stripe", "Deep Links", "Subscriptions"],
+    images: [
+      "/assets/images/priceless/priceless1.png",
+      "/assets/images/priceless/priceless2.png",
+      "/assets/images/priceless/priceless3.png",
+      "/assets/images/priceless/priceless4.png",
+    ],
+    demo: "https://pricelessmed.com/",
+    demoAndroid:
+      "https://play.google.com/store/apps/details?id=com.app.pricelessmed&hl=ar",
+    demoIos: "https://apps.apple.com/eg/app/pricelessmed/id6745231670",
     highlight: true,
   },
   {
@@ -158,19 +202,6 @@ const projects = [
     highlight: true,
   },
   {
-    name: "Chess",
-    description:
-      "Interactive chess game with checkmate detection, move validation, and clean game interface.",
-    tech: ["React.js", "JavaScript"],
-    images: [
-      "/assets/images/chess/chess1.png",
-      "/assets/images/chess/chess2.png",
-      "/assets/images/chess/chess3.png",
-    ],
-    demo: "#",
-    highlight: true,
-  },
-  {
     name: "Ninja",
     description:
       "Delivery and ERP system with order management, real-time tracking, attendance, and employee management.",
@@ -222,6 +253,7 @@ const skillGroups = [
       "Riverpod",
       "Provider",
       "MVVM",
+      "Clean Architecture",
       "Animations",
       "Localization",
       "Deep Links",
@@ -391,7 +423,12 @@ export default function Home() {
             >
               Flutter developer with 3+ years of experience building
               cross-platform iOS &amp; Android apps for clients across Egypt,
-              UAE, Saudi Arabia, and the USA. <span className={`font-bold ${isDark ? "text-white" : "text-gray-900"}`}>Top Rated on Upwork.</span>
+              UAE, Saudi Arabia, and the USA.{" "}
+              <span
+                className={`font-bold ${isDark ? "text-white" : "text-gray-900"}`}
+              >
+                Top Rated on Upwork.
+              </span>
             </p>
 
             {/* CTA Buttons */}
@@ -411,10 +448,11 @@ export default function Home() {
               </a>
               <a
                 href="#contact"
-                className={`px-6 py-3 rounded-xl border font-semibold transition-all duration-300 hover:-translate-y-0.5 ${isDark
-                  ? "border-gray-700 text-gray-300 hover:border-blue-500/50 hover:text-white"
-                  : "border-gray-300 text-gray-700 hover:border-blue-500/50 hover:text-blue-600"
-                  }`}
+                className={`px-6 py-3 rounded-xl border font-semibold transition-all duration-300 hover:-translate-y-0.5 ${
+                  isDark
+                    ? "border-gray-700 text-gray-300 hover:border-blue-500/50 hover:text-white"
+                    : "border-gray-300 text-gray-700 hover:border-blue-500/50 hover:text-blue-600"
+                }`}
               >
                 Contact Me
               </a>
@@ -450,10 +488,7 @@ export default function Home() {
                   borderColor: "var(--border-color)",
                 }}
               >
-                <p
-                  className="text-xs"
-                  style={{ color: "var(--text-muted)" }}
-                >
+                <p className="text-xs" style={{ color: "var(--text-muted)" }}>
                   Experience
                 </p>
                 <p
@@ -471,10 +506,7 @@ export default function Home() {
                   animationDelay: "1s",
                 }}
               >
-                <p
-                  className="text-xs"
-                  style={{ color: "var(--text-muted)" }}
-                >
+                <p className="text-xs" style={{ color: "var(--text-muted)" }}>
                   Upwork
                 </p>
                 <p
@@ -520,10 +552,10 @@ export default function Home() {
                 style={{ color: "var(--text-secondary)" }}
               >
                 I&apos;m a Flutter Developer and Mobile Software Engineer with
-                3+ years of hands-on experience building cross-platform iOS and
-                Android applications. I hold a B.Sc. in Computing and Data
-                Science from Alexandria University (2021–2025) and a CCNA
-                network certificate.
+                3+ years of hands-on experience architecting and shipping
+                production cross-platform iOS and Android applications. I hold a
+                B.Sc. in Computing and Data Science from Alexandria University
+                (2021–2025) and a CCNA network certificate.
               </p>
               <p
                 className="text-lg leading-relaxed mb-6"
@@ -532,15 +564,16 @@ export default function Home() {
                 I&apos;ve delivered production apps for clients across Egypt,
                 UAE, Saudi Arabia, and the USA — working with companies like
                 MDARJ, Priceless Medical, Colada, MemoryChat, and TopProz. I
-                specialize in real-time data architectures, offline-first
-                solutions, and scalable mobile UIs.
+                specialize in offline-first architectures, real-time
+                bidirectional sync, and payment integrations (Stripe, in-app
+                subscriptions).
               </p>
               <p
                 className="text-lg leading-relaxed"
                 style={{ color: "var(--text-secondary)" }}
               >
                 I&apos;m Top Rated on Upwork with a proven track record in
-                healthcare, food &amp; beverage, government, and fintech
+                healthcare, fintech, food &amp; beverage, and government
                 sectors.
               </p>
             </div>
@@ -577,7 +610,11 @@ export default function Home() {
         style={{ background: "var(--bg-secondary)" }}
       >
         <div className="max-w-4xl mx-auto">
-          <SectionTitle label="Work History" title="Experience" isDark={isDark} />
+          <SectionTitle
+            label="Work History"
+            title="Experience"
+            isDark={isDark}
+          />
 
           <div className="relative">
             {/* Timeline line */}
@@ -770,15 +807,15 @@ export default function Home() {
                 <p className="text-blue-400 font-semibold mb-2">
                   Alexandria University
                 </p>
-                <p className="text-sm mb-4" style={{ color: "var(--text-muted)" }}>
-                  Alexandria, Egypt
+                <p
+                  className="text-sm mb-4"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  Faculty of Computing and Data Science, Alexandria, Egypt
                 </p>
                 <div className="flex flex-wrap justify-center md:justify-start gap-3">
                   <span className="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-medium border border-blue-500/20">
                     Oct 2021 – June 2025
-                  </span>
-                  <span className="px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-medium border border-purple-500/20">
-                    Graduation Grade: Good
                   </span>
                 </div>
               </div>
@@ -811,7 +848,10 @@ export default function Home() {
                 <p className="text-amber-400 font-semibold mb-2">
                   NTI / Creativa — Cisco
                 </p>
-                <p className="text-sm mb-4" style={{ color: "var(--text-muted)" }}>
+                <p
+                  className="text-sm mb-4"
+                  style={{ color: "var(--text-muted)" }}
+                >
                   Alexandria, Egypt
                 </p>
                 <div className="flex flex-wrap justify-center md:justify-start gap-3">
@@ -858,20 +898,8 @@ export default function Home() {
                 ),
                 label: "Email",
                 value: "adelmostafamohamed12@gmail.com",
-                href: "mailto:adelmostafamohamed12@gmail.com",
+                href: "https://mail.google.com/mail/?view=cm&fs=1&to=adelmostafamohamed12@gmail.com",
                 color: "blue",
-              },
-              {
-                icon: (
-                  /* WhatsApp icon */
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                  </svg>
-                ),
-                label: "WhatsApp",
-                value: "+20 122 240 2998",
-                href: "https://wa.me/201222402998",
-                color: "green",
               },
               {
                 icon: (
@@ -914,17 +942,21 @@ export default function Home() {
                 className="gradient-border rounded-2xl p-5 md:p-6 flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 group min-w-0"
               >
                 <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 ${color === "blue"
-                    ? "bg-blue-500/10 text-blue-400"
-                    : color === "green"
-                      ? "bg-green-500/10 text-green-400"
-                      : "bg-purple-500/10 text-purple-400"
-                    }`}
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 ${
+                    color === "blue"
+                      ? "bg-blue-500/10 text-blue-400"
+                      : color === "green"
+                        ? "bg-green-500/10 text-green-400"
+                        : "bg-purple-500/10 text-purple-400"
+                  }`}
                 >
                   {icon}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs mb-0.5" style={{ color: "var(--text-muted)" }}>
+                  <p
+                    className="text-xs mb-0.5"
+                    style={{ color: "var(--text-muted)" }}
+                  >
                     {label}
                   </p>
                   <p
@@ -950,7 +982,9 @@ export default function Home() {
               Open to full-time and freelance opportunities.
             </p>
             <a
-              href="mailto:adelmostafamohamed12@gmail.com"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=adelmostafamohamed12@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5"
             >
               Send an Email
