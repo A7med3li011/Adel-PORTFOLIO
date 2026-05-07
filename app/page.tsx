@@ -625,7 +625,7 @@ export default function Home() {
                 className="text-lg leading-relaxed mb-6"
                 style={{ color: "var(--text-secondary)" }}
               >
-                Over the past 3 years I&apos;ve shipped production apps for clients
+                Over the past 4 years I&apos;ve shipped production apps for clients
                 across Egypt, UAE, Saudi Arabia, and the USA — including Colada
                 (50,000+ deals), Priceless Medical (30+ clinics), and Tansieq
                 (Saudi Ministry of Hajj). I architected MemoryChat from scratch
