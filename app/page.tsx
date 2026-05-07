@@ -515,11 +515,10 @@ export default function Home() {
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
-              I build <span className="gradient-text">offline-first</span>{" "}
-              mobile apps that sync in{" "}
-              <span className="gradient-text">real-time</span>.
+              I am a <span className="gradient-text">software engineer</span>{" "}
+              with over 4 years of experience building{" "}
+              <span className="gradient-text">real applications</span>.
             </h1>
-
             <p
               className={`text-base sm:text-lg md:text-xl font-medium mb-6 ${isDark ? "text-gray-400" : "text-gray-600"}`}
             >
