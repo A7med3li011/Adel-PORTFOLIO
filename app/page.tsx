@@ -107,7 +107,8 @@ const projects = [
       "/assets/images/memorychat/memory4.png",
     ],
     demo: "https://memorychat.app/ar/",
-    demoAndroid: "https://play.google.com/store/apps/details?id=app.memorychat.app&hl=en",
+    demoAndroid:
+      "https://play.google.com/store/apps/details?id=app.memorychat.app&hl=en",
     highlight: true,
     featured: true,
     impact: "Built from scratch — full offline-first architecture",
@@ -125,8 +126,10 @@ const projects = [
       "/assets/images/colada/colada4.jpg",
     ],
     demo: "https://coladaApp.io/en/",
-    demoAndroid: "https://play.google.com/store/apps/details?id=com.colada.coladaapp&hl=en",
-    demoIos: "https://apps.apple.com/us/app/colada-%D9%83%D9%88%D9%84%D8%A7%D8%AF%D8%A7/id1608914841",
+    demoAndroid:
+      "https://play.google.com/store/apps/details?id=com.colada.coladaapp&hl=en",
+    demoIos:
+      "https://apps.apple.com/us/app/colada-%D9%83%D9%88%D9%84%D8%A7%D8%AF%D8%A7/id1608914841",
     highlight: true,
     featured: true,
     impact: "50,000+ active deals across Riyadh",
@@ -143,7 +146,8 @@ const projects = [
       "/assets/images/priceless/priceless4.png",
     ],
     demo: "https://pricelessmed.com/",
-    demoAndroid: "https://play.google.com/store/apps/details?id=com.app.pricelessmed&hl=ar",
+    demoAndroid:
+      "https://play.google.com/store/apps/details?id=com.app.pricelessmed&hl=ar",
     demoIos: "https://apps.apple.com/eg/app/pricelessmed/id6745231670",
     highlight: true,
     featured: true,
@@ -308,33 +312,34 @@ const skillTiers = [
   },
 ];
 
-const colorMap: Record<string, { badge: string; label: string; glow: string }> = {
-  blue: {
-    badge: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-    label: "text-blue-400 border-blue-500/30 bg-blue-500/5",
-    glow: "shadow-blue-500/10",
-  },
-  purple: {
-    badge: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-    label: "text-purple-400 border-purple-500/30 bg-purple-500/5",
-    glow: "shadow-purple-500/10",
-  },
-  emerald: {
-    badge: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    label: "text-emerald-400 border-emerald-500/30 bg-emerald-500/5",
-    glow: "shadow-emerald-500/10",
-  },
-  amber: {
-    badge: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-    label: "text-amber-400 border-amber-500/30 bg-amber-500/5",
-    glow: "shadow-amber-500/10",
-  },
-  rose: {
-    badge: "bg-rose-500/10 text-rose-400 border-rose-500/20",
-    label: "text-rose-400 border-rose-500/30 bg-rose-500/5",
-    glow: "shadow-rose-500/10",
-  },
-};
+const colorMap: Record<string, { badge: string; label: string; glow: string }> =
+  {
+    blue: {
+      badge: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+      label: "text-blue-400 border-blue-500/30 bg-blue-500/5",
+      glow: "shadow-blue-500/10",
+    },
+    purple: {
+      badge: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+      label: "text-purple-400 border-purple-500/30 bg-purple-500/5",
+      glow: "shadow-purple-500/10",
+    },
+    emerald: {
+      badge: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+      label: "text-emerald-400 border-emerald-500/30 bg-emerald-500/5",
+      glow: "shadow-emerald-500/10",
+    },
+    amber: {
+      badge: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+      label: "text-amber-400 border-amber-500/30 bg-amber-500/5",
+      glow: "shadow-amber-500/10",
+    },
+    rose: {
+      badge: "bg-rose-500/10 text-rose-400 border-rose-500/20",
+      label: "text-rose-400 border-rose-500/30 bg-rose-500/5",
+      glow: "shadow-rose-500/10",
+    },
+  };
 
 // ─── Testimonials (from Upwork / clients) ─────────────────────────────────────
 const testimonials = [
@@ -365,8 +370,18 @@ const howIWork = [
     description:
       "I plan data flow and state boundaries before writing code. Clean Architecture, SOLID, and clear separation of concerns prevent half the bugs before they happen.",
     icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"
+        />
       </svg>
     ),
   },
@@ -375,8 +390,18 @@ const howIWork = [
     description:
       "Unit, widget, and integration tests on anything involving money, sync, or data integrity. I don't test everything — I test what matters.",
     icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
+        />
       </svg>
     ),
   },
@@ -385,8 +410,18 @@ const howIWork = [
     description:
       "GitHub Actions and Codemagic set up at project kickoff — automated builds, test runs, and store deployments. No hotfix surprises at 2 AM.",
     icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+        />
       </svg>
     ),
   },
@@ -395,8 +430,18 @@ const howIWork = [
     description:
       "I'd rather ship a solid v1 and learn from real users than polish a perfect v0 in isolation. Then I measure, cut what's not working, and double down on what is.",
     icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"
+        />
       </svg>
     ),
   },
@@ -470,8 +515,7 @@ export default function Home() {
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
-              I build{" "}
-              <span className="gradient-text">offline-first</span>{" "}
+              I build <span className="gradient-text">offline-first</span>{" "}
               mobile apps that sync in{" "}
               <span className="gradient-text">real-time</span>.
             </h1>
@@ -516,10 +560,11 @@ export default function Home() {
               </a>
               <a
                 href="#contact"
-                className={`px-6 py-3 rounded-xl border font-semibold transition-all duration-300 hover:-translate-y-0.5 ${isDark
-                  ? "border-gray-700 text-gray-300 hover:border-blue-500/50 hover:text-white"
-                  : "border-gray-300 text-gray-700 hover:border-blue-500/50 hover:text-blue-600"
-                  }`}
+                className={`px-6 py-3 rounded-xl border font-semibold transition-all duration-300 hover:-translate-y-0.5 ${
+                  isDark
+                    ? "border-gray-700 text-gray-300 hover:border-blue-500/50 hover:text-white"
+                    : "border-gray-300 text-gray-700 hover:border-blue-500/50 hover:text-blue-600"
+                }`}
               >
                 Contact Me
               </a>
@@ -559,7 +604,7 @@ export default function Home() {
                   className="text-sm font-bold"
                   style={{ color: "var(--text-primary)" }}
                 >
-                  Offline-First
+                  +4 Years
                 </p>
               </div>
               <div
@@ -614,7 +659,10 @@ export default function Home() {
                 style={{ color: "var(--text-secondary)" }}
               >
                 I&apos;m a Flutter engineer with a specific focus:{" "}
-                <span className="font-semibold" style={{ color: "var(--text-primary)" }}>
+                <span
+                  className="font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   offline-first architectures, real-time bidirectional sync, and
                   payment integrations
                 </span>
@@ -625,12 +673,12 @@ export default function Home() {
                 className="text-lg leading-relaxed mb-6"
                 style={{ color: "var(--text-secondary)" }}
               >
-                Over the past 4 years I&apos;ve shipped production apps for clients
-                across Egypt, UAE, Saudi Arabia, and the USA — including Colada
-                (50,000+ deals), Priceless Medical (30+ clinics), and Tansieq
-                (Saudi Ministry of Hajj). I architected MemoryChat from scratch
-                using Drift + PowerSync + Supabase for a fully offline-capable
-                chat experience with real-time sync.
+                Over the past 4 years I&apos;ve shipped production apps for
+                clients across Egypt, UAE, Saudi Arabia, and the USA — including
+                Colada (50,000+ deals), Priceless Medical (30+ clinics), and
+                Tansieq (Saudi Ministry of Hajj). I architected MemoryChat from
+                scratch using Drift + PowerSync + Supabase for a fully
+                offline-capable chat experience with real-time sync.
               </p>
               <p
                 className="text-lg leading-relaxed"
@@ -638,8 +686,8 @@ export default function Home() {
               >
                 I hold a B.Sc. in Computing and Data Science from Alexandria
                 University and a CCNA certification. I&apos;m Top Rated on
-                Upwork with a track record spanning healthcare, fintech, F&amp;B,
-                and government sectors.
+                Upwork with a track record spanning healthcare, fintech,
+                F&amp;B, and government sectors.
               </p>
             </div>
 
@@ -682,12 +730,13 @@ export default function Home() {
               <div
                 key={item.title}
                 className="gradient-border rounded-2xl p-6 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300"
-                style={{ animation: `fadeInUp 0.5s ease both`, animationDelay: `${i * 100}ms` }}
+                style={{
+                  animation: `fadeInUp 0.5s ease both`,
+                  animationDelay: `${i * 100}ms`,
+                }}
               >
                 <div className="flex items-start gap-4">
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 text-blue-400 border border-blue-500/20"
-                  >
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 text-blue-400 border border-blue-500/20">
                     {item.icon}
                   </div>
                   <div className="min-w-0">
@@ -718,7 +767,11 @@ export default function Home() {
         style={{ background: "var(--bg-primary)" }}
       >
         <div className="max-w-4xl mx-auto">
-          <SectionTitle label="Work History" title="Experience" isDark={isDark} />
+          <SectionTitle
+            label="Work History"
+            title="Experience"
+            isDark={isDark}
+          />
 
           <div className="relative">
             <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-blue-500 via-purple-500 to-transparent hidden md:block" />
@@ -785,7 +838,10 @@ export default function Home() {
                         <span className="inline-block px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-medium border border-blue-500/20 mb-1">
                           {job.type}
                         </span>
-                        <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+                        <p
+                          className="text-sm"
+                          style={{ color: "var(--text-muted)" }}
+                        >
                           {job.period}
                         </p>
                         <p
@@ -836,14 +892,21 @@ export default function Home() {
         style={{ background: "var(--bg-primary)" }}
       >
         <div className="max-w-6xl mx-auto">
-          <SectionTitle label="Client Feedback" title="Testimonials" isDark={isDark} />
+          <SectionTitle
+            label="Client Feedback"
+            title="Testimonials"
+            isDark={isDark}
+          />
 
           <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((t, i) => (
               <div
                 key={i}
                 className="gradient-border rounded-2xl p-6 flex flex-col hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300"
-                style={{ animation: `fadeInUp 0.5s ease both`, animationDelay: `${i * 100}ms` }}
+                style={{
+                  animation: `fadeInUp 0.5s ease both`,
+                  animationDelay: `${i * 100}ms`,
+                }}
               >
                 <svg
                   className="w-8 h-8 text-blue-400/40 mb-3"
@@ -858,7 +921,10 @@ export default function Home() {
                 >
                   {t.quote}
                 </p>
-                <div className="pt-4 border-t" style={{ borderColor: "var(--border-color)" }}>
+                <div
+                  className="pt-4 border-t"
+                  style={{ borderColor: "var(--border-color)" }}
+                >
                   <p
                     className="text-sm font-semibold"
                     style={{ color: "var(--text-primary)" }}
@@ -877,7 +943,8 @@ export default function Home() {
             className="text-center text-xs mt-6"
             style={{ color: "var(--text-muted)" }}
           >
-            Quotes reflect feedback from Upwork reviews. Full reviews available on my Upwork profile.
+            Quotes reflect feedback from Upwork reviews. Full reviews available
+            on my Upwork profile.
           </p>
         </div>
       </section>
@@ -895,7 +962,10 @@ export default function Home() {
             {skillTiers.map(({ label, sub, color, skills }) => {
               const c = colorMap[color];
               return (
-                <div key={label} className={`gradient-border rounded-2xl p-6 hover:shadow-lg transition-all duration-300 ${c.glow}`}>
+                <div
+                  key={label}
+                  className={`gradient-border rounded-2xl p-6 hover:shadow-lg transition-all duration-300 ${c.glow}`}
+                >
                   <div className="flex items-baseline gap-3 mb-4 flex-wrap">
                     <span
                       className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border ${c.label}`}
@@ -964,7 +1034,10 @@ export default function Home() {
                 <p className="text-blue-400 font-semibold mb-2">
                   Alexandria University
                 </p>
-                <p className="text-sm mb-4" style={{ color: "var(--text-muted)" }}>
+                <p
+                  className="text-sm mb-4"
+                  style={{ color: "var(--text-muted)" }}
+                >
                   Faculty of Computing and Data Science, Alexandria, Egypt
                 </p>
                 <div className="flex flex-wrap justify-center md:justify-start gap-3">
@@ -1001,7 +1074,10 @@ export default function Home() {
                 <p className="text-amber-400 font-semibold mb-2">
                   NTI / Creativa — Cisco
                 </p>
-                <p className="text-sm mb-4" style={{ color: "var(--text-muted)" }}>
+                <p
+                  className="text-sm mb-4"
+                  style={{ color: "var(--text-muted)" }}
+                >
                   Alexandria, Egypt
                 </p>
                 <div className="flex flex-wrap justify-center md:justify-start gap-3">
@@ -1034,16 +1110,32 @@ export default function Home() {
                 <span className="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
                 <span className="relative inline-flex w-2.5 h-2.5 rounded-full bg-emerald-400" />
               </span>
-              <span className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
+              <span
+                className="text-sm font-medium"
+                style={{ color: "var(--text-primary)" }}
+              >
                 Usually respond within 4 hours
               </span>
             </div>
             <span className="h-4 w-px bg-slate-700/50 hidden sm:block" />
             <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <svg
+                className="w-4 h-4 text-blue-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
-              <span className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
+              <span
+                className="text-sm font-medium"
+                style={{ color: "var(--text-primary)" }}
+              >
                 Egypt · GMT+2
               </span>
             </div>
@@ -1057,7 +1149,12 @@ export default function Home() {
             {[
               {
                 icon: (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -1073,7 +1170,11 @@ export default function Home() {
               },
               {
                 icon: (
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-6 h-6"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                   </svg>
                 ),
@@ -1084,7 +1185,11 @@ export default function Home() {
               },
               {
                 icon: (
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-6 h-6"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
                   </svg>
                 ),
@@ -1095,7 +1200,12 @@ export default function Home() {
               },
               {
                 icon: (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -1114,21 +1224,27 @@ export default function Home() {
                 key={label}
                 href={href}
                 target={href.startsWith("http") ? "_blank" : undefined}
-                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                rel={
+                  href.startsWith("http") ? "noopener noreferrer" : undefined
+                }
                 className="gradient-border rounded-2xl p-5 md:p-6 flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 group min-w-0"
               >
                 <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 ${color === "blue"
-                    ? "bg-blue-500/10 text-blue-400"
-                    : color === "emerald"
-                      ? "bg-emerald-500/10 text-emerald-400"
-                      : "bg-purple-500/10 text-purple-400"
-                    }`}
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 ${
+                    color === "blue"
+                      ? "bg-blue-500/10 text-blue-400"
+                      : color === "emerald"
+                        ? "bg-emerald-500/10 text-emerald-400"
+                        : "bg-purple-500/10 text-purple-400"
+                  }`}
                 >
                   {icon}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs mb-0.5" style={{ color: "var(--text-muted)" }}>
+                  <p
+                    className="text-xs mb-0.5"
+                    style={{ color: "var(--text-muted)" }}
+                  >
                     {label}
                   </p>
                   <p
@@ -1153,7 +1269,8 @@ export default function Home() {
         }}
       >
         <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-          &copy; {new Date().getFullYear()} Adel Mostafa · Currently shipping Colada &amp; writing about offline sync patterns.
+          &copy; {new Date().getFullYear()} Adel Mostafa · Currently shipping
+          Colada &amp; writing about offline sync patterns.
         </p>
       </footer>
     </main>
