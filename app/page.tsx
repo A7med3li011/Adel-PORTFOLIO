@@ -516,7 +516,7 @@ export default function Home() {
 
             <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
               I am a <span className="gradient-text">software engineer</span>{" "}
-              with over 4 years of experience building{" "}
+              with experience building{" "}
               <span className="gradient-text">real applications</span>.
             </h1>
             <p
