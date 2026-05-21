@@ -13,6 +13,8 @@ type Project = {
   highlight: boolean;
   demoAndroid?: string;
   demoIos?: string;
+  category?: string;
+  complexity?: string;
 };
 
 const INITIAL_COUNT = 3;
@@ -22,8 +24,25 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
     null,
   );
   const [showAll, setShowAll] = useState(false);
+  const [imageLoadingStates, setImageLoadingStates] = useState<{
+    [key: string]: boolean;
+  }>({});
   const { theme } = useTheme();
   const isDark = theme === "dark";
+
+  // Get unique categories
+  const categories = Array.from(
+    new Set(projects.map((p) => p.category).filter(Boolean)),
+  );
+
+  // Handle image loading states
+  const handleImageLoad = (src: string) => {
+    setImageLoadingStates((prev) => ({ ...prev, [src]: true }));
+  };
+
+  const handleImageError = (src: string) => {
+    setImageLoadingStates((prev) => ({ ...prev, [src]: true })); // Mark as loaded even if error
+  };
 
   // Always render all projects; collapse by clipping the second row
   const hasMore = projects.length > INITIAL_COUNT;
@@ -71,6 +90,28 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
 
   return (
     <>
+      {/* ── Project Categories ─────────────────────────────── */}
+      {categories.length > 0 && (
+        <div
+          className="mb-8 flex flex-wrap gap-2"
+          role="group"
+          aria-label="Project categories"
+        >
+          {categories.map((category) => (
+            <span
+              key={category}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 min-h-[44px] min-w-[44px] inline-flex items-center ${
+                isDark
+                  ? "bg-gray-800 text-gray-300"
+                  : "bg-gray-200 text-gray-700"
+              }`}
+            >
+              {category}
+            </span>
+          ))}
+        </div>
+      )}
+
       {/* ── First row: always fully visible ─────────────── */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {previewProjects.map((project, pi) => (
@@ -79,6 +120,10 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
             project={project}
             pi={pi}
             onOpen={() => open(pi)}
+            imageLoadingStates={imageLoadingStates}
+            handleImageLoad={handleImageLoad}
+            handleImageError={handleImageError}
+            isDark={isDark}
           />
         ))}
       </div>
@@ -98,6 +143,10 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                 project={project}
                 pi={pi}
                 onOpen={() => open(INITIAL_COUNT + pi)}
+                imageLoadingStates={imageLoadingStates}
+                handleImageLoad={handleImageLoad}
+                handleImageError={handleImageError}
+                isDark={isDark}
               />
             ))}
           </div>
@@ -111,6 +160,10 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                   project={project}
                   pi={pi}
                   onOpen={() => open(INITIAL_COUNT * 2 + pi)}
+                  imageLoadingStates={imageLoadingStates}
+                  handleImageLoad={handleImageLoad}
+                  handleImageError={handleImageError}
+                  isDark={isDark}
                 />
               ))}
             </div>
@@ -129,12 +182,18 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
             <div className="flex flex-col items-center gap-0">
               <button
                 onClick={() => setShowAll((p) => !p)}
-                className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl font-semibold text-white text-sm overflow-hidden transition-all duration-300 hover:-translate-y-0.5 active:scale-95"
+                className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl font-semibold text-white text-sm overflow-hidden transition-all duration-300 hover:-translate-y-0.5 active:scale-95 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#060d1a]"
                 style={{
                   background: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
                   boxShadow:
                     "0 6px 24px rgba(59,130,246,0.40), 0 2px 8px rgba(139,92,246,0.25)",
                 }}
+                aria-expanded={showAll}
+                aria-label={
+                  showAll
+                    ? "Show fewer projects"
+                    : `Show ${projects.length - INITIAL_COUNT} more projects`
+                }
               >
                 {/* Shimmer */}
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
@@ -187,7 +246,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                     "radial-gradient(ellipse, rgba(99,102,241,0.35) 0%, transparent 72%)",
                   filter: "blur(4px)",
                 }}
-              />
+              ></div>
             </div>
           </div>
         </div>
@@ -198,6 +257,9 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md animate-fadeIn px-3 sm:px-4"
           onClick={close}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${active.name} image gallery`}
         >
           <div
             className="relative w-full max-w-5xl flex flex-col"
@@ -214,13 +276,15 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
               </div>
               <button
                 onClick={close}
-                className="w-9 h-9 rounded-full bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white transition-all flex items-center justify-center"
+                className="w-9 h-9 rounded-full bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white transition-all flex items-center justify-center min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400"
+                aria-label="Close image gallery"
               >
                 <svg
                   className="w-5 h-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -239,18 +303,21 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                 alt={`${active.name} screenshot ${lightbox.ii + 1}`}
                 fill
                 className="object-contain animate-slideIn"
+                priority
               />
               {active.images.length > 1 && (
                 <>
                   <button
                     onClick={() => go(-1)}
-                    className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm border border-white/10"
+                    className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm border border-white/10 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    aria-label="Previous image"
                   >
                     <svg
                       className="w-5 h-5"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
@@ -262,13 +329,15 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                   </button>
                   <button
                     onClick={() => go(1)}
-                    className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm border border-white/10"
+                    className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm border border-white/10 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    aria-label="Next image"
                   >
                     <svg
                       className="w-5 h-5"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
@@ -283,31 +352,45 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
             </div>
 
             {active.images.length > 1 && (
-              <div className="flex justify-center gap-2 mt-4">
+              <div
+                className="flex justify-center gap-2 mt-4"
+                role="tablist"
+                aria-label="Image thumbnails"
+              >
                 {active.images.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setLightbox({ ...lightbox, ii: idx })}
-                    className={`rounded-full transition-all duration-300 ${
+                    className={`rounded-full transition-all duration-300 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                       idx === lightbox.ii
                         ? "w-6 h-2 bg-blue-400"
                         : "w-2 h-2 bg-gray-600 hover:bg-gray-400"
                     }`}
+                    aria-label={`View image ${idx + 1}`}
+                    aria-selected={idx === lightbox.ii}
+                    role="tab"
                   />
                 ))}
               </div>
             )}
 
-            <div className="flex gap-2 mt-4 overflow-x-auto pb-1 justify-center">
+            <div
+              className="flex gap-2 mt-4 overflow-x-auto pb-1 justify-center"
+              role="tablist"
+              aria-label="Image thumbnails"
+            >
               {active.images.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setLightbox({ ...lightbox, ii: idx })}
-                  className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-lg overflow-hidden shrink-0 transition-all duration-200 ${
+                  className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-lg overflow-hidden shrink-0 transition-all duration-200 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                     idx === lightbox.ii
                       ? "ring-2 ring-blue-400 opacity-100 scale-105"
                       : "opacity-40 hover:opacity-70"
                   }`}
+                  aria-label={`View ${active.name} image ${idx + 1}`}
+                  aria-selected={idx === lightbox.ii}
+                  role="tab"
                 >
                   <Image src={img} alt="" fill className="object-cover" />
                 </button>
@@ -325,12 +408,22 @@ function ProjectCard({
   project,
   pi,
   onOpen,
+  imageLoadingStates,
+  handleImageLoad,
+  handleImageError,
+  isDark,
 }: {
   project: Project;
   pi: number;
   onOpen: () => void;
+  imageLoadingStates: { [key: string]: boolean };
+  handleImageLoad: (src: string) => void;
+  handleImageError: (src: string) => void;
+  isDark: boolean;
 }) {
   const hasStoreLinks = project.demoAndroid || project.demoIos;
+  const imageSrc = project.images[0];
+  const isImageLoaded = imageLoadingStates[imageSrc];
 
   return (
     <div
@@ -353,12 +446,26 @@ function ProjectCard({
       <div
         className="relative w-full h-44 overflow-hidden bg-[#0f172a] cursor-pointer"
         onClick={onOpen}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onOpen();
+          }
+        }}
+        aria-label={`View ${project.name} gallery`}
       >
+        {!isImageLoaded && (
+          <div className="absolute inset-0 skeleton" aria-hidden="true" />
+        )}
         <Image
           src={project.images[0]}
-          alt={project.name}
+          alt={`${project.name} screenshot`}
           fill
-          className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+          className={`object-cover object-top group-hover:scale-105 transition-transform duration-500 ${!isImageLoaded ? "opacity-0" : "opacity-100"}`}
+          onLoad={() => handleImageLoad(project.images[0])}
+          onError={() => handleImageError(project.images[0])}
         />
         <div className="absolute inset-0 bg-linear-to-b from-transparent to-[#0f172a]/60" />
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40">
@@ -368,6 +475,7 @@ function ProjectCard({
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"

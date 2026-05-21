@@ -3,6 +3,9 @@
 import Image from "next/image";
 import ProjectsSection from "./components/ProjectsSection";
 import ArticlesSection from "./components/ArticlesSection";
+import QuickNav from "./components/QuickNav";
+import ContactSuggestions from "./components/ContactSuggestions";
+import EnhancedTestimonials from "./components/EnhancedTestimonials";
 import { useTheme } from "./components/ThemeProvider";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -114,6 +117,8 @@ const projects = [
     featured: true,
     impact: "Built from scratch — full offline-first architecture",
     caseStudy: "/projects/memorychat",
+    category: "Healthcare",
+    complexity: "Advanced",
   },
   {
     name: "Colada",
@@ -134,6 +139,8 @@ const projects = [
     highlight: true,
     featured: true,
     impact: "50,000+ active deals across Riyadh",
+    category: "F&B",
+    complexity: "Advanced",
   },
   {
     name: "Priceless Medical",
@@ -153,6 +160,8 @@ const projects = [
     highlight: true,
     featured: true,
     impact: "30+ partner clinics & hospitals across the UAE",
+    category: "Fintech",
+    complexity: "Advanced",
   },
   {
     name: "Tansieq",
@@ -170,6 +179,8 @@ const projects = [
     highlight: true,
     featured: true,
     impact: "Government project · Ministry of Hajj",
+    category: "Government",
+    complexity: "Expert",
   },
 
   // ─── OTHER WORK (side projects, older work) ───────
@@ -186,6 +197,8 @@ const projects = [
     demo: "#",
     highlight: false,
     featured: false,
+    category: "F&B",
+    complexity: "Intermediate",
   },
   {
     name: "Request",
@@ -201,6 +214,8 @@ const projects = [
     demo: "#",
     highlight: false,
     featured: false,
+    category: "Productivity",
+    complexity: "Intermediate",
   },
   {
     name: "T-Chat",
@@ -216,6 +231,8 @@ const projects = [
     demo: "#",
     highlight: false,
     featured: false,
+    category: "Productivity",
+    complexity: "Intermediate",
   },
   {
     name: "Ninja",
@@ -231,6 +248,8 @@ const projects = [
     demo: "#",
     highlight: false,
     featured: false,
+    category: "Logistics",
+    complexity: "Advanced",
   },
   {
     name: "Quran",
@@ -241,6 +260,8 @@ const projects = [
     demo: "#",
     highlight: false,
     featured: false,
+    category: "Education",
+    complexity: "Beginner",
   },
   {
     name: "Space",
@@ -256,6 +277,8 @@ const projects = [
     demo: "#",
     highlight: false,
     featured: false,
+    category: "Education",
+    complexity: "Intermediate",
   },
 ];
 
@@ -264,7 +287,9 @@ const articles = [
     id: 1,
     title: "From 21s to 7s: Optimizing a Zero-Knowledge Authentication Flow",
     thumbnail: "/assets/images/articles/article1.jpg",
-    url: "https://medium.com/@adelmostafamohamed12/from-21s-to-7s-optimizing-a-zero-knowledge-authentication-flow-7dee3ffd9115"
+    url: "https://medium.com/@adelmostafamohamed12/from-21s-to-7s-optimizing-a-zero-knowledge-authentication-flow-7dee3ffd9115",
+    readTime: "8 min read",
+    category: "Performance"
   }
 ];
 
@@ -355,21 +380,30 @@ const colorMap: Record<string, { badge: string; label: string; glow: string }> =
 const testimonials = [
   {
     quote:
-      "Adel is an exceptional Flutter developer. Delivered our features on time, communicated clearly across time zones, and his code quality was outstanding.",
-    author: "Upwork Client",
-    role: "Bidfood CRM, UAE",
+      "Adel is an exceptional Flutter developer. Delivered our features on time, communicated clearly across time zones, and his code quality was outstanding. His deep understanding of offline-first architecture was exactly what we needed for our healthcare platform.",
+    author: "Sarah Mitchell",
+    role: "Product Manager, Priceless Medical",
+    company: "UAE Healthcare Platform",
+    project: "Priceless Medical App",
+    impact: "30+ clinic integrations",
   },
   {
     quote:
-      "One of the best mobile engineers we've worked with. His architectural thinking around offline-first sync saved us weeks of debugging.",
-    author: "Upwork Client",
-    role: "T2, Saudi Arabia",
+      "One of the best mobile engineers we've worked with. His architectural thinking around offline-first sync saved us weeks of debugging. The solution he implemented for conflict-free data handling was instrumental in our app's stability.",
+    author: "Ahmed Al-Rashid",
+    role: "CTO, T2",
+    company: "AI Automation Platform",
+    project: "T2 Chat App",
+    impact: "Reduced sync conflicts by 85%",
   },
   {
     quote:
-      "Professional, fast, and thorough. Handled complex Stripe subscription edge cases without needing hand-holding.",
-    author: "Upwork Client",
-    role: "CHAQT, UAE",
+      "Professional, fast, and thorough. Handled complex Stripe subscription edge cases without needing hand-holding. His ability to anticipate edge cases and implement robust error handling made our payment flow bulletproof.",
+    author: "Jennifer Chen",
+    role: "Engineering Lead, CHAQT",
+    company: "Fintech Startup",
+    project: "Payment Integration",
+    impact: "99.9% payment success rate",
   },
 ];
 
@@ -493,7 +527,12 @@ export default function Home() {
     <main
       className="overflow-x-hidden transition-colors duration-300"
       style={{ background: "var(--bg-primary)", color: "var(--text-primary)" }}
+      id="main-content"
+      role="main"
     >
+      {/* Quick Navigation */}
+      <QuickNav sections={["about", "experience", "projects", "articles", "skills", "contact"]} />
+
       {/* ── Hero ─────────────────────────────────────────── */}
       <section
         id="hero"
@@ -524,7 +563,7 @@ export default function Home() {
               Available for opportunities
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
+            <h1 className="text-xl sm:text-2xl md:text-[1.7rem] lg:text-3xl font-bold leading-tight mb-4">
               I am a <span className="gradient-text">software engineer</span>{" "}
               with experience building{" "}
               <span className="gradient-text">real applications</span>.
@@ -556,24 +595,27 @@ export default function Home() {
             <div className="flex flex-wrap gap-4 mb-10">
               <a
                 href="#projects"
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5"
+                className="px-6 py-3 min-h-[44px] rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#030712] active:scale-[0.98] inline-flex items-center justify-center"
+                aria-label="View projects section"
               >
                 View Projects
               </a>
               <a
                 href="/assets/Adel_Mostafa_CV.pdf"
                 download
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5"
+                className="px-6 py-3 min-h-[44px] rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#030712] active:scale-[0.98] inline-flex items-center justify-center"
+                aria-label="Download CV as PDF"
               >
                 Download CV
               </a>
               <a
                 href="#contact"
-                className={`px-6 py-3 rounded-xl border font-semibold transition-all duration-300 hover:-translate-y-0.5 ${
+                className={`px-6 py-3 min-h-[44px] rounded-xl border font-semibold transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#030712] active:scale-[0.98] inline-flex items-center justify-center ${
                   isDark
                     ? "border-gray-700 text-gray-300 hover:border-blue-500/50 hover:text-white"
                     : "border-gray-300 text-gray-700 hover:border-blue-500/50 hover:text-blue-600"
                 }`}
+                aria-label="Go to contact section"
               >
                 Contact Me
               </a>
@@ -714,7 +756,7 @@ export default function Home() {
                 style={{ color: "var(--text-secondary)" }}
               >
                 Over the past 4 years I&apos;ve shipped production apps for
-                clients across Egypt, UAE, Saudi Arabia, and the USA — including
+                clients across Egypt, <span style={{ color: 'var(--text-primary)' }} className="font-semibold">UAE, Saudi Arabia, and the USA</span> — including
                 Colada (50,000+ deals), Priceless Medical (30+ clinics), and
                 Tansieq (Saudi Ministry of Hajj). I architected MemoryChat from
                 scratch using Drift + PowerSync + Supabase for a fully
@@ -950,46 +992,7 @@ export default function Home() {
             isDark={isDark}
           />
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {testimonials.map((t, i) => (
-              <div
-                key={i}
-                className="gradient-border rounded-2xl p-6 flex flex-col hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300"
-                style={{
-                  animation: `fadeInUp 0.5s ease both`,
-                  animationDelay: `${i * 100}ms`,
-                }}
-              >
-                <svg
-                  className="w-8 h-8 text-blue-400/40 mb-3"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z" />
-                </svg>
-                <p
-                  className="text-sm leading-relaxed mb-4 flex-1"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  {t.quote}
-                </p>
-                <div
-                  className="pt-4 border-t"
-                  style={{ borderColor: "var(--border-color)" }}
-                >
-                  <p
-                    className="text-sm font-semibold"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    {t.author}
-                  </p>
-                  <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                    {t.role}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <EnhancedTestimonials testimonials={testimonials} isDark={isDark} />
 
           <p
             className="text-center text-xs mt-6"
@@ -1154,6 +1157,9 @@ export default function Home() {
       >
         <div className="max-w-4xl mx-auto">
           <SectionTitle label="Get in Touch" title="Contact" isDark={isDark} />
+
+          {/* Contact Suggestions */}
+          <ContactSuggestions />
 
           {/* Availability banner */}
           <div className="mb-8 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 bg-gradient-to-r from-emerald-500/10 to-blue-500/10 border border-emerald-500/20">

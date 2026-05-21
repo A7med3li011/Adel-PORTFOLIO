@@ -8,6 +8,8 @@ interface Article {
   title: string;
   thumbnail: string;
   url: string;
+  readTime?: string;
+  category?: string;
 }
 
 interface ArticlesSectionProps {
@@ -15,7 +17,10 @@ interface ArticlesSectionProps {
   isDark: boolean;
 }
 
-export default function ArticlesSection({ articles, isDark }: ArticlesSectionProps) {
+export default function ArticlesSection({
+  articles,
+  isDark,
+}: ArticlesSectionProps) {
   const [imageError, setImageError] = useState<{ [key: number]: boolean }>({});
 
   const handleImageError = (id: number) => {
@@ -23,7 +28,7 @@ export default function ArticlesSection({ articles, isDark }: ArticlesSectionPro
   };
 
   const isExternalUrl = (url: string) => {
-    return url.startsWith('http://') || url.startsWith('https://');
+    return url.startsWith("http://") || url.startsWith("https://");
   };
 
   return (
@@ -72,10 +77,22 @@ export default function ArticlesSection({ articles, isDark }: ArticlesSectionPro
             )}
           </div>
           <div className="p-4">
-            <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            <div className="flex items-center gap-2 mb-2">
+              {article.category && (
+                <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
+                  {article.category}
+                </span>
+              )}
+              {article.readTime && (
+                <span className="text-xs text-gray-500 dark:text-gray-400">
+                  {article.readTime}
+                </span>
+              )}
+            </div>
+            <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight">
               {article.title}
             </h3>
-            <button className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5">
+            <button className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 min-h-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
               Read on Medium
             </button>
           </div>
