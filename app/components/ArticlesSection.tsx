@@ -1,0 +1,86 @@
+"use client";
+
+import Image from "next/image";
+import { useState } from "react";
+
+interface Article {
+  id: number;
+  title: string;
+  thumbnail: string;
+  url: string;
+}
+
+interface ArticlesSectionProps {
+  articles: Article[];
+  isDark: boolean;
+}
+
+export default function ArticlesSection({ articles, isDark }: ArticlesSectionProps) {
+  const [imageError, setImageError] = useState<{ [key: number]: boolean }>({});
+
+  const handleImageError = (id: number) => {
+    setImageError((prev) => ({ ...prev, [id]: true }));
+  };
+
+  const isExternalUrl = (url: string) => {
+    return url.startsWith('http://') || url.startsWith('https://');
+  };
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {articles.map((article) => (
+        <a
+          key={article.id}
+          href={article.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group bg-white dark:bg-gray-900 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+        >
+          <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-800">
+            {imageError[article.id] ? (
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
+                <svg
+                  className="w-16 h-16 text-white opacity-80"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                  />
+                </svg>
+              </div>
+            ) : isExternalUrl(article.thumbnail) ? (
+              <img
+                src={article.thumbnail}
+                alt={article.title}
+                className="w-full h-full object-cover"
+                onError={() => handleImageError(article.id)}
+              />
+            ) : (
+              <Image
+                src={article.thumbnail}
+                alt={article.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                onError={() => handleImageError(article.id)}
+              />
+            )}
+          </div>
+          <div className="p-4">
+            <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              {article.title}
+            </h3>
+            <button className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5">
+              Read on Medium
+            </button>
+          </div>
+        </a>
+      ))}
+    </div>
+  );
+}

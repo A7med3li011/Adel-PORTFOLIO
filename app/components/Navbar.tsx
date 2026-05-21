@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "./ThemeProvider";
 
-const navLinks = ["About", "Experience", "Projects", "Skills", "Contact"];
+const navLinks = ["About", "Experience", "Projects", "Articles", "Skills", "Contact"];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
