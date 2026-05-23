@@ -4,7 +4,9 @@
       "Bash(node -e \":*)",
       "Bash(npm run *)",
       "Bash(curl -o \"/Users/user/Downloads/Work/Acheivment/Portfolio/portfolio/Adel-PORTFOLIO/public/assets/images/articles/article1.jpg\" \"https://maas-log-prod.cn-wlcb.ufileos.com/anthropic/0feed8b0-c73a-4b6b-b259-78492483d1c7/fc9b8b82b0194e4fbdf81dafb226e938.jpg?UCloudPublicKey=TOKEN_e15ba47a-d098-4fbd-9afc-a0dcf0e4e621&Expires=1779398781&Signature=G516C0vEuQ6L3FloBBNzQ+yZVNQ=\")",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(lsof -ti:3000)",
+      "Bash(xargs kill -9)"
     ]
   }
 }

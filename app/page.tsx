@@ -309,8 +309,8 @@ const articles = [
     thumbnail: "/assets/images/articles/article1.jpg",
     url: "https://medium.com/@adelmostafamohamed12/from-21s-to-7s-optimizing-a-zero-knowledge-authentication-flow-7dee3ffd9115",
     readTime: "8 min read",
-    category: "Performance"
-  }
+    category: "Performance",
+  },
 ];
 
 // ─── Tiered skills ────────────────────────────────────────────────────────────
@@ -399,31 +399,20 @@ const colorMap: Record<string, { badge: string; label: string; glow: string }> =
 // ─── Testimonials (from Upwork / clients) ─────────────────────────────────────
 const testimonials = [
   {
-    quote:
-      "Adel is an exceptional Flutter developer. Delivered our features on time, communicated clearly across time zones, and his code quality was outstanding. His deep understanding of offline-first architecture was exactly what we needed for our healthcare platform.",
-    author: "Sarah Mitchell",
-    role: "Product Manager, Priceless Medical",
-    company: "UAE Healthcare Platform",
-    project: "Priceless Medical App",
-    impact: "30+ clinic integrations",
+    title: "Create and Develop MTA for Android OS (feasibility study)",
+    image: "/assets/images/testimonials/testimonial1.jpg",
   },
   {
-    quote:
-      "One of the best mobile engineers we've worked with. His architectural thinking around offline-first sync saved us weeks of debugging. The solution he implemented for conflict-free data handling was instrumental in our app's stability.",
-    author: "Ahmed Al-Rashid",
-    role: "CTO, T2",
-    company: "AI Automation Platform",
-    project: "T2 Chat App",
-    impact: "Reduced sync conflicts by 85%",
+    title: "Flutter Mobile Developer Needed for App Enhancement",
+    image: "/assets/images/testimonials/testimonial2.jpg",
   },
   {
-    quote:
-      "Professional, fast, and thorough. Handled complex Stripe subscription edge cases without needing hand-holding. His ability to anticipate edge cases and implement robust error handling made our payment flow bulletproof.",
-    author: "Jennifer Chen",
-    role: "Engineering Lead, CHAQT",
-    company: "Fintech Startup",
-    project: "Payment Integration",
-    impact: "99.9% payment success rate",
+    title: "Consultations",
+    image: "/assets/images/testimonials/testimonial3.jpg",
+  },
+  {
+    title: "Freelance Mobile App Developer for MVP Messaging Application",
+    image: "/assets/images/testimonials/testimonial4.jpg",
   },
 ];
 
@@ -551,7 +540,16 @@ export default function Home() {
       role="main"
     >
       {/* Quick Navigation */}
-      <QuickNav sections={["about", "experience", "projects", "articles", "skills", "contact"]} />
+      <QuickNav
+        sections={[
+          "about",
+          "experience",
+          "projects",
+          "articles",
+          "skills",
+          "contact",
+        ]}
+      />
 
       {/* ── Hero ─────────────────────────────────────────── */}
       <section
@@ -776,11 +774,17 @@ export default function Home() {
                 style={{ color: "var(--text-secondary)" }}
               >
                 Over the past 4 years I&apos;ve shipped production apps for
-                clients across Egypt, <span style={{ color: 'var(--text-primary)' }} className="font-semibold">UAE, Saudi Arabia, and the USA</span> — including
-                Colada (50,000+ deals), Priceless Medical (30+ clinics), and
-                Tansieq (Saudi Ministry of Hajj). I architected MemoryChat from
-                scratch using Drift + PowerSync + Supabase for a fully
-                offline-capable chat experience with real-time sync.
+                clients across Egypt,{" "}
+                <span
+                  style={{ color: "var(--text-primary)" }}
+                  className="font-semibold"
+                >
+                  UAE, Saudi Arabia, and the USA
+                </span>{" "}
+                — including Colada (50,000+ deals), Priceless Medical (30+
+                clinics), and Tansieq (Saudi Ministry of Hajj). I architected
+                MemoryChat from scratch using Drift + PowerSync + Supabase for a
+                fully offline-capable chat experience with real-time sync.
               </p>
               <p
                 className="text-lg leading-relaxed"

@@ -1,12 +1,11 @@
 "use client";
 
+import Image from "next/image";
+import { useState } from "react";
+
 interface Testimonial {
-  quote: string;
-  author: string;
-  role: string;
-  company?: string;
-  project?: string;
-  impact?: string;
+  title: string;
+  image: string;
 }
 
 interface EnhancedTestimonialsProps {
@@ -14,66 +13,96 @@ interface EnhancedTestimonialsProps {
   isDark: boolean;
 }
 
-export default function EnhancedTestimonials({ testimonials, isDark }: EnhancedTestimonialsProps) {
+export default function EnhancedTestimonials({
+  testimonials,
+}: EnhancedTestimonialsProps) {
+  const [selected, setSelected] = useState<Testimonial | null>(null);
+
   return (
-    <div className="grid md:grid-cols-3 gap-6">
-      {testimonials.map((t, i) => (
+    <>
+      <div className="grid sm:grid-cols-2 gap-6 max-w-6xl mx-auto">
+        {testimonials.map((t, i) => (
+          <button
+            key={i}
+            onClick={() => setSelected(t)}
+            className="gradient-border rounded-2xl overflow-hidden hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 text-left cursor-pointer w-full"
+            style={{
+              animation: `fadeInUp 0.5s ease both`,
+              animationDelay: `${i * 100}ms`,
+            }}
+          >
+            <div className="relative w-full aspect-[16/9] overflow-hidden">
+              <Image
+                src={t.image}
+                alt={t.title}
+                fill
+                className="object-cover"
+                style={{ objectPosition: "top left" }}
+                sizes="(max-width: 640px) 100vw, 50vw"
+              />
+            </div>
+            <div className="p-4">
+              <p
+                className="text-sm font-medium leading-snug"
+                style={{ color: "var(--text-primary)" }}
+              >
+                {t.title}
+              </p>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      {/* Lightbox */}
+      {selected && (
         <div
-          key={i}
-          className="gradient-border rounded-2xl p-6 flex flex-col hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300"
-          style={{
-            animation: `fadeInUp 0.5s ease both`,
-            animationDelay: `${i * 100}ms`,
-          }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          onClick={() => setSelected(null)}
         >
-          <svg
-            className="w-8 h-8 text-blue-400/40 mb-3"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z" />
-          </svg>
-          <p
-            className="text-sm leading-relaxed mb-4 flex-1"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            {t.quote}
-          </p>
           <div
-            className="pt-4 border-t"
-            style={{ borderColor: "var(--border-color)" }}
+            className="relative max-w-4xl w-full rounded-2xl overflow-hidden"
+            style={{ background: "var(--bg-surface)" }}
+            onClick={(e) => e.stopPropagation()}
           >
-            <p
-              className="text-sm font-semibold mb-1"
-              style={{ color: "var(--text-primary)" }}
+            <button
+              onClick={() => setSelected(null)}
+              className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80 transition-colors"
+              aria-label="Close"
             >
-              {t.author}
-            </p>
-            <p className="text-xs mb-2" style={{ color: "var(--text-muted)" }}>
-              {t.role}
-            </p>
-            {t.company && (
-              <p className="text-xs font-medium mb-1" style={{ color: "var(--accent-blue)" }}>
-                {t.company}
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+            <div className="relative w-full">
+              <Image
+                src={selected.image}
+                alt={selected.title}
+                width={1200}
+                height={800}
+                className="w-full h-auto object-contain"
+              />
+            </div>
+            <div className="p-5">
+              <p
+                className="text-base font-semibold"
+                style={{ color: "var(--text-primary)" }}
+              >
+                {selected.title}
               </p>
-            )}
-            {t.project && (
-              <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                Project: {t.project}
-              </p>
-            )}
-            {t.impact && (
-              <div className="mt-2 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium">
-                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                {t.impact}
-              </div>
-            )}
+            </div>
           </div>
         </div>
-      ))}
-    </div>
+      )}
+    </>
   );
 }
