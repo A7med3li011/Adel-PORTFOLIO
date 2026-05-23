@@ -353,19 +353,25 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
 
             {active.images.length > 1 && (
               <div
-                className="flex justify-center gap-2 mt-4"
+                className="flex justify-center gap-1.5 mt-3"
                 role="tablist"
-                aria-label="Image thumbnails"
+                aria-label="Image indicators"
               >
                 {active.images.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setLightbox({ ...lightbox, ii: idx })}
-                    className={`rounded-full transition-all duration-300 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                    className={`rounded-sm transition-all duration-300 p-0 border-0 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                       idx === lightbox.ii
-                        ? "w-6 h-2 bg-blue-400"
-                        : "w-2 h-2 bg-gray-600 hover:bg-gray-400"
+                        ? "bg-blue-400"
+                        : "bg-gray-600 hover:bg-gray-400"
                     }`}
+                    style={{
+                      height: "4px",
+                      width: idx === lightbox.ii ? "24px" : "12px",
+                      minHeight: "unset",
+                      minWidth: "unset",
+                    }}
                     aria-label={`View image ${idx + 1}`}
                     aria-selected={idx === lightbox.ii}
                     role="tab"

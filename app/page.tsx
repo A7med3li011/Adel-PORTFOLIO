@@ -164,6 +164,26 @@ const projects = [
     complexity: "Advanced",
   },
   {
+    name: "CHAQT",
+    description:
+      "Expert monetization platform enabling professionals to monetize knowledge through text and voice messages. Direct, paid access to experts with privacy-focused communication and transparent pricing.",
+    tech: ["Flutter", "In-App Purchases", "Real-time Chat", "Voice Messages"],
+    images: [
+      "/assets/images/chaqt/chaqt1.jpg",
+      "/assets/images/chaqt/chaqt2.jpg",
+      "/assets/images/chaqt/chaqt3.png",
+      "/assets/images/chaqt/chaqt4.png",
+      "/assets/images/chaqt/chaqt5.jpg",
+    ],
+    demo: "https://apps.apple.com/eg/app/chaqt/id6743349098",
+    demoIos: "https://apps.apple.com/eg/app/chaqt/id6743349098",
+    highlight: true,
+    featured: true,
+    impact: "Privacy-focused expert consultation platform",
+    category: "Business",
+    complexity: "Advanced",
+  },
+  {
     name: "Tansieq",
     description:
       "Saudi Ministry of Hajj — drone and visual detection system for reporting camp, tent, and infrastructure issues during Hajj operations.",
