@@ -31,7 +31,7 @@ export default function EnhancedTestimonials({
               animationDelay: `${i * 100}ms`,
             }}
           >
-            <div className="relative w-full aspect-[16/9] overflow-hidden">
+            <div className="relative w-full aspect-[21/9] overflow-hidden">
               <Image
                 src={t.image}
                 alt={t.title}
