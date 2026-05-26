@@ -37,7 +37,7 @@ export default function AboutSection() {
               . These are the three hardest problems in production mobile apps,
               and they&apos;re where I spend most of my time.
             </p>
-            <div className="h-[2px] w-[10px] rounded-full bg-gradient-to-r from-blue-500 to-transparent mb-6" />
+            <div className="h-[2px] w-[150px] rounded-full bg-gradient-to-r from-blue-500 to-transparent mb-6" />
             <p
               className="text-lg leading-relaxed mb-6"
               style={{ color: "var(--text-secondary)" }}
@@ -81,7 +81,7 @@ export default function AboutSection() {
               from scratch using Drift + PowerSync + Supabase for a fully
               offline-capable chat experience with real-time sync.
             </p>
-            <div className="h-[2px] w-[10px] rounded-full bg-gradient-to-r from-blue-500 to-transparent mb-6" />
+            <div className="h-[2px] w-[150px] rounded-full bg-gradient-to-r from-blue-500 to-transparent mb-6" />
             <p
               className="text-lg leading-relaxed"
               style={{ color: "var(--text-secondary)" }}
