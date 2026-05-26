@@ -14,7 +14,8 @@ export default function QuickNav({ sections }: QuickNavProps) {
   useEffect(() => {
     const handleScroll = () => {
       // Calculate reading progress
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
       const scrolled = window.scrollY;
       const progressPercent = (scrolled / scrollHeight) * 100;
       setProgress(Math.min(100, Math.max(0, progressPercent)));
@@ -36,13 +37,18 @@ export default function QuickNav({ sections }: QuickNavProps) {
   return (
     <>
       {/* Reading Progress Indicator */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-600 z-[60]" style={{ width: `${progress}%` }} />
+      <div
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-600 z-[60]"
+        style={{ width: `${progress}%` }}
+      />
 
       {/* Quick Navigation Dropdown */}
       <div className="fixed bottom-6 right-6 z-50 md:hidden">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-lg hover:shadow-xl transition-all duration-300 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 flex items-center justify-center"
+          className={`w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-lg hover:shadow-xl transition-all duration-300 min-h-[44px] min-w-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 flex items-center justify-center ${
+            isOpen ? "ring-2 ring-white ring-offset-2" : ""
+          }`}
           aria-label="Quick navigation menu"
           aria-expanded={isOpen}
         >

@@ -178,7 +178,17 @@ body {
   background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
     linear-gradient(135deg, #3b82f6, #8b5cf6) border-box;
   border: 1px solid transparent;
-  transition: background 0.3s ease;
+}
+
+/* ─── Projects fade mask (collapsed state) ─────────────────────────────────── */
+.projects-fade-mask {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 50%,
+    color-mix(in srgb, var(--bg-primary) 25%, transparent) 75%,
+    color-mix(in srgb, var(--bg-primary) 55%, transparent) 100%
+  );
 }
 
 /* ─── Theme-aware utility classes ───────────────────────────────────────────── */

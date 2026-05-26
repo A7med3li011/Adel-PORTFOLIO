@@ -84,10 +84,6 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
   const peekProjects = projects.slice(INITIAL_COUNT, INITIAL_COUNT * 2);
   const restProjects = projects.slice(INITIAL_COUNT * 2);
 
-  const gradientFade = isDark
-    ? "linear-gradient(to bottom, transparent 0%, rgba(3,7,18,0.7) 40%, rgba(3,7,18,0.97) 80%)"
-    : "linear-gradient(to bottom, transparent 0%, rgba(248,250,252,0.7) 40%, rgba(248,250,252,0.97) 80%)";
-
   return (
     <>
       {/* ── Project Categories ─────────────────────────────── */}
@@ -133,8 +129,8 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
         <div className="relative mt-6">
           {/* Peek grid — clipped to show only top half */}
           <div
-            className={`grid md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-700 ease-in-out overflow-hidden ${
-              showAll ? "max-h-[9999px]" : "max-h-[140px]"
+            className={`grid md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-700 ease-in-out overflow-hidden  ${
+              showAll ? "max-h-full" : "max-h-70"
             }`}
           >
             {peekProjects.map((project, pi) => (
@@ -151,9 +147,23 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
             ))}
           </div>
 
+          {/* Professional fade overlay — blends the peek row into the page */}
+          {!showAll && (
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-32 z-10"
+              style={{
+                background:
+                  "linear-gradient(to bottom, rgba(6,13,26,0) 0%, rgba(6,13,26,0.65) 55%, rgba(6,13,26,0.95) 100%)",
+              }}
+            />
+          )}
+
           {/* Extra projects when expanded */}
           {showAll && restProjects.length > 0 && (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+            <div
+              className={`grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 pb-10`}
+            >
               {restProjects.map((project, pi) => (
                 <ProjectCard
                   key={project.name}
@@ -170,15 +180,12 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
           )}
 
           {/* Gradient fade — only shown when collapsed */}
-          {!showAll && (
-            <div
-              className="absolute inset-x-0 top-0 h-full pointer-events-none z-10"
-              style={{ background: gradientFade }}
-            />
-          )}
+          {/* {!showAll && (
+            <div className="absolute inset-x-0 top-0 h-full pointer-events-none z-10 bg-linear-to-b from-transparent via-black/60 to-black/30" />
+          )} */}
 
           {/* Show More / Show Less button */}
-          <div className="relative z-20 flex justify-center mt-4">
+          <div className=" absolute z-20 flex justify-center mt-4  w-full bottom-[-40px]  ">
             <div className="flex flex-col items-center gap-0">
               <button
                 onClick={() => setShowAll((p) => !p)}
