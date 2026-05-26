@@ -7,6 +7,151 @@ import QuickNav from "./components/QuickNav";
 import ContactSuggestions from "./components/ContactSuggestions";
 import EnhancedTestimonials from "./components/EnhancedTestimonials";
 import { useTheme } from "./components/ThemeProvider";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  type ReactNode,
+} from "react";
+
+// ─── Scroll-Reveal Component (IntersectionObserver, GPU-only) ────────────────
+// Uses only opacity + translateY (composited properties) → zero layout thrash.
+
+function ScrollReveal({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setVisible(true);
+          io.unobserve(el);
+        }
+      },
+      { threshold: 0.1 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(16px)",
+        transition: `opacity 0.5s ease ${delay}ms, transform 0.5s ease ${delay}ms`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+// ─── Count-Up Component ──────────────────────────────────────────────────────
+
+function CountUp({
+  target,
+  suffix = "",
+  duration = 1200,
+}: {
+  target: number;
+  suffix?: string;
+  duration?: number;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting && !started) {
+          setStarted(true);
+          io.unobserve(el);
+        }
+      },
+      { threshold: 0.5 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [started]);
+
+  useEffect(() => {
+    if (!started) return;
+    const start = performance.now();
+    let raf: number;
+    const step = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      // easeOutCubic for a natural deceleration
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * target));
+      if (progress < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [started, target, duration]);
+
+  return (
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>
+  );
+}
+
+// ─── Back-to-Top Button ──────────────────────────────────────────────────────
+
+function BackToTop() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > 600);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      aria-label="Back to top"
+      className={`fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25 flex items-center justify-center transition-all duration-300 hover:scale-110 ${
+        show
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-4 pointer-events-none"
+      }`}
+    >
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M5 15l7-7 7 7"
+        />
+      </svg>
+    </button>
+  );
+}
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -98,7 +243,6 @@ const experience = [
 ];
 
 const projects = [
-  // ─── FEATURED (production apps) ───────────────────
   {
     name: "MemoryChat",
     description:
@@ -202,8 +346,6 @@ const projects = [
     category: "Government",
     complexity: "Expert",
   },
-
-  // ─── OTHER WORK (side projects, older work) ───────
   {
     name: "Patria",
     description:
@@ -396,7 +538,18 @@ const colorMap: Record<string, { badge: string; label: string; glow: string }> =
     },
   };
 
-// ─── Testimonials (from Upwork / clients) ─────────────────────────────────────
+// ─── Employment type color map ───────────────────────────────────────────────
+const typeColors: Record<string, string> = {
+  Contract: "bg-blue-500/10 text-blue-400 border border-blue-500/20",
+  "Part-time": "bg-amber-500/10 text-amber-400 border border-amber-500/20",
+  "Full-time":
+    "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+  "Side Project":
+    "bg-purple-500/10 text-purple-400 border border-purple-500/20",
+  Freelance: "bg-rose-500/10 text-rose-400 border border-rose-500/20",
+};
+
+// ─── Testimonials ─────────────────────────────────────────────────────────────
 const testimonials = [
   {
     title: "Create and Develop MTA for Android OS (feasibility study)",
@@ -416,12 +569,14 @@ const testimonials = [
   },
 ];
 
-// ─── How I Work ───────────────────────────────────────────────────────────────
+// ─── How I Work — each item now has its own icon color ────────────────────────
 const howIWork = [
   {
     title: "Architecture First",
     description:
       "I plan data flow and state boundaries before writing code. Clean Architecture, SOLID, and clear separation of concerns prevent half the bugs before they happen.",
+    iconColor:
+      "bg-gradient-to-br from-blue-500/20 to-blue-600/20 text-blue-400 border border-blue-500/20",
     icon: (
       <svg
         className="w-6 h-6"
@@ -442,6 +597,8 @@ const howIWork = [
     title: "Test-Covered Critical Paths",
     description:
       "Unit, widget, and integration tests on anything involving money, sync, or data integrity. I don't test everything — I test what matters.",
+    iconColor:
+      "bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 text-emerald-400 border border-emerald-500/20",
     icon: (
       <svg
         className="w-6 h-6"
@@ -462,6 +619,8 @@ const howIWork = [
     title: "CI/CD From Day One",
     description:
       "GitHub Actions and Codemagic set up at project kickoff — automated builds, test runs, and store deployments. No hotfix surprises at 2 AM.",
+    iconColor:
+      "bg-gradient-to-br from-amber-500/20 to-amber-600/20 text-amber-400 border border-amber-500/20",
     icon: (
       <svg
         className="w-6 h-6"
@@ -482,6 +641,8 @@ const howIWork = [
     title: "Ship, Measure, Iterate",
     description:
       "I'd rather ship a solid v1 and learn from real users than polish a perfect v0 in isolation. Then I measure, cut what's not working, and double down on what is.",
+    iconColor:
+      "bg-gradient-to-br from-purple-500/20 to-purple-600/20 text-purple-400 border border-purple-500/20",
     icon: (
       <svg
         className="w-6 h-6"
@@ -512,7 +673,7 @@ function SectionTitle({
   isDark: boolean;
 }) {
   return (
-    <div className="mb-10 md:mb-16 text-center">
+    <ScrollReveal className="mb-10 md:mb-16 text-center">
       <span className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-3 block">
         {label}
       </span>
@@ -521,8 +682,65 @@ function SectionTitle({
       >
         {title}
       </h2>
-      <div className="mt-4 mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-600" />
-    </div>
+      {/* Wider underline (was w-16, now w-20) */}
+      <div className="mt-4 mx-auto h-1 w-20 rounded-full bg-gradient-to-r from-blue-500 to-purple-600" />
+    </ScrollReveal>
+  );
+}
+
+// ─── Copy-to-Clipboard Button ────────────────────────────────────────────────
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    },
+    [text],
+  );
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="ml-auto shrink-0 p-2 rounded-lg hover:bg-white/5 transition-colors duration-200"
+      aria-label="Copy to clipboard"
+    >
+      {copied ? (
+        <svg
+          className="w-4 h-4 text-emerald-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+      ) : (
+        <svg
+          className="w-4 h-4"
+          style={{ color: "var(--text-muted)" }}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+          />
+        </svg>
+      )}
+    </button>
   );
 }
 
@@ -532,6 +750,33 @@ export default function Home() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
+  // ── Timeline draw-down animation ──
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const timelineLineRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = timelineRef.current;
+    const line = timelineLineRef.current;
+    if (!container || !line) return;
+
+    const onScroll = () => {
+      const rect = container.getBoundingClientRect();
+      const containerTop = rect.top;
+      const containerHeight = rect.height;
+      const viewportHeight = window.innerHeight;
+
+      // How far through the container we've scrolled
+      const scrolled = Math.max(0, viewportHeight - containerTop);
+      const progress = Math.min(scrolled / containerHeight, 1);
+
+      line.style.transform = `scaleY(${progress})`;
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll(); // initial
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <main
       className="overflow-x-hidden transition-colors duration-300"
@@ -539,7 +784,7 @@ export default function Home() {
       id="main-content"
       role="main"
     >
-      {/* Quick Navigation */}
+      {/* Quick Navigation — NOTE: Add backdrop-filter: blur(12px) and semi-transparent bg in QuickNav component */}
       <QuickNav
         sections={[
           "about",
@@ -550,6 +795,9 @@ export default function Home() {
           "contact",
         ]}
       />
+
+      {/* Back to Top */}
+      <BackToTop />
 
       {/* ── Hero ─────────────────────────────────────────── */}
       <section
@@ -574,27 +822,38 @@ export default function Home() {
         />
 
         <div className="relative max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
-          {/* Text */}
+          {/* Text — staggered entrance via CSS animation */}
           <div className="order-2 md:order-1">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-6">
+            {/* "Available" badge — moved closer to headline (mb-4 instead of mb-6) */}
+            <div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-4 hero-entrance"
+              style={{ animationDelay: "0ms" }}
+            >
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
               Available for opportunities
             </div>
 
-            <h1 className="text-xl sm:text-2xl md:text-[1.7rem] lg:text-3xl font-bold leading-tight mb-4">
+            <h1
+              className="text-xl sm:text-2xl md:text-[1.7rem] lg:text-3xl font-bold leading-tight mb-4 hero-entrance"
+              style={{ animationDelay: "100ms" }}
+            >
               I am a <span className="gradient-text">software engineer</span>{" "}
               with experience building{" "}
               <span className="gradient-text">real applications</span>.
             </h1>
             <p
-              className={`text-base sm:text-lg md:text-xl font-medium mb-6 ${isDark ? "text-gray-400" : "text-gray-600"}`}
+              className={`text-base sm:text-lg md:text-xl font-medium mb-6 hero-entrance ${isDark ? "text-gray-400" : "text-gray-600"}`}
+              style={{ animationDelay: "200ms" }}
             >
               Flutter engineer shipping production apps in healthcare, fintech,
               and F&amp;B across Egypt, UAE, Saudi Arabia, and the USA.
             </p>
 
             {/* Proof pills */}
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div
+              className="flex flex-wrap gap-2 mb-8 hero-entrance"
+              style={{ animationDelay: "300ms" }}
+            >
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-300 text-xs font-semibold border border-amber-500/20">
                 <svg className="w-3.5 h-3.5 fill-amber-400" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
@@ -609,8 +868,12 @@ export default function Home() {
               </span>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 mb-10">
+            {/* CTA Buttons — clear hierarchy: primary / secondary / ghost */}
+            <div
+              className="flex flex-wrap gap-4 mb-10 hero-entrance"
+              style={{ animationDelay: "400ms" }}
+            >
+              {/* PRIMARY — View Projects */}
               <a
                 href="#projects"
                 className="px-6 py-3 min-h-[44px] rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#030712] active:scale-[0.98] inline-flex items-center justify-center"
@@ -618,32 +881,43 @@ export default function Home() {
               >
                 View Projects
               </a>
+              {/* SECONDARY — Download CV (outline + file details) */}
               <a
                 href="/assets/Adel_Mostafa_CV.pdf"
                 download
-                className="px-6 py-3 min-h-[44px] rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#030712] active:scale-[0.98] inline-flex items-center justify-center"
-                aria-label="Download CV as PDF"
-              >
-                Download CV
-              </a>
-              <a
-                href="#contact"
-                className={`px-6 py-3 min-h-[44px] rounded-xl border font-semibold transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#030712] active:scale-[0.98] inline-flex items-center justify-center ${
+                className={`px-6 py-3 min-h-[44px] rounded-xl border font-semibold transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#030712] active:scale-[0.98] inline-flex items-center justify-center gap-2 ${
                   isDark
-                    ? "border-gray-700 text-gray-300 hover:border-blue-500/50 hover:text-white"
+                    ? "border-gray-600 text-gray-200 hover:border-blue-500/50 hover:text-white"
                     : "border-gray-300 text-gray-700 hover:border-blue-500/50 hover:text-blue-600"
                 }`}
-                aria-label="Go to contact section"
+                aria-label="Download CV as PDF"
               >
-                Contact Me
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+                Download CV
+                <span className="text-xs opacity-60 font-normal">(PDF)</span>
               </a>
             </div>
           </div>
 
-          {/* Photo */}
-          <div className="order-1 md:order-2 flex justify-center md:justify-end">
+          {/* Photo — restored glow animation */}
+          <div
+            className="order-1 md:order-2 flex justify-center md:justify-end hero-entrance"
+            style={{ animationDelay: "300ms" }}
+          >
             <div className="relative mx-14 sm:mx-10 md:mx-0">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 blur-2xl opacity-30 scale-110" />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 blur-2xl opacity-20 scale-110" />
               <div className="relative w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full p-1 bg-linear-to-tr from-blue-500 via-purple-500 to-pink-500 animate-pulse-glow">
                 <div
                   className="w-full h-full rounded-full overflow-hidden"
@@ -659,29 +933,12 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div
-                className="absolute -bottom-4 -left-4 px-4 py-2 rounded-xl border shadow-xl animate-float"
-                style={{
-                  background: "var(--bg-surface)",
-                  borderColor: "var(--border-color)",
-                }}
-              >
-                <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                  Specialty
-                </p>
-                <p
-                  className="text-sm font-bold"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  +4 Years
-                </p>
-              </div>
+              {/* Floating badge: Upwork Top Rated */}
               <div
                 className="absolute -top-4 -right-4 px-4 py-2 rounded-xl border shadow-xl animate-float"
                 style={{
                   background: "var(--bg-surface)",
                   borderColor: "var(--border-color)",
-                  animationDelay: "1s",
                 }}
               >
                 <p className="text-xs" style={{ color: "var(--text-muted)" }}>
@@ -700,6 +957,25 @@ export default function Home() {
                   Top Rated
                 </p>
               </div>
+              {/* Floating badge: Specialty +4 Years */}
+              <div
+                className="absolute -bottom-4 -left-4 px-4 py-2 rounded-xl border shadow-xl animate-float"
+                style={{
+                  background: "var(--bg-surface)",
+                  borderColor: "var(--border-color)",
+                }}
+              >
+                <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                  Specialty
+                </p>
+                <p
+                  className="text-sm font-bold"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  +4 Years
+                </p>
+              </div>
+              {/* Floating badge: Writing · Medium */}
               <div
                 className="absolute top-12 -left-8 px-4 py-2 rounded-xl border shadow-xl animate-float"
                 style={{
@@ -753,7 +1029,8 @@ export default function Home() {
           <SectionTitle label="About Me" title="Who I Am" isDark={isDark} />
 
           <div className="grid md:grid-cols-3 gap-8 items-start">
-            <div className="md:col-span-2">
+            <ScrollReveal className="md:col-span-2">
+              {/* Key entity names bolded for scanning */}
               <p
                 className="text-lg leading-relaxed mb-6"
                 style={{ color: "var(--text-secondary)" }}
@@ -769,6 +1046,8 @@ export default function Home() {
                 . These are the three hardest problems in production mobile
                 apps, and they&apos;re where I spend most of my time.
               </p>
+              {/* Short gradient divider — 10px, fades out */}
+              <div className="h-[2px] w-[10px] rounded-full bg-gradient-to-r from-blue-500 to-transparent mb-6" />
               <p
                 className="text-lg leading-relaxed mb-6"
                 style={{ color: "var(--text-secondary)" }}
@@ -781,11 +1060,39 @@ export default function Home() {
                 >
                   UAE, Saudi Arabia, and the USA
                 </span>{" "}
-                — including Colada (50,000+ deals), Priceless Medical (30+
-                clinics), and Tansieq (Saudi Ministry of Hajj). I architected
-                MemoryChat from scratch using Drift + PowerSync + Supabase for a
-                fully offline-capable chat experience with real-time sync.
+                — including{" "}
+                <span
+                  className="font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  Colada
+                </span>{" "}
+                (50,000+ deals),{" "}
+                <span
+                  className="font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  Priceless Medical
+                </span>{" "}
+                (30+ clinics), and{" "}
+                <span
+                  className="font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  Tansieq
+                </span>{" "}
+                (Saudi Ministry of Hajj). I architected{" "}
+                <span
+                  className="font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  MemoryChat
+                </span>{" "}
+                from scratch using Drift + PowerSync + Supabase for a fully
+                offline-capable chat experience with real-time sync.
               </p>
+              {/* Short gradient divider — 10px, fades out */}
+              <div className="h-[2px] w-[10px] rounded-full bg-gradient-to-r from-blue-500 to-transparent mb-6" />
               <p
                 className="text-lg leading-relaxed"
                 style={{ color: "var(--text-secondary)" }}
@@ -795,34 +1102,45 @@ export default function Home() {
                 Upwork with a track record spanning healthcare, fintech,
                 F&amp;B, and government sectors.
               </p>
-            </div>
+            </ScrollReveal>
 
-            {/* Stats cards */}
+            {/* Stats cards — with count-up animation */}
             <div className="grid grid-cols-2 gap-4">
               {[
-                { value: "4+", label: "Years Experience" },
-                { value: "6+", label: "Shipped Apps" },
-                { value: "4", label: "Countries" },
-                { value: "Top Rated", label: "On Upwork" },
-              ].map(({ value, label }) => (
-                <div
-                  key={label}
-                  className="gradient-border rounded-2xl p-5 text-center hover:scale-105 transition-transform duration-300"
-                >
-                  <div className="flex items-center justify-center gap-1 mb-1">
-                    <p className="text-2xl font-bold gradient-text">{value}</p>
+                { value: 4, suffix: "+", label: "Years Experience" },
+                { value: 6, suffix: "+", label: "Shipped Apps" },
+                { value: 4, suffix: "", label: "Countries" },
+              ].map(({ value, suffix, label }, i) => (
+                <ScrollReveal key={label} delay={i * 100}>
+                  <div className="gradient-border rounded-2xl p-5 text-center hover:scale-105 transition-transform duration-300">
+                    <p className="text-2xl font-bold gradient-text mb-1">
+                      <CountUp target={value} suffix={suffix} />
+                    </p>
+                    <p
+                      style={{ color: "var(--text-muted)" }}
+                      className="text-xs"
+                    >
+                      {label}
+                    </p>
                   </div>
+                </ScrollReveal>
+              ))}
+              <ScrollReveal delay={300}>
+                <div className="gradient-border rounded-2xl p-5 text-center hover:scale-105 transition-transform duration-300">
+                  <p className="text-2xl font-bold gradient-text mb-1">
+                    Top Rated
+                  </p>
                   <p style={{ color: "var(--text-muted)" }} className="text-xs">
-                    {label}
+                    On Upwork
                   </p>
                 </div>
-              ))}
+              </ScrollReveal>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── How I Work ───────────────────────────────────── */}
+      {/* ── How I Work — OPEN LAYOUT (no card borders) ──── */}
       <section
         id="how-i-work"
         className="py-16 md:py-24 px-6 transition-colors duration-300"
@@ -831,18 +1149,14 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <SectionTitle label="Process" title="How I Work" isDark={isDark} />
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
             {howIWork.map((item, i) => (
-              <div
-                key={item.title}
-                className="gradient-border rounded-2xl p-6 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300"
-                style={{
-                  animation: `fadeInUp 0.5s ease both`,
-                  animationDelay: `${i * 100}ms`,
-                }}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 text-blue-400 border border-blue-500/20">
+              <ScrollReveal key={item.title} delay={i * 100}>
+                <div className="flex items-start gap-5">
+                  {/* Each icon has its own color */}
+                  <div
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${item.iconColor}`}
+                  >
                     {item.icon}
                   </div>
                   <div className="min-w-0">
@@ -860,13 +1174,13 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Experience ───────────────────────────────────── */}
+      {/* ── Experience — LEFT-BORDER ACCENT cards + color-coded types ──── */}
       <section
         id="experience"
         className="py-16 md:py-24 px-6 transition-colors duration-300"
@@ -879,100 +1193,112 @@ export default function Home() {
             isDark={isDark}
           />
 
-          <div className="relative">
-            <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-blue-500 via-purple-500 to-transparent hidden md:block" />
+          <div className="relative" ref={timelineRef}>
+            {/* Timeline line — draws down on scroll via scaleY */}
+            <div
+              ref={timelineLineRef}
+              className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-blue-500 via-purple-500 to-blue-500/0 hidden md:block origin-top"
+              style={{ transform: "scaleY(0)" }}
+            />
 
-            <div className="space-y-10">
+            <div className="space-y-8">
               {experience.map((job, i) => (
-                <div key={i} className="relative md:pl-16 group">
-                  <div
-                    className="absolute left-4 top-6 w-4 h-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 border-2 hidden md:block group-hover:scale-125 transition-transform duration-300"
-                    style={{ borderColor: "var(--bg-primary)" }}
-                  />
+                <ScrollReveal key={i} delay={i * 80}>
+                  <div className="relative md:pl-16 group">
+                    {/* Timeline dot */}
+                    <div
+                      className="absolute left-4 top-6 w-4 h-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 border-2 hidden md:block group-hover:scale-125 transition-transform duration-300"
+                      style={{ borderColor: "var(--bg-primary)" }}
+                    />
 
-                  <div className="gradient-border rounded-2xl p-6 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
-                    <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
-                      <div>
-                        <h3
-                          className="text-xl font-bold"
-                          style={{ color: "var(--text-primary)" }}
-                        >
-                          {job.role}
-                        </h3>
-                        <div className="flex items-center gap-3 flex-wrap mt-1">
-                          <p className="text-blue-400 font-semibold">
-                            {job.company}
-                          </p>
-                          {job.url && (
-                            <a
-                              href={job.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all duration-300 hover:scale-105 shadow-sm shadow-blue-500/20"
-                            >
-                              <svg
-                                className="w-3 h-3"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                />
-                              </svg>
-                              View
-                            </a>
-                          )}
-                          {"clients" in job &&
-                            job.clients?.map((c) => (
+                    {/* Card: left-border accent, no full border */}
+                    <div
+                      className="rounded-2xl p-6 transition-all duration-300 border-l-[3px] border-blue-500/60 hover:border-blue-400"
+                      style={{
+                        background: isDark
+                          ? "rgba(255,255,255,0.02)"
+                          : "rgba(0,0,0,0.02)",
+                      }}
+                    >
+                      <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div>
+                          <h3
+                            className="text-xl font-bold"
+                            style={{ color: "var(--text-primary)" }}
+                          >
+                            {job.role}
+                          </h3>
+                          <div className="flex items-center gap-3 flex-wrap mt-1">
+                            {/* Company name as text link instead of button */}
+                            {job.url ? (
                               <a
-                                key={c.name}
-                                href={c.url}
+                                href={job.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20 hover:bg-purple-500/20 transition-all duration-200"
+                                className="text-blue-400 font-semibold hover:text-blue-300 underline underline-offset-2 decoration-blue-500/30 hover:decoration-blue-400/60 transition-colors duration-200"
                               >
-                                {c.name}
+                                {job.company}
                               </a>
-                            ))}
+                            ) : (
+                              <p className="text-blue-400 font-semibold">
+                                {job.company}
+                              </p>
+                            )}
+                            {"clients" in job &&
+                              job.clients?.map((c) => (
+                                <a
+                                  key={c.name}
+                                  href={c.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-purple-400 font-semibold text-sm underline underline-offset-2 decoration-purple-500/30 hover:decoration-purple-400/60 hover:text-purple-300 transition-colors duration-200"
+                                >
+                                  {c.name}
+                                </a>
+                              ))}
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          {/* Color-coded employment type */}
+                          <span
+                            className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-1 ${typeColors[job.type] || "bg-blue-500/10 text-blue-400 border border-blue-500/20"}`}
+                          >
+                            {job.type}
+                          </span>
+                          <p
+                            className="text-sm"
+                            style={{ color: "var(--text-muted)" }}
+                          >
+                            {job.period}
+                          </p>
+                          <p
+                            className="text-xs"
+                            style={{
+                              color: "var(--text-muted)",
+                              opacity: 0.7,
+                            }}
+                          >
+                            {job.location}
+                          </p>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <span className="inline-block px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-medium border border-blue-500/20 mb-1">
-                          {job.type}
-                        </span>
-                        <p
-                          className="text-sm"
-                          style={{ color: "var(--text-muted)" }}
-                        >
-                          {job.period}
-                        </p>
-                        <p
-                          className="text-xs"
-                          style={{ color: "var(--text-muted)", opacity: 0.7 }}
-                        >
-                          {job.location}
-                        </p>
-                      </div>
-                    </div>
 
-                    <ul className="space-y-2">
-                      {job.points.map((point, j) => (
-                        <li
-                          key={j}
-                          className="flex items-start gap-3 text-sm"
-                          style={{ color: "var(--text-secondary)" }}
-                        >
-                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
+                      <ul className="space-y-2">
+                        {job.points.map((point, j) => (
+                          <li
+                            key={j}
+                            className="flex items-start gap-3 text-sm"
+                            style={{ color: "var(--text-secondary)" }}
+                          >
+                            {/* Slightly larger bullet dot */}
+                            <span className="mt-1.5 w-2 h-2 rounded-full bg-blue-500/70 shrink-0" />
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                </div>
+                </ScrollReveal>
               ))}
             </div>
           </div>
@@ -1028,7 +1354,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Skills (tiered) ──────────────────────────────── */}
+      {/* ── Skills (tiered) — tighter spacing, bigger Daily Driver chips ── */}
       <section
         id="skills"
         className="py-16 md:py-24 px-6 transition-colors duration-300"
@@ -1037,45 +1363,55 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <SectionTitle label="Tech Stack" title="Skills" isDark={isDark} />
 
-          <div className="space-y-6">
-            {skillTiers.map(({ label, sub, color, skills }) => {
+          {/* Reduced gap from space-y-6 to space-y-4 */}
+          <div className="space-y-4">
+            {skillTiers.map(({ label, sub, color, skills }, tierIndex) => {
               const c = colorMap[color];
+              const isDailyDrivers = label === "Daily Drivers";
               return (
-                <div
-                  key={label}
-                  className={`gradient-border rounded-2xl p-6 hover:shadow-lg transition-all duration-300 ${c.glow}`}
-                >
-                  <div className="flex items-baseline gap-3 mb-4 flex-wrap">
-                    <span
-                      className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border ${c.label}`}
-                    >
-                      {label}
-                    </span>
-                    <span
-                      className="text-xs italic"
-                      style={{ color: "var(--text-muted)" }}
-                    >
-                      {sub}
-                    </span>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.map((skill) => (
+                <ScrollReveal key={label} delay={tierIndex * 100}>
+                  <div
+                    className={`gradient-border rounded-2xl p-6 hover:shadow-lg transition-all duration-300 ${c.glow}`}
+                  >
+                    <div className="flex items-baseline gap-3 mb-4 flex-wrap">
                       <span
-                        key={skill}
-                        className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-all duration-200 hover:scale-105 cursor-default ${c.badge}`}
+                        className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border ${c.label}`}
                       >
-                        {skill}
+                        {label}
                       </span>
-                    ))}
+                      <span
+                        className="text-xs italic"
+                        style={{ color: "var(--text-muted)" }}
+                      >
+                        {sub}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {skills.map((skill, si) => (
+                        <span
+                          key={skill}
+                          className={`rounded-lg font-medium border transition-all duration-200 hover:scale-105 cursor-default ${c.badge} ${
+                            isDailyDrivers
+                              ? "px-4 py-2 text-base"
+                              : "px-3 py-1.5 text-sm"
+                          } skill-chip-enter`}
+                          style={{
+                            animationDelay: `${si * 30}ms`,
+                          }}
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </ScrollReveal>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* ── Education ────────────────────────────────────── */}
+      {/* ── Education — SIDE BY SIDE, compact inline layout ── */}
       <section
         id="education"
         className="py-16 md:py-24 px-6 transition-colors duration-300"
@@ -1084,96 +1420,90 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <SectionTitle label="Academic" title="Education" isDark={isDark} />
 
-          <div className="space-y-6">
-            <div className="gradient-border rounded-2xl p-8 flex flex-col md:flex-row gap-6 items-center md:items-start hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
-              <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center shrink-0">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                  <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-                  />
-                </svg>
-              </div>
-              <div className="text-center md:text-left">
-                <h3
-                  className="text-xl font-bold mb-1"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  B.Sc. Computing and Data Science
-                </h3>
-                <p className="text-blue-400 font-semibold mb-2">
-                  Alexandria University
-                </p>
-                <p
-                  className="text-sm mb-4"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  Faculty of Computing and Data Science, Alexandria, Egypt
-                </p>
-                <div className="flex flex-wrap justify-center md:justify-start gap-3">
-                  <span className="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-medium border border-blue-500/20">
-                    Oct 2021 – June 2025
-                  </span>
+          <ScrollReveal>
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* BSc */}
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 rounded-xl bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center shrink-0">
+                  <svg
+                    className="w-6 h-6 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h3
+                    className="text-base font-bold"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    B.Sc. Computing and Data Science
+                  </h3>
+                  <p className="text-blue-400 font-semibold text-sm">
+                    Alexandria University
+                  </p>
+                  <p
+                    className="text-xs mt-1"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    Alexandria, Egypt · Oct 2021 – June 2025
+                  </p>
                 </div>
               </div>
-            </div>
 
-            <div className="gradient-border rounded-2xl p-8 flex flex-col md:flex-row gap-6 items-center md:items-start hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
-              <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-amber-500 to-orange-600 flex items-center justify-center shrink-0">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                  />
-                </svg>
-              </div>
-              <div className="text-center md:text-left">
-                <h3
-                  className="text-xl font-bold mb-1"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  CCNA Network Certificate
-                </h3>
-                <p className="text-amber-400 font-semibold mb-2">
-                  NTI / Creativa — Cisco
-                </p>
-                <p
-                  className="text-sm mb-4"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  Alexandria, Egypt
-                </p>
-                <div className="flex flex-wrap justify-center md:justify-start gap-3">
-                  <span className="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-medium border border-amber-500/20">
-                    Sep 2023 – Nov 2023
-                  </span>
-                  <span className="px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-medium border border-orange-500/20">
+              {/* CCNA */}
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 rounded-xl bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center shrink-0">
+                  <svg
+                    className="w-6 h-6 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h3
+                    className="text-base font-bold"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    CCNA Network Certificate
+                  </h3>
+                  <p className="text-blue-400 font-semibold text-sm">
+                    NTI / Creativa — Cisco
+                  </p>
+                  <p
+                    className="text-xs mt-1"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    Alexandria, Egypt · Sep 2023 – Nov 2023
+                  </p>
+                  <span className="inline-block mt-2 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium border border-emerald-500/20">
                     Cisco Certified
                   </span>
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* ── Contact ──────────────────────────────────────── */}
+      {/* ── Contact — horizontal bars, email highlighted as preferred ── */}
       <section
         id="contact"
         className="py-16 md:py-24 px-6 transition-colors duration-300"
@@ -1185,54 +1515,57 @@ export default function Home() {
           {/* Contact Suggestions */}
           <ContactSuggestions />
 
-          {/* Availability banner */}
-          <div className="mb-8 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 bg-gradient-to-r from-emerald-500/10 to-blue-500/10 border border-emerald-500/20">
-            <div className="flex items-center gap-2">
-              <span className="relative flex w-2.5 h-2.5">
-                <span className="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-                <span className="relative inline-flex w-2.5 h-2.5 rounded-full bg-emerald-400" />
-              </span>
-              <span
-                className="text-sm font-medium"
-                style={{ color: "var(--text-primary)" }}
-              >
-                Usually respond within 4 hours
+          {/* Availability banner — slightly more prominent */}
+          <ScrollReveal>
+            <div className="mb-8 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 bg-gradient-to-r from-emerald-500/10 to-blue-500/10 border border-emerald-500/20">
+              <div className="flex items-center gap-2">
+                <span className="relative flex w-2.5 h-2.5">
+                  <span className="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+                  <span className="relative inline-flex w-2.5 h-2.5 rounded-full bg-emerald-400" />
+                </span>
+                <span
+                  className="text-sm font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  Usually respond within 4 hours
+                </span>
+              </div>
+              <span className="h-4 w-px bg-slate-700/50 hidden sm:block" />
+              <div className="flex items-center gap-2">
+                <svg
+                  className="w-4 h-4 text-blue-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span
+                  className="text-sm font-semibold"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  Egypt · GMT+2
+                </span>
+              </div>
+              <span className="h-4 w-px bg-slate-700/50 hidden sm:block" />
+              <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+                Overlaps with EU, MENA &amp; US-East hours
               </span>
             </div>
-            <span className="h-4 w-px bg-slate-700/50 hidden sm:block" />
-            <div className="flex items-center gap-2">
-              <svg
-                className="w-4 h-4 text-blue-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span
-                className="text-sm font-medium"
-                style={{ color: "var(--text-primary)" }}
-              >
-                Egypt · GMT+2
-              </span>
-            </div>
-            <span className="h-4 w-px bg-slate-700/50 hidden sm:block" />
-            <span className="text-xs" style={{ color: "var(--text-muted)" }}>
-              Overlaps with EU, MENA &amp; US-East hours
-            </span>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          {/* Contact methods — horizontal bar layout */}
+          <div className="space-y-3">
             {[
               {
                 icon: (
                   <svg
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -1249,11 +1582,13 @@ export default function Home() {
                 value: "adelmostafamohamed12@gmail.com",
                 href: "https://mail.google.com/mail/?view=cm&fs=1&to=adelmostafamohamed12@gmail.com",
                 color: "blue",
+                preferred: true,
+                copyable: true,
               },
               {
                 icon: (
                   <svg
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -1264,11 +1599,13 @@ export default function Home() {
                 value: "Adel Mostafa",
                 href: "https://www.linkedin.com/in/adel-mostafa-766296234/",
                 color: "blue",
+                preferred: false,
+                copyable: false,
               },
               {
                 icon: (
                   <svg
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -1279,65 +1616,83 @@ export default function Home() {
                 value: "Adelmostafa31",
                 href: "https://github.com/Adelmostafa31/",
                 color: "purple",
+                preferred: false,
+                copyable: false,
               },
               {
                 icon: (
                   <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
+                    className="w-5 h-5"
+                    fill="currentColor"
                     viewBox="0 0 24 24"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                    />
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-.5 3.5l7.5 4.5v8l-7.5 4.5L4 16V8l7.5-4.5z" />
                   </svg>
                 ),
-                label: "Portfolio",
-                value: "adel-portfolio-three.vercel.app",
-                href: "https://adel-portfolio-three.vercel.app/",
+                label: "Upwork",
+                value: "Top Rated Flutter Developer",
+                href: "https://www.upwork.com/freelancers/~your-profile-id",
                 color: "emerald",
+                preferred: false,
+                copyable: false,
               },
-            ].map(({ icon, label, value, href, color }) => (
-              <a
-                key={label}
-                href={href}
-                target={href.startsWith("http") ? "_blank" : undefined}
-                rel={
-                  href.startsWith("http") ? "noopener noreferrer" : undefined
-                }
-                className="gradient-border rounded-2xl p-5 md:p-6 flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 group min-w-0"
-              >
-                <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 ${
-                    color === "blue"
-                      ? "bg-blue-500/10 text-blue-400"
-                      : color === "emerald"
-                        ? "bg-emerald-500/10 text-emerald-400"
-                        : "bg-purple-500/10 text-purple-400"
-                  }`}
-                >
-                  {icon}
-                </div>
-                <div className="min-w-0">
-                  <p
-                    className="text-xs mb-0.5"
-                    style={{ color: "var(--text-muted)" }}
+            ].map(
+              ({ icon, label, value, href, color, preferred, copyable }, i) => (
+                <ScrollReveal key={label} delay={i * 80}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center gap-4 px-5 py-4 rounded-xl transition-all duration-300 hover:-translate-y-0.5 group ${
+                      preferred
+                        ? "bg-blue-500/10 border border-blue-500/20 hover:border-blue-400/40"
+                        : "hover:bg-white/[0.02]"
+                    }`}
+                    style={
+                      !preferred
+                        ? {
+                            borderBottom: `1px solid var(--border-color)`,
+                          }
+                        : undefined
+                    }
                   >
-                    {label}
-                  </p>
-                  <p
-                    className="font-medium text-sm md:text-base truncate"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    {value}
-                  </p>
-                </div>
-              </a>
-            ))}
+                    <div
+                      className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 ${
+                        color === "blue"
+                          ? "bg-blue-500/10 text-blue-400"
+                          : color === "emerald"
+                            ? "bg-emerald-500/10 text-emerald-400"
+                            : "bg-purple-500/10 text-purple-400"
+                      }`}
+                    >
+                      {icon}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <p
+                          className="text-xs"
+                          style={{ color: "var(--text-muted)" }}
+                        >
+                          {label}
+                        </p>
+                        {preferred && (
+                          <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-500/20 text-blue-400">
+                            Preferred
+                          </span>
+                        )}
+                      </div>
+                      <p
+                        className="font-medium text-sm truncate"
+                        style={{ color: "var(--text-primary)" }}
+                      >
+                        {value}
+                      </p>
+                    </div>
+                    {copyable && <CopyButton text={value} />}
+                  </a>
+                </ScrollReveal>
+              ),
+            )}
           </div>
         </div>
       </section>
@@ -1355,6 +1710,39 @@ export default function Home() {
           Colada &amp; writing about offline sync patterns.
         </p>
       </footer>
+
+      {/* ── Global CSS for hero entrance + skill chip stagger ── */}
+      <style jsx global>{`
+        /* Hero staggered entrance — runs once on page load */
+        .hero-entrance {
+          animation: heroFadeUp 0.6s ease both;
+        }
+        @keyframes heroFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(16px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* Skill chip stagger — purely decorative, no layout shift */
+        .skill-chip-enter {
+          animation: chipIn 0.4s ease both;
+        }
+        @keyframes chipIn {
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      `}</style>
     </main>
   );
 }

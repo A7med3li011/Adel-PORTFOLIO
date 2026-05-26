@@ -417,7 +417,6 @@ function ProjectCard({
   imageLoadingStates,
   handleImageLoad,
   handleImageError,
-  isDark,
 }: {
   project: Project;
   pi: number;
