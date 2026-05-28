@@ -12,6 +12,7 @@ export type ProjectItem = {
   caseStudy?: string;
   category?: string;
   complexity?: string;
+  downloads?: number;
 };
 
 export const projects: ProjectItem[] = [
@@ -31,6 +32,7 @@ export const projects: ProjectItem[] = [
       "https://play.google.com/store/apps/details?id=app.memorychat.app&hl=en",
     highlight: true,
     featured: true,
+    downloads: 500,
     impact: "Built from scratch — full offline-first architecture",
     caseStudy: "/projects/memorychat",
     category: "Healthcare",
@@ -54,6 +56,7 @@ export const projects: ProjectItem[] = [
       "https://apps.apple.com/us/app/colada-%D9%83%D9%88%D9%84%D8%A7%D8%AF%D8%A7/id1608914841",
     highlight: true,
     featured: true,
+    downloads: 50000,
     impact: "50,000+ active deals across Riyadh",
     category: "F&B",
     complexity: "Advanced",
@@ -75,6 +78,7 @@ export const projects: ProjectItem[] = [
     demoIos: "https://apps.apple.com/eg/app/pricelessmed/id6745231670",
     highlight: true,
     featured: true,
+    downloads: 10000,
     impact: "30+ partner clinics & hospitals across the UAE",
     category: "Fintech",
     complexity: "Advanced",
@@ -95,6 +99,7 @@ export const projects: ProjectItem[] = [
     demoIos: "https://apps.apple.com/eg/app/chaqt/id6743349098",
     highlight: true,
     featured: true,
+    downloads: 1000,
     impact: "Privacy-focused expert consultation platform",
     category: "Business",
     complexity: "Advanced",
