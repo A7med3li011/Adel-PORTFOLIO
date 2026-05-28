@@ -262,7 +262,9 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
       {/* ── Lightbox ─────────────────────────────────────── */}
       {lightbox && active && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md animate-fadeIn px-3 sm:px-4"
+          className={`fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md animate-fadeIn px-3 sm:px-4 ${
+            isDark ? "bg-black/95" : "bg-black/80"
+          }`}
           onClick={close}
           role="dialog"
           aria-modal="true"
@@ -274,16 +276,24 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
           >
             <div className="flex items-center justify-between mb-3 px-1 min-w-0">
               <div>
-                <h3 className="text-white font-bold text-lg leading-tight">
+                <h3 className={`font-bold text-lg leading-tight ${
+                  isDark ? "text-white" : "text-gray-900"
+                }`}>
                   {active.name}
                 </h3>
-                <p className="text-gray-500 text-sm">
+                <p className={`text-sm ${
+                  isDark ? "text-gray-400" : "text-gray-600"
+                }`}>
                   {lightbox.ii + 1} / {active.images.length}
                 </p>
               </div>
               <button
                 onClick={close}
-                className="w-9 h-9 rounded-full bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white transition-all flex items-center justify-center min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className={`w-9 h-9 rounded-full transition-all flex items-center justify-center min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                  isDark
+                    ? "bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white"
+                    : "bg-gray-200 hover:bg-gray-300 text-gray-600 hover:text-gray-900"
+                }`}
                 aria-label="Close image gallery"
               >
                 <svg
@@ -303,7 +313,9 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
               </button>
             </div>
 
-            <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-[#0f172a]">
+            <div className={`relative w-full aspect-video rounded-xl overflow-hidden ${
+              isDark ? "bg-[#0f172a]" : "bg-gray-100"
+            }`}>
               <Image
                 key={lightbox.ii}
                 src={active.images[lightbox.ii]}
@@ -424,6 +436,7 @@ function ProjectCard({
   imageLoadingStates,
   handleImageLoad,
   handleImageError,
+  isDark,
 }: {
   project: Project;
   pi: number;
@@ -441,22 +454,22 @@ function ProjectCard({
     <div
       className={`group relative rounded-2xl overflow-hidden border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
         project.highlight
-          ? "bg-linear-to-br from-blue-500/10 to-purple-500/10 border-blue-500/30 hover:border-blue-400/50 hover:shadow-blue-500/10"
-          : "bg-[#0f172a]/50 border-gray-800/50 hover:border-gray-700 hover:shadow-black/20"
+          ? isDark
+            ? "bg-linear-to-br from-blue-500/10 to-purple-500/10 border-blue-500/30 hover:border-blue-400/50 hover:shadow-blue-500/10"
+            : "bg-linear-to-br from-blue-50 to-purple-50 border-blue-200 hover:border-blue-300 hover:shadow-blue-500/10"
+          : isDark
+            ? "bg-[#0f172a]/50 border-gray-800/50 hover:border-gray-700 hover:shadow-black/20"
+            : "bg-white border-gray-200 hover:border-gray-300 hover:shadow-gray-300/20"
       }`}
       style={{
         animation: `fadeInUp 0.5s ease both`,
         animationDelay: `${pi * 80}ms`,
       }}
     >
-      {project.highlight && (
-        <span className="absolute top-4 right-4 z-10 px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 text-xs font-medium border border-blue-500/30">
-          Featured
-        </span>
-      )}
-
       <div
-        className="relative w-full h-44 overflow-hidden bg-[#0f172a] cursor-pointer"
+        className={`relative w-full h-44 overflow-hidden cursor-pointer ${
+          isDark ? "bg-[#0f172a]" : "bg-gray-100"
+        }`}
         onClick={onOpen}
         role="button"
         tabIndex={0}
@@ -479,7 +492,11 @@ function ProjectCard({
           onLoad={() => handleImageLoad(project.images[0])}
           onError={() => handleImageError(project.images[0])}
         />
-        <div className="absolute inset-0 bg-linear-to-b from-transparent to-[#0f172a]/60" />
+        <div
+          className={`absolute inset-0 bg-linear-to-b from-transparent ${
+            isDark ? "to-[#0f172a]/60" : "to-gray-900/20"
+          }`}
+        />
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40">
           <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium">
             <svg
@@ -502,8 +519,18 @@ function ProjectCard({
       </div>
 
       <div className="p-6">
-        <h3 className="text-lg font-bold text-white mb-2">{project.name}</h3>
-        <p className="text-gray-500 text-sm leading-relaxed mb-4">
+        <h3
+          className={`text-lg font-bold mb-2 ${
+            isDark ? "text-white" : "text-gray-900"
+          }`}
+        >
+          {project.name}
+        </h3>
+        <p
+          className={`text-sm leading-relaxed mb-4 ${
+            isDark ? "text-gray-500" : "text-gray-600"
+          }`}
+        >
           {project.description}
         </p>
 
@@ -516,7 +543,11 @@ function ProjectCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-green-500/20 hover:border-green-400/40 transition-all duration-200"
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 ${
+                  isDark
+                    ? "bg-green-500/10 text-green-400 border-green-500/20 hover:bg-green-500/20 hover:border-green-400/40"
+                    : "bg-green-50 text-green-700 border-green-200 hover:bg-green-100 hover:border-green-300"
+                }`}
               >
                 <svg
                   className="w-3.5 h-3.5"
@@ -534,7 +565,11 @@ function ProjectCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gray-500/10 text-gray-300 border border-gray-500/20 hover:bg-gray-500/20 hover:border-gray-400/40 transition-all duration-200"
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 ${
+                  isDark
+                    ? "bg-gray-500/10 text-gray-300 border-gray-500/20 hover:bg-gray-500/20 hover:border-gray-400/40"
+                    : "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200 hover:border-gray-300"
+                }`}
               >
                 <svg
                   className="w-3.5 h-3.5"

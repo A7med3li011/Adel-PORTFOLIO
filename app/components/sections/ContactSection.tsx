@@ -5,6 +5,7 @@ import ContactSuggestions from "../ContactSuggestions";
 import CopyButton from "../ui/CopyButton";
 import ScrollReveal from "../ui/ScrollReveal";
 import SectionTitle from "../ui/SectionTitle";
+import { useTheme } from "../ThemeProvider";
 
 type ContactMethod = {
   icon: ReactNode;
@@ -81,13 +82,19 @@ const methods: ContactMethod[] = [
   },
 ];
 
-const colorClasses: Record<ContactMethod["color"], string> = {
-  blue: "bg-blue-500/10 text-blue-400",
-  emerald: "bg-emerald-500/10 text-emerald-400",
-  purple: "bg-purple-500/10 text-purple-400",
+const getColorClasses = (color: ContactMethod["color"], isDark: boolean) => {
+  const classes: Record<ContactMethod["color"], { dark: string; light: string }> = {
+    blue: { dark: "bg-blue-500/10 text-blue-400", light: "bg-blue-100 text-blue-600" },
+    emerald: { dark: "bg-emerald-500/10 text-emerald-400", light: "bg-emerald-100 text-emerald-600" },
+    purple: { dark: "bg-purple-500/10 text-purple-400", light: "bg-purple-100 text-purple-600" },
+  };
+  return isDark ? classes[color].dark : classes[color].light;
 };
 
 export default function ContactSection() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <section
       id="contact"
@@ -101,11 +108,15 @@ export default function ContactSection() {
 
         {/* Availability banner */}
         <ScrollReveal>
-          <div className="mb-8 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 bg-gradient-to-r from-emerald-500/10 to-blue-500/10 border border-emerald-500/20">
+          <div className={`mb-8 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 border ${
+            isDark
+              ? "bg-gradient-to-r from-emerald-500/10 to-blue-500/10 border-emerald-500/20"
+              : "bg-gradient-to-r from-emerald-50 to-blue-50 border-emerald-200"
+          }`}>
             <div className="flex items-center gap-2">
               <span className="relative flex w-2.5 h-2.5">
-                <span className="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-                <span className="relative inline-flex w-2.5 h-2.5 rounded-full bg-emerald-400" />
+                <span className={`absolute inline-flex w-full h-full rounded-full ${isDark ? "bg-emerald-400" : "bg-emerald-500"} opacity-75 animate-ping`} />
+                <span className={`relative inline-flex w-2.5 h-2.5 rounded-full ${isDark ? "bg-emerald-400" : "bg-emerald-500"}`} />
               </span>
               <span
                 className="text-sm font-semibold"
@@ -114,10 +125,10 @@ export default function ContactSection() {
                 Usually respond within 4 hours
               </span>
             </div>
-            <span className="h-4 w-px bg-slate-700/50 hidden sm:block" />
+            <span className={`h-4 w-px hidden sm:block ${isDark ? "bg-slate-700/50" : "bg-gray-300"}`} />
             <div className="flex items-center gap-2">
               <svg
-                className="w-4 h-4 text-blue-400"
+                className={`w-4 h-4 ${isDark ? "text-blue-400" : "text-blue-600"}`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -136,7 +147,7 @@ export default function ContactSection() {
                 Egypt · GMT+2
               </span>
             </div>
-            <span className="h-4 w-px bg-slate-700/50 hidden sm:block" />
+            <span className={`h-4 w-px hidden sm:block ${isDark ? "bg-slate-700/50" : "bg-gray-300"}`} />
             <span className="text-xs" style={{ color: "var(--text-muted)" }}>
               Overlaps with EU, MENA &amp; US-East hours
             </span>
@@ -157,7 +168,9 @@ export default function ContactSection() {
                   rel="noopener noreferrer"
                   className={`flex items-center gap-4 px-5 py-4 rounded-xl transition-all duration-300 hover:-translate-y-0.5 group ${
                     preferred
-                      ? "bg-blue-500/10 border border-blue-500/20 hover:border-blue-400/40"
+                      ? isDark
+                        ? "bg-blue-500/10 border border-blue-500/20 hover:border-blue-400/40"
+                        : "bg-blue-50 border border-blue-200 hover:border-blue-300"
                       : "hover:bg-white/[0.02]"
                   }`}
                   style={
@@ -169,7 +182,7 @@ export default function ContactSection() {
                   }
                 >
                   <div
-                    className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 ${colorClasses[color]}`}
+                    className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 ${getColorClasses(color, isDark)}`}
                   >
                     {icon}
                   </div>
@@ -182,7 +195,9 @@ export default function ContactSection() {
                         {label}
                       </p>
                       {preferred && (
-                        <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-500/20 text-blue-400">
+                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${
+                          isDark ? "bg-blue-500/20 text-blue-400" : "bg-blue-100 text-blue-700"
+                        }`}>
                           Preferred
                         </span>
                       )}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTheme } from "./ThemeProvider";
 
 interface ContactSuggestion {
   id: string;
@@ -64,6 +65,8 @@ const contactSuggestions: ContactSuggestion[] = [
 ];
 
 export default function ContactSuggestions() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [selectedSuggestion, setSelectedSuggestion] = useState<string | null>(null);
 
   const handleSuggestionClick = (suggestion: ContactSuggestion) => {
@@ -91,12 +94,18 @@ export default function ContactSuggestions() {
             onClick={() => handleSuggestionClick(suggestion)}
             className={`flex items-start gap-3 p-4 rounded-xl border transition-all duration-200 min-h-[88px] text-left hover:-translate-y-0.5 ${
               selectedSuggestion === suggestion.id
-                ? "bg-blue-500/10 border-blue-500/30"
-                : "bg-[#0f172a]/50 border-gray-800/50 hover:border-gray-700"
+                ? isDark
+                  ? "bg-blue-500/10 border-blue-500/30"
+                  : "bg-blue-50 border-blue-300"
+                : isDark
+                  ? "bg-[#0f172a]/50 border-gray-800/50 hover:border-gray-700"
+                  : "bg-white border-gray-200 hover:border-gray-300"
             }`}
             aria-label={`Contact for ${suggestion.label}`}
           >
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-blue-500/10 text-blue-400 shrink-0">
+            <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${
+              isDark ? "bg-blue-500/10 text-blue-400" : "bg-blue-100 text-blue-600"
+            }`}>
               {suggestion.icon}
             </div>
             <div className="min-w-0">

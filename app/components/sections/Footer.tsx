@@ -10,8 +10,7 @@ export default function Footer() {
       }}
     >
       <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-        &copy; {new Date().getFullYear()} Adel Mostafa · Currently shipping
-        Colada &amp; writing about offline sync patterns.
+        &copy; Adel Mostafa
       </p>
     </footer>
   );

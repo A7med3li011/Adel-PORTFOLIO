@@ -39,9 +39,13 @@ export default function ArticlesSection({
           href={article.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="group bg-white dark:bg-gray-900 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+          className={`group rounded-lg overflow-hidden border transition-all duration-300 hover:-translate-y-1 ${
+            isDark
+              ? "bg-[#0f172a]/50 border-gray-800/50 hover:shadow-xl"
+              : "bg-white border-gray-200 hover:shadow-lg"
+          }`}
         >
-          <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-800">
+          <div className={`relative w-full h-48 ${isDark ? "bg-gray-800" : "bg-gray-100"}`}>
             {imageError[article.id] ? (
               <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
                 <svg
@@ -79,17 +83,27 @@ export default function ArticlesSection({
           <div className="p-4">
             <div className="flex items-center gap-2 mb-2">
               {article.category && (
-                <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
+                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                  isDark
+                    ? "bg-blue-900/30 text-blue-300"
+                    : "bg-blue-100 text-blue-700"
+                }`}>
                   {article.category}
                 </span>
               )}
               {article.readTime && (
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+                <span className={`text-xs ${
+                  isDark ? "text-gray-400" : "text-gray-500"
+                }`}>
                   {article.readTime}
                 </span>
               )}
             </div>
-            <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight">
+            <h3 className={`text-xl font-semibold mb-4 leading-tight transition-colors ${
+              isDark
+                ? "text-white group-hover:text-blue-400"
+                : "text-gray-900 group-hover:text-blue-600"
+            }`}>
               {article.title}
             </h3>
             <button className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 min-h-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
