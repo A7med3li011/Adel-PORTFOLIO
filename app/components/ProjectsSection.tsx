@@ -15,6 +15,7 @@ type Project = {
   demoIos?: string;
   category?: string;
   complexity?: string;
+  downloads?: number;
 };
 
 const INITIAL_COUNT = 3;
@@ -466,6 +467,17 @@ function ProjectCard({
         animationDelay: `${pi * 80}ms`,
       }}
     >
+      {project.downloads && (
+        <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold">
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          {project.downloads >= 1000
+            ? `${(project.downloads / 1000).toFixed(project.downloads % 1000 === 0 ? 0 : 1)}K`
+            : project.downloads}
+        </div>
+      )}
+
       <div
         className={`relative w-full h-44 overflow-hidden cursor-pointer ${
           isDark ? "bg-[#0f172a]" : "bg-gray-100"
