@@ -75,7 +75,7 @@ const methods: ContactMethod[] = [
     ),
     label: "Upwork",
     value: "Top Rated Flutter Developer",
-    href: "https://www.upwork.com/freelancers/~your-profile-id",
+    href: "https://www.upwork.com/freelancers/adelswe",
     color: "emerald",
     preferred: false,
     copyable: false,
@@ -83,10 +83,22 @@ const methods: ContactMethod[] = [
 ];
 
 const getColorClasses = (color: ContactMethod["color"], isDark: boolean) => {
-  const classes: Record<ContactMethod["color"], { dark: string; light: string }> = {
-    blue: { dark: "bg-blue-500/10 text-blue-400", light: "bg-blue-100 text-blue-600" },
-    emerald: { dark: "bg-emerald-500/10 text-emerald-400", light: "bg-emerald-100 text-emerald-600" },
-    purple: { dark: "bg-purple-500/10 text-purple-400", light: "bg-purple-100 text-purple-600" },
+  const classes: Record<
+    ContactMethod["color"],
+    { dark: string; light: string }
+  > = {
+    blue: {
+      dark: "bg-blue-500/10 text-blue-400",
+      light: "bg-blue-100 text-blue-600",
+    },
+    emerald: {
+      dark: "bg-emerald-500/10 text-emerald-400",
+      light: "bg-emerald-100 text-emerald-600",
+    },
+    purple: {
+      dark: "bg-purple-500/10 text-purple-400",
+      light: "bg-purple-100 text-purple-600",
+    },
   };
   return isDark ? classes[color].dark : classes[color].light;
 };
@@ -108,15 +120,21 @@ export default function ContactSection() {
 
         {/* Availability banner */}
         <ScrollReveal>
-          <div className={`mb-8 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 border ${
-            isDark
-              ? "bg-gradient-to-r from-emerald-500/10 to-blue-500/10 border-emerald-500/20"
-              : "bg-gradient-to-r from-emerald-50 to-blue-50 border-emerald-200"
-          }`}>
+          <div
+            className={`mb-8 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 border ${
+              isDark
+                ? "bg-gradient-to-r from-emerald-500/10 to-blue-500/10 border-emerald-500/20"
+                : "bg-gradient-to-r from-emerald-50 to-blue-50 border-emerald-200"
+            }`}
+          >
             <div className="flex items-center gap-2">
               <span className="relative flex w-2.5 h-2.5">
-                <span className={`absolute inline-flex w-full h-full rounded-full ${isDark ? "bg-emerald-400" : "bg-emerald-500"} opacity-75 animate-ping`} />
-                <span className={`relative inline-flex w-2.5 h-2.5 rounded-full ${isDark ? "bg-emerald-400" : "bg-emerald-500"}`} />
+                <span
+                  className={`absolute inline-flex w-full h-full rounded-full ${isDark ? "bg-emerald-400" : "bg-emerald-500"} opacity-75 animate-ping`}
+                />
+                <span
+                  className={`relative inline-flex w-2.5 h-2.5 rounded-full ${isDark ? "bg-emerald-400" : "bg-emerald-500"}`}
+                />
               </span>
               <span
                 className="text-sm font-semibold"
@@ -125,7 +143,9 @@ export default function ContactSection() {
                 Usually respond within 4 hours
               </span>
             </div>
-            <span className={`h-4 w-px hidden sm:block ${isDark ? "bg-slate-700/50" : "bg-gray-300"}`} />
+            <span
+              className={`h-4 w-px hidden sm:block ${isDark ? "bg-slate-700/50" : "bg-gray-300"}`}
+            />
             <div className="flex items-center gap-2">
               <svg
                 className={`w-4 h-4 ${isDark ? "text-blue-400" : "text-blue-600"}`}
@@ -147,7 +167,9 @@ export default function ContactSection() {
                 Egypt · GMT+2
               </span>
             </div>
-            <span className={`h-4 w-px hidden sm:block ${isDark ? "bg-slate-700/50" : "bg-gray-300"}`} />
+            <span
+              className={`h-4 w-px hidden sm:block ${isDark ? "bg-slate-700/50" : "bg-gray-300"}`}
+            />
             <span className="text-xs" style={{ color: "var(--text-muted)" }}>
               Overlaps with EU, MENA &amp; US-East hours
             </span>
@@ -157,10 +179,7 @@ export default function ContactSection() {
         {/* Contact methods */}
         <div className="space-y-3">
           {methods.map(
-            (
-              { icon, label, value, href, color, preferred, copyable },
-              i,
-            ) => (
+            ({ icon, label, value, href, color, preferred, copyable }, i) => (
               <ScrollReveal key={label} delay={i * 80}>
                 <a
                   href={href}
@@ -195,9 +214,13 @@ export default function ContactSection() {
                         {label}
                       </p>
                       {preferred && (
-                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${
-                          isDark ? "bg-blue-500/20 text-blue-400" : "bg-blue-100 text-blue-700"
-                        }`}>
+                        <span
+                          className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${
+                            isDark
+                              ? "bg-blue-500/20 text-blue-400"
+                              : "bg-blue-100 text-blue-700"
+                          }`}
+                        >
                           Preferred
                         </span>
                       )}
