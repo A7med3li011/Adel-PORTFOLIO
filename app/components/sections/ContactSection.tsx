@@ -49,7 +49,7 @@ const methods: ContactMethod[] = [
     ),
     label: "LinkedIn",
     value: "Adel Mostafa",
-    href: "https://www.linkedin.com/in/adel-mostafa-766296234/",
+    href: "https://www.linkedin.com/in/adel-mostafa-swe/",
     color: "blue",
     preferred: false,
     copyable: false,
