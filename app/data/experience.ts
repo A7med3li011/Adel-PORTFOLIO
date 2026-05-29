@@ -82,7 +82,7 @@ export const experience: ExperienceItem[] = [
     period: "January 2023 – Present",
     location: "Remote",
     type: "Freelance",
-    url: "https://www.upwork.com/nx/find-work/",
+    url: "https://www.upwork.com/freelancers/adelswe",
     clients: [
       { name: "BidFood", url: "https://bidfoodhome.ae/" },
       { name: "T2", url: "https://t2.sa/" },
