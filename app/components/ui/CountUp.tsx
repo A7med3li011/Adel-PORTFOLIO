@@ -25,7 +25,7 @@ export default function CountUp({
           io.unobserve(el);
         }
       },
-      { threshold: 0.5 },
+      { threshold: 0.1 },
     );
     io.observe(el);
     return () => io.disconnect();

@@ -26,8 +26,8 @@ export default function Home() {
         sections={[
           "about",
           "experience",
-          "projects",
           "articles",
+          "projects",
           "skills",
           "contact",
         ]}
@@ -39,8 +39,8 @@ export default function Home() {
       <AboutSection />
       <HowIWorkSection />
       <ExperienceSection />
-      <ProjectsSectionWrapper />
       <ArticlesSectionWrapper />
+      <ProjectsSectionWrapper />
       <TestimonialsSection />
       <SkillsSection />
       <EducationSection />

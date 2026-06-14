@@ -33,7 +33,7 @@ export const howIWork: HowIWorkItem[] = [
   {
     title: "Test-Covered Critical Paths",
     description:
-      "Unit, widget, and integration tests on anything involving money, sync, or data integrity. I don't test everything — I test what matters.",
+      "Unit, widget, and integration tests on anything involving money, sync, or data integrity. I don't test everything — I test what matters. Coverage badges on critical modules.",
     iconColor:
       "bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 text-emerald-400 border border-emerald-500/20",
     icon: (
@@ -55,7 +55,7 @@ export const howIWork: HowIWorkItem[] = [
   {
     title: "CI/CD From Day One",
     description:
-      "GitHub Actions and Codemagic set up at project kickoff — automated builds, test runs, and store deployments. No hotfix surprises at 2 AM.",
+      "GitHub Actions and Codemagic set up at project kickoff — automated builds, test runs, and store deployments. Automated releases to both stores. No hotfix surprises at 2 AM.",
     iconColor:
       "bg-gradient-to-br from-amber-500/20 to-amber-600/20 text-amber-400 border border-amber-500/20",
     icon: (

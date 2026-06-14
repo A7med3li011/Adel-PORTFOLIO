@@ -13,14 +13,16 @@ export type ProjectItem = {
   category?: string;
   complexity?: string;
   downloads?: number;
+  metrics?: string[];
+  architecture?: string;
 };
 
 export const projects: ProjectItem[] = [
   {
     name: "MemoryChat",
     description:
-      "Offline-first chat and note-taking app. Drift ORM + PowerSync + Supabase for bidirectional sync. Full case study available.",
-    tech: ["Flutter", "Drift ORM", "PowerSync", "Supabase"],
+      "Offline-first chat and note-taking app. Drift ORM + PowerSync + Supabase for bidirectional sync. Architected from scratch with zero-knowledge encryption. Reduced login time by 66% (21s → 7s) by profiling and migrating RSA key generation to Go. Full case study available.",
+    tech: ["Flutter", "Drift ORM", "PowerSync", "Supabase", "Go"],
     images: [
       "/assets/images/memorychat/memory1.png",
       "/assets/images/memorychat/memory2.png",
@@ -34,15 +36,22 @@ export const projects: ProjectItem[] = [
     featured: true,
     downloads: 500,
     impact: "Built from scratch — full offline-first architecture",
-    caseStudy: "/projects/memorychat",
-    category: "Healthcare",
+    caseStudy: "https://medium.com/@adelmostafamohamed12/from-21s-to-7s-optimizing-a-zero-knowledge-authentication-flow-7dee3ffd9115",
+    category: "Productivity",
     complexity: "Advanced",
+    metrics: [
+      "Reduced login time by 66% (21s → 7s)",
+      "Cut RSA key generation from ~7s to ~200ms",
+      "Eliminated redundant database queries with upserts",
+      "Full offline capability with bidirectional sync",
+    ],
+    architecture: "Drift (local) + PowerSync + Supabase/Postgres, Go native RSA keygen, offline queue + reconcile-on-reconnect",
   },
   {
     name: "Colada",
     description:
-      "Exclusive restaurant & cafe offers app for the Saudi market. Real-time deal updates, cashback rewards, and deep link integration.",
-    tech: ["Flutter", "Dart", "REST APIs", "Deep Links"],
+      "Exclusive restaurant & cafe offers app for the Saudi market. Real-time deal updates, cashback rewards, coupon system, coffee subscription flow, and deep link integration. Optimized app startup performance from 28-30s to 13-16s cold-start.",
+    tech: ["Flutter", "Dart", "REST APIs", "Deep Links", "Meta Ads"],
     images: [
       "/assets/images/colada/colada2.jpg",
       "/assets/images/colada/colada1.jpg",
@@ -60,12 +69,19 @@ export const projects: ProjectItem[] = [
     impact: "50,000+ active deals across Riyadh",
     category: "F&B",
     complexity: "Advanced",
+    metrics: [
+      "Cut cold-start time from 28-30s to 13-16s",
+      "Reduced API calls from 24 to 17 unique requests",
+      "Built coupons system + coffee subscription flow",
+      "Integrated Meta Ads for user acquisition",
+    ],
+    architecture: "Parallelized sequential API calls, eliminated duplicate requests, BLoC state management",
   },
   {
     name: "Priceless Medical",
     description:
-      "UAE's first smart healthcare savings platform. Stripe subscriptions, deep links, and surgical quotation scope for partner clinics.",
-    tech: ["Flutter", "Stripe", "Deep Links", "Subscriptions"],
+      "UAE's first smart healthcare savings platform. Integrated Stripe subscriptions, deep linking for offer redemption, surgical quotation scope, and partner clinic management. Built payment flows, subscription lifecycle handling, and clinic-to-patient communication.",
+    tech: ["Flutter", "Stripe", "Deep Links", "In-App Purchases", "REST APIs"],
     images: [
       "/assets/images/priceless/priceless1.png",
       "/assets/images/priceless/priceless2.png",
@@ -82,12 +98,19 @@ export const projects: ProjectItem[] = [
     impact: "30+ partner clinics & hospitals across the UAE",
     category: "Fintech",
     complexity: "Advanced",
+    metrics: [
+      "Integrated Stripe subscriptions with webhook handling",
+      "Built deep link routing for offer-to-app redemption",
+      "Surgical quotation scope for clinic pricing",
+      "Improved subscription retention flows",
+    ],
+    architecture: "Stripe webhooks for subscription events, deep link routing layer, BLoC for payment state",
   },
   {
     name: "CHAQT",
     description:
-      "Expert monetization platform enabling professionals to monetize knowledge through text and voice messages. Direct, paid access to experts with privacy-focused communication and transparent pricing.",
-    tech: ["Flutter", "In-App Purchases", "Real-time Chat", "Voice Messages"],
+      "Expert monetization platform enabling professionals to monetize knowledge through text and voice messages. Built IAP for paid expert access, real-time chat, voice messaging, and privacy-focused communication with transparent pricing.",
+    tech: ["Flutter", "In-App Purchases", "Real-time Chat", "Voice Messages", "REST APIs"],
     images: [
       "/assets/images/chaqt/chaqt1.jpg",
       "/assets/images/chaqt/chaqt2.jpg",
@@ -103,12 +126,19 @@ export const projects: ProjectItem[] = [
     impact: "Privacy-focused expert consultation platform",
     category: "Business",
     complexity: "Advanced",
+    metrics: [
+      "Built real-time chat with voice messaging",
+      "Implemented IAP for expert access payments",
+      "Privacy-focused communication design",
+      "Transparent pricing for expert services",
+    ],
+    architecture: "Real-time chat backend, IAP receipt validation, voice message streaming, BLoC state management",
   },
   {
     name: "Tansieq",
     description:
-      "Saudi Ministry of Hajj — drone and visual detection system for reporting camp, tent, and infrastructure issues during Hajj operations.",
-    tech: ["Flutter", "Dart", "Computer Vision"],
+      "Saudi Ministry of Hajj — drone and visual detection system for reporting camp, tent, and infrastructure issues during Hajj operations. Built cross-platform mobile app for real-time issue reporting, geotagged photo uploads, and dashboard integration.",
+    tech: ["Flutter", "Dart", "Computer Vision", "Geolocation", "REST APIs"],
     images: [
       "/assets/images/tasniq/1.png",
       "/assets/images/tasniq/2.png",
@@ -119,9 +149,16 @@ export const projects: ProjectItem[] = [
     demo: "#",
     highlight: true,
     featured: true,
-    impact: "Government project · Ministry of Hajj",
+    impact: "Government project · Ministry of Hajj · Real-time incident reporting",
     category: "Government",
     complexity: "Expert",
+    metrics: [
+      "Real-time geotagged issue reporting",
+      "Offline-capable photo capture & upload queue",
+      "Integrated with drone detection dashboard",
+      "Supported Hajj operations monitoring",
+    ],
+    architecture: "MVVM + BLoC state management, offline-first image queue, geofencing for camp boundaries",
   },
   {
     name: "Patria",
