@@ -26,6 +26,20 @@ export const experience: ExperienceItem[] = [
     ],
   },
   {
+    company: "MemoryChat",
+    role: "Flutter Developer",
+    period: "June 2025 – Present",
+    location: "Alexandria, Egypt",
+    type: "Side Project",
+    url: "https://memorychat.app/ar/",
+    points: [
+      "Own the full software lifecycle — development, database design (Supabase / PostgreSQL), and mobile application quality — for a cross-platform productivity app built on a zero-knowledge encryption architecture.",
+      "Reduced login time by 66% (~21s → ~7s) by profiling real bottlenecks and migrating RSA key generation from pure Dart to a native Go library, cutting key generation from ~7s to ~200ms.",
+      "Replaced redundant database query patterns with upsert operations and parallelized previously sequential calls, eliminating unnecessary round-trips and redundant Google Drive delete operations.",
+      "Designed and maintained secure data flows for encrypted user data across devices.",
+    ],
+  },
+  {
     company: "Chaqt",
     role: "Flutter Developer",
     period: "January 2026 – Present",
@@ -66,20 +80,7 @@ export const experience: ExperienceItem[] = [
       "Contributed to code reviews and established component patterns reused across multiple screens.",
     ],
   },
-  {
-    company: "MemoryChat",
-    role: "Flutter Developer",
-    period: "June 2025 – Present",
-    location: "Alexandria, Egypt",
-    type: "Side Project",
-    url: "https://memorychat.app/ar/",
-    points: [
-      "Own the full software lifecycle — development, database design (Supabase / PostgreSQL), and mobile application quality — for a cross-platform productivity app built on a zero-knowledge encryption architecture.",
-      "Reduced login time by 66% (~21s → ~7s) by profiling real bottlenecks and migrating RSA key generation from pure Dart to a native Go library, cutting key generation from ~7s to ~200ms.",
-      "Replaced redundant database query patterns with upsert operations and parallelized previously sequential calls, eliminating unnecessary round-trips and redundant Google Drive delete operations.",
-      "Designed and maintained secure data flows for encrypted user data across devices.",
-    ],
-  },
+
   {
     company: "MDARJ",
     role: "Flutter Developer",
