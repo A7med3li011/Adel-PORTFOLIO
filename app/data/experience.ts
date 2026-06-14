@@ -18,9 +18,26 @@ export const experience: ExperienceItem[] = [
     type: "Contract",
     url: "https://coladaapp.io/en/",
     points: [
-      "Build and maintain the Colada consumer app — an exclusive restaurant and cafe offers platform serving 50,000+ active deals and cashback rewards across Riyadh.",
-      "Integrated dynamic offer feeds, deep links, and real-time deal updates using Flutter and REST APIs; app live on App Store and Google Play.",
-      "Optimized list rendering and image caching to reduce deal-feed load time and improve scroll performance on low-end Android devices.",
+      "Building a cross-platform Flutter app that helps users discover the best offers, discounts, and deals at restaurants and cafes.",
+      "Optimized app startup performance, cutting cold-start time from splash screen to fully rendered home screen from ~28–30s to ~13–16s by eliminating duplicate API calls and parallelizing previously sequential, independent requests — reducing total requests from 24 to 17 unique calls.",
+      "Developed multiple core features end-to-end, including a coupons system and a coffee subscription flow.",
+      "Integrated Meta Ads to support user acquisition and in-app marketing.",
+      "Delivered scalable, maintainable UIs in Flutter & Dart for both iOS and Android.",
+    ],
+  },
+  {
+    company: "Chaqt",
+    role: "Flutter Developer",
+    period: "January 2026 – Present",
+    location: "UAE (Remote)",
+    type: "Freelance",
+    url: "https://chaqt.com/",
+    points: [
+      "Delivered cross-platform Flutter/Dart features and ongoing maintenance for a UAE-based client.",
+      "Implemented deep linking to improve navigation and user routing into specific in-app content.",
+      "Built a customer support feature to streamline user assistance within the app.",
+      "Refreshed and improved UI across multiple screens for a more polished user experience.",
+      "Diagnosed and fixed bugs to improve app stability and reliability.",
     ],
   },
   {
@@ -57,9 +74,10 @@ export const experience: ExperienceItem[] = [
     type: "Side Project",
     url: "https://memorychat.app/ar/",
     points: [
-      "Architected an offline-first chat and note-taking application using Drift ORM for local storage and PowerSync for bidirectional sync with a Supabase (PostgreSQL) backend.",
-      "Implemented real-time messaging with Supabase Realtime subscriptions and conflict-free data handling for concurrent edits.",
-      "Designed a resilient sync layer that queues operations offline and reconciles automatically on reconnect.",
+      "Own the full software lifecycle — development, database design (Supabase / PostgreSQL), and mobile application quality — for a cross-platform productivity app built on a zero-knowledge encryption architecture.",
+      "Reduced login time by 66% (~21s → ~7s) by profiling real bottlenecks and migrating RSA key generation from pure Dart to a native Go library, cutting key generation from ~7s to ~200ms.",
+      "Replaced redundant database query patterns with upsert operations and parallelized previously sequential calls, eliminating unnecessary round-trips and redundant Google Drive delete operations.",
+      "Designed and maintained secure data flows for encrypted user data across devices.",
     ],
   },
   {
