@@ -129,7 +129,7 @@ export default function HeroSection() {
                 style={{ background: "var(--bg-surface)" }}
               >
                 <Image
-                  src="/assets/images/profile.jpeg"
+                  src="/assets/images/profile.png"
                   alt="Adel Mostafa"
                   width={320}
                   height={320}
