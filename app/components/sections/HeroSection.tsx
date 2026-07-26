@@ -44,8 +44,8 @@ export default function HeroSection() {
             className="text-xl sm:text-2xl md:text-[1.7rem] lg:text-3xl font-bold leading-tight mb-4 hero-entrance"
             style={{ animationDelay: "100ms" }}
           >
-            I am a <span className="gradient-text">software engineer</span>{" "}
-            with experience building{" "}
+            I am a <span className="gradient-text">software engineer</span> with
+            experience building{" "}
             <span className="gradient-text">real applications</span>.
           </h1>
           <p
@@ -129,7 +129,7 @@ export default function HeroSection() {
                 style={{ background: "var(--bg-surface)" }}
               >
                 <Image
-                  src="/assets/images/profile.png"
+                  src="/assets/images/profile.jpg"
                   alt="Adel Mostafa"
                   width={320}
                   height={320}
