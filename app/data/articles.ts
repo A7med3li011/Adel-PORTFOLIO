@@ -16,4 +16,13 @@ export const articles: ArticleItem[] = [
     readTime: "8 min read",
     category: "Performance",
   },
+  {
+    id: 2,
+    title:
+      "Zero-Knowledge Encryption, The Service Provider Can’t Read Your Data",
+    thumbnail: "/assets/images/articles/article2.png",
+    url: "https://medium.com/@adelmostafamohamed12/zero-knowledge-encryption-c24168f24752?sharedUserId=adelmostafamohamed12",
+    readTime: "8 min read",
+    category: "Security",
+  },
 ];
