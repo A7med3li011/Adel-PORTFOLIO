@@ -7,7 +7,10 @@
       "Bash(node -e ' *)",
       "Bash(lsof -ti:3000)",
       "Bash(xargs kill -9)",
-      "Bash(echo \"EXIT: $?\")"
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(curl -s https://pub.dev/api/packages/custom_media_picker)",
+      "Bash(python3 -c ' *)",
+      "Bash(curl -s \"https://pub.dev/api/packages/custom_media_picker/score\")"
     ]
   }
 }

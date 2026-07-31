@@ -9,6 +9,7 @@ import ExperienceSection from "./components/sections/ExperienceSection";
 import Footer from "./components/sections/Footer";
 import HeroSection from "./components/sections/HeroSection";
 import HowIWorkSection from "./components/sections/HowIWorkSection";
+import PackagesSection from "./components/sections/PackagesSection";
 import ProjectsSectionWrapper from "./components/sections/ProjectsSectionWrapper";
 import SkillsSection from "./components/sections/SkillsSection";
 import TestimonialsSection from "./components/sections/TestimonialsSection";
@@ -28,6 +29,7 @@ export default function Home() {
           "experience",
           "articles",
           "projects",
+          "packages",
           "skills",
           "contact",
         ]}
@@ -41,6 +43,7 @@ export default function Home() {
       <ExperienceSection />
       <ArticlesSectionWrapper />
       <ProjectsSectionWrapper />
+      <PackagesSection />
       <TestimonialsSection />
       <SkillsSection />
       <EducationSection />
