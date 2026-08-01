@@ -6,9 +6,9 @@ import { useTheme } from "./ThemeProvider";
 const navLinks = [
   "About",
   "Experience",
+  "Articles",
   "Projects",
   "Packages",
-  "Articles",
   "Skills",
   "Contact",
 ];
