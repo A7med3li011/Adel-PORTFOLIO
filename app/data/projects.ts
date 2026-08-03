@@ -34,7 +34,7 @@ export const projects: ProjectItem[] = [
       "https://play.google.com/store/apps/details?id=app.memorychat.app&hl=en",
     highlight: true,
     featured: true,
-    downloads: 500,
+    downloads: 1000,
     impact: "Built from scratch — full offline-first architecture",
     caseStudy: "https://medium.com/@adelmostafamohamed12/from-21s-to-7s-optimizing-a-zero-knowledge-authentication-flow-7dee3ffd9115",
     category: "Productivity",
