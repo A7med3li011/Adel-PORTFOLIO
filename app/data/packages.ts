@@ -15,7 +15,7 @@ export type PackageItem = {
 export const packages: PackageItem[] = [
   {
     name: "custom_media_picker",
-    version: "0.1.2",
+    version: "0.1.3",
     description:
       "A Flutter package for picking images and videos from the device gallery with a fully custom UI, native Android/iOS access, and built-in preview support.",
     install: "flutter pub add custom_media_picker",
