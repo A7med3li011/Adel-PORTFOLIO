@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   description:
     "Flutter Developer | Mobile Software Engineer specializing in cross-platform iOS and Android apps. Top Rated on Upwork.",
   icons: {
-    icon: "/assets/images/profile.jpg",
-    apple: "/assets/images/profile.jpg",
+    icon: "/assets/images/profile.png",
+    apple: "/assets/images/profile.png",
   },
 };
 

@@ -57,50 +57,17 @@ export default function HeroSection() {
           <ScrollReveal delay={200}>
             <div className="relative">
               <div
-                className="rounded-2xl overflow-hidden shadow-2xl"
+                className="rounded-[2.5rem] overflow-hidden shadow-2xl"
                 style={{ boxShadow: "0 30px 60px -15px rgba(28,29,32,0.35)" }}
               >
                 <Image
-                  src="/assets/images/profile.jpg"
+                  src="/assets/images/profile.png"
                   alt="Adel Mostafa"
                   width={476}
                   height={757}
-                  className="w-full max-w-[340px] md:max-w-[420px] h-auto object-cover"
+                  className="w-full max-w-[340px] md:max-w-[420px] h-[460px] md:h-[560px] object-cover"
                   priority
                 />
-              </div>
-
-              {/* Floating badge: Top Rated */}
-              <div
-                className="absolute -top-4 -right-4 px-4 py-2 rounded-xl border bg-white shadow-lg"
-                style={{ borderColor: "rgba(14,90,78,0.15)" }}
-              >
-                <p className="text-xs" style={{ color: "#6a6d76" }}>
-                  Upwork
-                </p>
-                <p className="text-sm font-semibold flex items-center gap-1" style={{ color: "#1c1d20" }}>
-                  <svg
-                    className="w-3.5 h-3.5 fill-yellow-400"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                  </svg>
-                  Top Rated
-                </p>
-              </div>
-
-              {/* Floating badge: +4 Years */}
-              <div
-                className="absolute -bottom-5 -left-5 px-4 py-2 rounded-xl border bg-white shadow-lg"
-                style={{ borderColor: "rgba(14,90,78,0.15)" }}
-              >
-                <p className="text-xs" style={{ color: "#6a6d76" }}>
-                  Specialty
-                </p>
-                <p className="text-sm font-semibold" style={{ color: "#1c1d20" }}>
-                  +4 Years
-                </p>
               </div>
             </div>
           </ScrollReveal>
