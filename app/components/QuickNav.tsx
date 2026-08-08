@@ -21,7 +21,7 @@ export default function QuickNav({ sections }: QuickNavProps) {
       setProgress(Math.min(100, Math.max(0, progressPercent)));
 
       // Track active section
-      for (const id of sections.reverse()) {
+      for (const id of [...sections].reverse()) {
         const el = document.getElementById(id);
         if (el && window.scrollY >= el.offsetTop - 200) {
           setActiveSection(id);
@@ -38,17 +38,16 @@ export default function QuickNav({ sections }: QuickNavProps) {
     <>
       {/* Reading Progress Indicator */}
       <div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-600 z-[60]"
-        style={{ width: `${progress}%` }}
+        className="fixed top-0 left-0 right-0 h-1 z-[60]"
+        style={{ width: `${progress}%`, background: "#0E5A4E" }}
       />
 
       {/* Quick Navigation Dropdown */}
       <div className="fixed bottom-6 right-6 z-50 md:hidden">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-lg hover:shadow-xl transition-all duration-300 min-h-[44px] min-w-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 flex items-center justify-center ${
-            isOpen ? "ring-2 ring-white ring-offset-2" : ""
-          }`}
+          className="w-12 h-12 rounded-full text-white shadow-lg hover:shadow-xl transition-all duration-300 min-h-[44px] min-w-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0e5a4e] flex items-center justify-center"
+          style={{ background: "#0e5a4e" }}
           aria-label="Quick navigation menu"
           aria-expanded={isOpen}
         >
@@ -86,9 +85,15 @@ export default function QuickNav({ sections }: QuickNavProps) {
         </button>
 
         {isOpen && (
-          <div className="absolute bottom-14 right-0 w-48 bg-[#0f172a] border border-gray-700 rounded-xl shadow-2xl overflow-hidden animate-fadeInUp">
+          <div
+            className="absolute bottom-14 right-0 w-48 rounded-xl shadow-2xl overflow-hidden animate-fadeInUp"
+            style={{
+              background: "#ffffff",
+              border: "1px solid rgba(17,64,128,0.12)",
+            }}
+          >
             <div className="p-2">
-              <div className="text-xs text-gray-500 uppercase tracking-wider mb-2 px-2">
+              <div className="text-xs uppercase tracking-wider mb-2 px-2" style={{ color: "#6a6d76" }}>
                 Quick Navigation
               </div>
               {sections.map((section) => (
@@ -96,19 +101,24 @@ export default function QuickNav({ sections }: QuickNavProps) {
                   key={section}
                   href={`#${section}`}
                   onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors min-h-[44px] ${
-                    activeSection === section
-                      ? "bg-blue-500/20 text-blue-400"
-                      : "text-gray-300 hover:bg-gray-800"
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors min-h-[44px] hover:bg-gray-100 ${
+                    activeSection === section ? "font-semibold" : ""
                   }`}
+                  style={{
+                    color: activeSection === section ? "#0E5A4E" : "#1c1d20",
+                  }}
                   aria-current={activeSection === section ? "page" : undefined}
                 >
                   <div
-                    className={`w-2 h-2 rounded-full ${
-                      activeSection === section ? "bg-blue-400" : "bg-gray-600"
-                    }`}
+                    className="w-2 h-2 rounded-full"
+                    style={{
+                      background:
+                        activeSection === section ? "#0E5A4E" : "#c7cad1",
+                    }}
                   />
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
+                  {section === "projects"
+                    ? "Projects"
+                    : section.charAt(0).toUpperCase() + section.slice(1)}
                 </a>
               ))}
             </div>

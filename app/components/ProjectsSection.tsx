@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
-import { useTheme } from "./ThemeProvider";
 
 type Project = {
   name: string;
@@ -31,13 +30,6 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
   const [imageLoadingStates, setImageLoadingStates] = useState<{
     [key: string]: boolean;
   }>({});
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
-  // Get unique categories
-  const categories = Array.from(
-    new Set(projects.map((p) => p.category).filter(Boolean)),
-  );
 
   // Handle image loading states
   const handleImageLoad = (src: string) => {
@@ -90,28 +82,6 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
 
   return (
     <>
-      {/* ── Project Categories ─────────────────────────────── */}
-      {categories.length > 0 && (
-        <div
-          className="mb-8 flex flex-wrap gap-2"
-          role="group"
-          aria-label="Project categories"
-        >
-          {categories.map((category) => (
-            <span
-              key={category}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 min-h-[44px] min-w-[44px] inline-flex items-center ${
-                isDark
-                  ? "bg-gray-800 text-gray-300"
-                  : "bg-gray-200 text-gray-700"
-              }`}
-            >
-              {category}
-            </span>
-          ))}
-        </div>
-      )}
-
       {/* ── First row: always fully visible ─────────────── */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {previewProjects.map((project, pi) => (
@@ -123,7 +93,6 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
             imageLoadingStates={imageLoadingStates}
             handleImageLoad={handleImageLoad}
             handleImageError={handleImageError}
-            isDark={isDark}
           />
         ))}
       </div>
@@ -146,8 +115,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                 imageLoadingStates={imageLoadingStates}
                 handleImageLoad={handleImageLoad}
                 handleImageError={handleImageError}
-                isDark={isDark}
-              />
+                  />
             ))}
           </div>
 
@@ -158,7 +126,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
               className="pointer-events-none absolute inset-x-0 bottom-0 h-32 z-10"
               style={{
                 background:
-                  "linear-gradient(to bottom, rgba(6,13,26,0) 0%, rgba(6,13,26,0.65) 55%, rgba(6,13,26,0.95) 100%)",
+                  "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.65) 55%, rgba(255,255,255,0.95) 100%)",
               }}
             />
           )}
@@ -177,8 +145,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                   imageLoadingStates={imageLoadingStates}
                   handleImageLoad={handleImageLoad}
                   handleImageError={handleImageError}
-                  isDark={isDark}
-                />
+                      />
               ))}
             </div>
           )}
@@ -193,11 +160,11 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
             <div className="flex flex-col items-center gap-0">
               <button
                 onClick={() => setShowAll((p) => !p)}
-                className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl font-semibold text-white text-sm overflow-hidden transition-all duration-300 hover:-translate-y-0.5 active:scale-95 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#060d1a]"
+                className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl font-semibold text-white text-sm overflow-hidden transition-all duration-300 hover:-translate-y-0.5 active:scale-95 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-[#0e5a4e] focus:ring-offset-2 focus:ring-offset-[#0f172a]"
                 style={{
-                  background: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
-                  boxShadow:
-                    "0 6px 24px rgba(59,130,246,0.40), 0 2px 8px rgba(139,92,246,0.25)",
+                  background: "#0e5a4e",
+                  boxShadow: "0 6px 24px rgba(14,90,78,0.35)",
+                  border: "1px solid rgba(255,255,255,0.15)",
                 }}
                 aria-expanded={showAll}
                 aria-label={
@@ -267,7 +234,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
       {lightbox && active && (
         <div
           className={`fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md animate-fadeIn px-3 sm:px-4 ${
-            isDark ? "bg-black/95" : "bg-black/80"
+            "bg-black/80"
           }`}
           onClick={close}
           role="dialog"
@@ -281,22 +248,20 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
             <div className="flex items-center justify-between mb-3 px-1 min-w-0">
               <div>
                 <h3 className={`font-bold text-lg leading-tight ${
-                  isDark ? "text-white" : "text-gray-900"
+                  "text-gray-900"
                 }`}>
                   {active.name}
                 </h3>
                 <p className={`text-sm ${
-                  isDark ? "text-gray-400" : "text-gray-600"
+                  "text-gray-600"
                 }`}>
                   {lightbox.ii + 1} / {active.images.length}
                 </p>
               </div>
               <button
                 onClick={close}
-                className={`w-9 h-9 rounded-full transition-all flex items-center justify-center min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                  isDark
-                    ? "bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white"
-                    : "bg-gray-200 hover:bg-gray-300 text-gray-600 hover:text-gray-900"
+                className={`w-9 h-9 rounded-full transition-all flex items-center justify-center min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-[#0e5a4e] ${
+                  "bg-gray-200 hover:bg-gray-300 text-gray-600 hover:text-gray-900"
                 }`}
                 aria-label="Close image gallery"
               >
@@ -318,7 +283,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
             </div>
 
             <div className={`relative w-full aspect-video rounded-xl overflow-hidden ${
-              isDark ? "bg-[#0f172a]" : "bg-gray-100"
+              "bg-gray-100"
             }`}>
               <Image
                 key={lightbox.ii}
@@ -332,7 +297,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                 <>
                   <button
                     onClick={() => go(-1)}
-                    className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm border border-white/10 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm border border-white/10 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-[#0e5a4e]"
                     aria-label="Previous image"
                   >
                     <svg
@@ -352,7 +317,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                   </button>
                   <button
                     onClick={() => go(1)}
-                    className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm border border-white/10 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all hover:scale-110 backdrop-blur-sm border border-white/10 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-[#0e5a4e]"
                     aria-label="Next image"
                   >
                     <svg
@@ -384,9 +349,9 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                   <button
                     key={idx}
                     onClick={() => setLightbox({ ...lightbox, ii: idx })}
-                    className={`rounded-sm transition-all duration-300 p-0 border-0 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                    className={`rounded-sm transition-all duration-300 p-0 border-0 focus:outline-none focus:ring-2 focus:ring-[#0e5a4e] ${
                       idx === lightbox.ii
-                        ? "bg-blue-400"
+                        ? "bg-emerald-400"
                         : "bg-gray-600 hover:bg-gray-400"
                     }`}
                     style={{
@@ -412,9 +377,9 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                 <button
                   key={idx}
                   onClick={() => setLightbox({ ...lightbox, ii: idx })}
-                  className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-lg overflow-hidden shrink-0 transition-all duration-200 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                  className={`relative w-12 h-9 sm:w-16 sm:h-12 rounded-lg overflow-hidden shrink-0 transition-all duration-200 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-[#0e5a4e] ${
                     idx === lightbox.ii
-                      ? "ring-2 ring-blue-400 opacity-100 scale-105"
+                      ? "ring-2 ring-emerald-400 opacity-100 scale-105"
                       : "opacity-40 hover:opacity-70"
                   }`}
                   aria-label={`View ${active.name} image ${idx + 1}`}
@@ -440,7 +405,6 @@ function ProjectCard({
   imageLoadingStates,
   handleImageLoad,
   handleImageError,
-  isDark,
 }: {
   project: Project;
   pi: number;
@@ -448,7 +412,6 @@ function ProjectCard({
   imageLoadingStates: { [key: string]: boolean };
   handleImageLoad: (src: string) => void;
   handleImageError: (src: string) => void;
-  isDark: boolean;
 }) {
   const hasStoreLinks = project.demoAndroid || project.demoIos;
   const imageSrc = project.images[0];
@@ -456,15 +419,7 @@ function ProjectCard({
 
   return (
     <div
-      className={`group relative rounded-2xl overflow-hidden border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col h-full ${
-        project.highlight
-          ? isDark
-            ? "bg-linear-to-br from-blue-500/10 to-purple-500/10 border-blue-500/30 hover:border-blue-400/50 hover:shadow-blue-500/10"
-            : "bg-linear-to-br from-blue-50 to-purple-50 border-blue-200 hover:border-blue-300 hover:shadow-blue-500/10"
-          : isDark
-            ? "bg-[#0f172a]/50 border-gray-800/50 hover:border-gray-700 hover:shadow-black/20"
-            : "bg-white border-gray-200 hover:border-gray-300 hover:shadow-gray-300/20"
-      }`}
+      className="group relative rounded-2xl overflow-hidden border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col h-full bg-white border-gray-200 hover:border-gray-300 hover:shadow-gray-300/20"
       style={{
         animation: `fadeInUp 0.5s ease both`,
         animationDelay: `${pi * 80}ms`,
@@ -483,7 +438,7 @@ function ProjectCard({
 
       <div
         className={`relative w-full h-44 overflow-hidden cursor-pointer ${
-          isDark ? "bg-[#0f172a]" : "bg-gray-100"
+          "bg-gray-100"
         }`}
         onClick={onOpen}
         role="button"
@@ -509,7 +464,7 @@ function ProjectCard({
         />
         <div
           className={`absolute inset-0 bg-linear-to-b from-transparent ${
-            isDark ? "to-[#0f172a]/60" : "to-gray-900/20"
+            "to-gray-900/20"
           }`}
         />
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40">
@@ -536,14 +491,14 @@ function ProjectCard({
       <div className="p-6 flex flex-col flex-1">
         <h3
           className={`text-lg font-bold mb-2 ${
-            isDark ? "text-white" : "text-gray-900"
+            "text-gray-900"
           }`}
         >
           {project.name}
         </h3>
         <p
           className={`text-sm leading-relaxed mb-3 ${
-            isDark ? "text-gray-500" : "text-gray-600"
+            "text-gray-600"
           }`}
         >
           {project.description}
@@ -556,9 +511,7 @@ function ProjectCard({
               <span
                 key={tech}
                 className={`px-2 py-0.5 rounded text-xs font-medium ${
-                  isDark
-                    ? "bg-blue-500/10 text-blue-400 border border-blue-500/20"
-                    : "bg-blue-50 text-blue-700 border border-blue-200"
+                  "bg-emerald-50 text-emerald-700 border border-emerald-200"
                 }`}
               >
                 {tech}
@@ -567,9 +520,7 @@ function ProjectCard({
             {project.tech.length > 4 && (
               <span
                 className={`px-2 py-0.5 rounded text-xs font-medium ${
-                  isDark
-                    ? "bg-gray-500/10 text-gray-400 border border-gray-500/20"
-                    : "bg-gray-100 text-gray-600 border border-gray-200"
+                  "bg-gray-100 text-gray-600 border border-gray-200"
                 }`}
               >
                 +{project.tech.length - 4}
@@ -585,7 +536,7 @@ function ProjectCard({
               <div
                 key={idx}
                 className={`flex items-start gap-2 text-xs ${
-                  isDark ? "text-gray-400" : "text-gray-600"
+                  "text-gray-600"
                 }`}
               >
                 <svg
@@ -617,9 +568,7 @@ function ProjectCard({
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 ${
-                  isDark
-                    ? "bg-green-500/10 text-green-400 border-green-500/20 hover:bg-green-500/20 hover:border-green-400/40"
-                    : "bg-green-50 text-green-700 border-green-200 hover:bg-green-100 hover:border-green-300"
+                  "bg-green-50 text-green-700 border-green-200 hover:bg-green-100 hover:border-green-300"
                 }`}
               >
                 <svg
@@ -639,9 +588,7 @@ function ProjectCard({
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 ${
-                  isDark
-                    ? "bg-gray-500/10 text-gray-300 border-gray-500/20 hover:bg-gray-500/20 hover:border-gray-400/40"
-                    : "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200 hover:border-gray-300"
+                  "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200 hover:border-gray-300"
                 }`}
               >
                 <svg
@@ -661,9 +608,7 @@ function ProjectCard({
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 ${
-                  isDark
-                    ? "bg-purple-500/10 text-purple-400 border-purple-500/20 hover:bg-purple-500/20 hover:border-purple-400/40"
-                    : "bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100 hover:border-purple-300"
+                  "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100 hover:border-emerald-300"
                 }`}
               >
                 <svg

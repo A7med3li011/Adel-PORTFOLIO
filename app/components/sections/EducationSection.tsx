@@ -7,7 +7,7 @@ export default function EducationSection() {
   return (
     <section
       id="education"
-      className="py-16 md:py-24 px-6 transition-colors duration-300"
+      className="py-16 md:py-24 px-6"
       style={{ background: "var(--bg-primary)" }}
     >
       <div className="max-w-4xl mx-auto">
@@ -16,10 +16,12 @@ export default function EducationSection() {
         <ScrollReveal>
           <div className="grid md:grid-cols-2 gap-6">
             {/* BSc */}
-            <div className="flex gap-4 items-start">
-              <div className="w-12 h-12 rounded-xl bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center shrink-0">
+            <div
+              className="flex gap-4 items-start rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 bg-white border-gray-200 hover:shadow-lg"
+            >
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(14,90,78,0.08)", border: "1px solid rgba(14,90,78,0.18)", color: "#0E5A4E" }}>
                 <svg
-                  className="w-6 h-6 text-white"
+                  className="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -41,7 +43,7 @@ export default function EducationSection() {
                 >
                   B.Sc. Computing and Data Science
                 </h3>
-                <p className="text-blue-400 font-semibold text-sm">
+                <p className="text-[#0E5A4E] font-semibold text-sm">
                   Alexandria University
                 </p>
                 <p
@@ -54,10 +56,12 @@ export default function EducationSection() {
             </div>
 
             {/* CCNA */}
-            <div className="flex gap-4 items-start">
-              <div className="w-12 h-12 rounded-xl bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center shrink-0">
+            <div
+              className="flex gap-4 items-start rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 bg-white border-gray-200 hover:shadow-lg"
+            >
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(14,90,78,0.08)", border: "1px solid rgba(14,90,78,0.18)", color: "#0E5A4E" }}>
                 <svg
-                  className="w-6 h-6 text-white"
+                  className="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -77,7 +81,7 @@ export default function EducationSection() {
                 >
                   CCNA Network Certificate
                 </h3>
-                <p className="text-blue-400 font-semibold text-sm">
+                <p className="text-[#0E5A4E] font-semibold text-sm">
                   NTI / Creativa — Cisco
                 </p>
                 <p
@@ -86,9 +90,6 @@ export default function EducationSection() {
                 >
                   Alexandria, Egypt · Sep 2023 – Nov 2023
                 </p>
-                <span className="inline-block mt-2 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium border border-emerald-500/20">
-                  Cisco Certified
-                </span>
               </div>
             </div>
           </div>

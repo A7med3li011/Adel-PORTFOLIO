@@ -7,7 +7,6 @@ export type PackageItem = {
   repoUrl?: string;
   platforms: string[];
   topics: string[];
-  pubPoints?: { granted: number; max: number };
   license?: string;
   highlights?: string[];
 };
@@ -23,7 +22,6 @@ export const packages: PackageItem[] = [
     repoUrl: "https://github.com/Adelmostafa31/media_picker_demo",
     platforms: ["Android", "iOS", "macOS"],
     topics: ["media", "picker", "gallery", "image", "video"],
-    pubPoints: { granted: 160, max: 160 },
     license: "MIT",
     highlights: [
       "Native gallery access over platform channels — no third-party picker UI",

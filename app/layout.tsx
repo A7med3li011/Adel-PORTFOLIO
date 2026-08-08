@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
-import { Cairo } from "next/font/google";
+import { Space_Grotesk, Archivo } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-import { ThemeProvider } from "./components/ThemeProvider";
 import { Analytics } from "@vercel/analytics/react";
 
-const cairo = Cairo({ subsets: ["latin", "arabic"] });
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
+});
+const archivo = Archivo({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-archivo",
+});
 
 export const metadata: Metadata = {
   title: "Adel Mostafa - Flutter Developer",
@@ -24,11 +32,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${cairo.className} antialiased`}>
-        <ThemeProvider>
-          <Navbar />
-          {children}
-        </ThemeProvider>
+      <body
+        className={`${archivo.variable} ${spaceGrotesk.variable} antialiased bg-white`}
+      >
+        <Navbar />
+        {children}
         <Analytics />
       </body>
     </html>

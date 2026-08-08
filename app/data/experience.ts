@@ -116,11 +116,9 @@ export const experience: ExperienceItem[] = [
 ];
 
 export const typeColors: Record<string, string> = {
-  Contract: "bg-blue-500/10 text-blue-400 border border-blue-500/20",
-  "Part-time": "bg-amber-500/10 text-amber-400 border border-amber-500/20",
-  "Full-time":
-    "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
-  "Side Project":
-    "bg-purple-500/10 text-purple-400 border border-purple-500/20",
-  Freelance: "bg-rose-500/10 text-rose-400 border border-rose-500/20",
+  Contract: "bg-[#0E5A4E]/10 text-[#0E5A4E] border border-[#0E5A4E]/20",
+  "Part-time": "bg-[#0E5A4E]/10 text-[#0E5A4E] border border-[#0E5A4E]/20",
+  "Full-time": "bg-[#0E5A4E]/10 text-[#0E5A4E] border border-[#0E5A4E]/20",
+  "Side Project": "bg-[#0E5A4E]/10 text-[#0E5A4E] border border-[#0E5A4E]/20",
+  Freelance: "bg-[#0E5A4E]/10 text-[#0E5A4E] border border-[#0E5A4E]/20",
 };

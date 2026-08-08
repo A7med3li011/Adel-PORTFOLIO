@@ -1,6 +1,7 @@
 "use client";
 
-import { colorMap, skillTiers } from "../../data/skills";
+import Image from "next/image";
+import { skillTiers } from "../../data/skills";
 import ScrollReveal from "../ui/ScrollReveal";
 import SectionTitle from "../ui/SectionTitle";
 
@@ -8,55 +9,54 @@ export default function SkillsSection() {
   return (
     <section
       id="skills"
-      className="py-16 md:py-24 px-6 transition-colors duration-300"
+      className="py-16 md:py-24 px-6"
       style={{ background: "var(--bg-secondary)" }}
     >
-      <div className="max-w-4xl mx-auto">
-        <SectionTitle label="Tech Stack" title="Skills" />
+      <div className="max-w-5xl mx-auto">
+        <div className="relative mb-10 md:mb-16 text-center">
+          <SectionTitle label="" title="My Skills" center />
+          {/* Gaber "My Skils" decorative cap */}
+          <Image
+            src="/assets/design/group-29.webp"
+            alt=""
+            aria-hidden="true"
+            width={120}
+            height={98}
+            className="inline-block opacity-90"
+            style={{ marginTop: "-38px", marginLeft: "150px" }}
+          />
+        </div>
 
-        <div className="space-y-4">
-          {skillTiers.map(({ label, sub, color, skills }, tierIndex) => {
-            const c = colorMap[color];
-            const isDailyDrivers = label === "Daily Drivers";
-            return (
-              <ScrollReveal key={label} delay={tierIndex * 100}>
-                <div
-                  className={`gradient-border rounded-2xl p-6 hover:shadow-lg transition-all duration-300 ${c.glow}`}
-                >
-                  <div className="flex items-baseline gap-3 mb-4 flex-wrap">
+        <div className="grid md:grid-cols-3 gap-6 items-start">
+          {skillTiers.map(({ label, sub, skills }, tierIndex) => (
+            <ScrollReveal key={label} delay={tierIndex * 120}>
+              <div
+                className={`rounded-lg p-6 h-full transition-all duration-300 hover:-translate-y-1 bg-white border-gray-200 hover:shadow-lg border`}
+              >
+                <h3 className="text-lg font-bold mb-1" style={{ color: "#0E5A4E" }}>
+                  {label}
+                </h3>
+                <p className="text-xs mb-5" style={{ color: "#6a6d76" }}>
+                  {sub}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {skills.map((skill) => (
                     <span
-                      className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border ${c.label}`}
+                      key={skill}
+                      className="px-3 py-1.5 rounded-md text-sm font-medium border transition-all duration-200 hover:-translate-y-0.5 cursor-default"
+                      style={{
+                        color: "#0E5A4E",
+                        background: "#ffffff",
+                        borderColor: "rgba(14,90,78,0.18)",
+                      }}
                     >
-                      {label}
+                      {skill}
                     </span>
-                    <span
-                      className="text-xs italic"
-                      style={{ color: "var(--text-muted)" }}
-                    >
-                      {sub}
-                    </span>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.map((skill, si) => (
-                      <span
-                        key={skill}
-                        className={`rounded-lg font-medium border transition-all duration-200 hover:scale-105 cursor-default ${c.badge} ${
-                          isDailyDrivers
-                            ? "px-4 py-2 text-base"
-                            : "px-3 py-1.5 text-sm"
-                        } skill-chip-enter`}
-                        style={{
-                          animationDelay: `${si * 30}ms`,
-                        }}
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
+                  ))}
                 </div>
-              </ScrollReveal>
-            );
-          })}
+              </div>
+            </ScrollReveal>
+          ))}
         </div>
       </div>
     </section>

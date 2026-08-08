@@ -1,19 +1,15 @@
 "use client";
 
 import { packages } from "../../data/packages";
-import { useTheme } from "../ThemeProvider";
 import CopyButton from "../ui/CopyButton";
 import ScrollReveal from "../ui/ScrollReveal";
 import SectionTitle from "../ui/SectionTitle";
 
 export default function PackagesSection() {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
   return (
     <section
       id="packages"
-      className="py-16 md:py-24 px-6 transition-colors duration-300"
+      className="py-16 md:py-24 px-6"
       style={{ background: "var(--bg-secondary)" }}
     >
       <div className="max-w-6xl mx-auto">
@@ -23,17 +19,13 @@ export default function PackagesSection() {
           {packages.map((pkg) => (
             <ScrollReveal key={pkg.name}>
               <div
-                className={`h-full rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 ${
-                  isDark
-                    ? "bg-[#0f172a]/50 border-gray-800/50 hover:shadow-xl"
-                    : "bg-white border-gray-200 hover:shadow-lg"
-                }`}
+                className="h-full rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 bg-white border-gray-200 hover:shadow-lg"
               >
                 {/* Header */}
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(14,90,78,0.08)", border: "1px solid rgba(14,90,78,0.18)", color: "#0E5A4E" }}>
                     <svg
-                      className="w-6 h-6 text-white"
+                      className="w-6 h-6"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -56,7 +48,7 @@ export default function PackagesSection() {
                       >
                         {pkg.name}
                       </h3>
-                      <span className="px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 text-xs font-medium border border-blue-500/20">
+                      <span className="px-2 py-0.5 rounded-full bg-[#0E5A4E]/10 text-[#0E5A4E] text-xs font-medium border border-[#0E5A4E]/20">
                         v{pkg.version}
                       </span>
                     </div>
@@ -109,19 +101,10 @@ export default function PackagesSection() {
 
                 {/* Badges */}
                 <div className="mt-5 flex flex-wrap gap-2">
-                  {pkg.pubPoints && (
-                    <span className="px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium border border-emerald-500/20">
-                      {pkg.pubPoints.granted}/{pkg.pubPoints.max} pub points
-                    </span>
-                  )}
                   {pkg.platforms.map((platform) => (
                     <span
                       key={platform}
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        isDark
-                          ? "bg-gray-800/70 text-gray-300"
-                          : "bg-gray-100 text-gray-700"
-                      }`}
+                      className="px-2 py-1 rounded-full text-xs font-medium bg-[#0E5A4E]/10 text-[#0E5A4E] border border-[#0E5A4E]/20"
                     >
                       {platform}
                     </span>
@@ -133,11 +116,7 @@ export default function PackagesSection() {
                   {pkg.topics.map((topic) => (
                     <span
                       key={topic}
-                      className={`px-2 py-1 rounded-full text-xs ${
-                        isDark
-                          ? "bg-blue-900/30 text-blue-300"
-                          : "bg-blue-100 text-blue-700"
-                      }`}
+                      className="px-2 py-1 rounded-full text-xs bg-[#0E5A4E]/10 text-[#0E5A4E] border border-[#0E5A4E]/20"
                     >
                       #{topic}
                     </span>
@@ -146,11 +125,7 @@ export default function PackagesSection() {
 
                 {/* Install snippet */}
                 <div
-                  className={`mt-5 flex items-center gap-2 rounded-xl border px-3 py-2 ${
-                    isDark
-                      ? "bg-black/30 border-gray-800"
-                      : "bg-gray-50 border-gray-200"
-                  }`}
+                  className="mt-5 flex items-center gap-2 rounded-xl border px-3 py-2 bg-gray-50 border-gray-200"
                 >
                   <code
                     className="text-xs md:text-sm font-mono truncate"
@@ -167,7 +142,7 @@ export default function PackagesSection() {
                     href={pkg.pubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 text-center px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+                    className="flex-1 text-center px-4 py-3 rounded-xl bg-gradient-to-r from-[#0e5a4e] to-[#0b463f] hover:from-[#0b463f] hover:to-[#0e5a4e] text-white font-semibold transition-all duration-300 shadow-lg shadow-[#0e5a4e]/25 hover:shadow-[#0e5a4e]/40 hover:-translate-y-0.5 min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0e5a4e]"
                   >
                     View on pub.dev
                   </a>
@@ -176,11 +151,7 @@ export default function PackagesSection() {
                       href={pkg.repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`flex-1 text-center px-4 py-3 rounded-xl font-semibold border transition-all duration-300 hover:-translate-y-0.5 min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 ${
-                        isDark
-                          ? "border-gray-700 text-gray-200 hover:bg-gray-800/60"
-                          : "border-gray-300 text-gray-700 hover:bg-gray-100"
-                      }`}
+                      className="flex-1 text-center px-4 py-3 rounded-xl font-semibold border transition-all duration-300 hover:-translate-y-0.5 min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0e5a4e] border-gray-300 text-gray-700 hover:bg-gray-100"
                     >
                       Source on GitHub
                     </a>
