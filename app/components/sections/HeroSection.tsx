@@ -72,7 +72,7 @@ export default function HeroSection() {
 
               {/* Floating badge: Top Rated */}
               <div
-                className="absolute -top-4 -right-4 px-4 py-2 rounded-full border bg-white shadow-lg"
+                className="absolute -top-4 -right-4 px-4 py-2 rounded-xl border bg-white shadow-lg"
                 style={{ borderColor: "rgba(14,90,78,0.15)" }}
               >
                 <p className="text-xs" style={{ color: "#6a6d76" }}>
