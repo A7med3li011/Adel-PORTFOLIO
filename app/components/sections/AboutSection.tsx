@@ -6,8 +6,8 @@ import ScrollReveal from "../ui/ScrollReveal";
 
 const stats = [
   { value: 4, suffix: "+", label: "Years Experience" },
-  { value: 6, suffix: "+", label: "Shipped Apps" },
-  { value: 4, suffix: "", label: "Countries" },
+  { value: 10, suffix: "+", label: "Shipped Apps" },
+  { value: 5, suffix: "+", label: "Countries" },
 ];
 
 export default function AboutSection() {
