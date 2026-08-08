@@ -82,9 +82,10 @@ export default function AboutSection() {
               href="/Adel_Mostafa_Software_Engineer.pdf"
               download="Adel_Mostafa_CV.pdf"
               className="btn-pill"
+              style={{ borderRadius: "14px" }}
               aria-label="Download my CV"
             >
-              My CV
+              Download CV
             </a>
           </ScrollReveal>
 
