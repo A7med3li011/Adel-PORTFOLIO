@@ -36,7 +36,7 @@ icon: (
   },
   {
     label: "Medium",
-    href: "https://medium.com/@adelmostafaswe",
+    href: "https://medium.com/@adelmostafamohamed12",
     icon: (
       <svg
         className="w-5 h-5"
