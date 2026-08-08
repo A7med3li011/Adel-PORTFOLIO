@@ -36,7 +36,7 @@ export default function HeroSection() {
 
           <ScrollReveal delay={100}>
             <p
-              className="text-lg md:text-xl font-medium mb-8 max-w-md"
+              className="text-2xl md:text-3xl font-medium mb-8 max-w-md"
               style={{ color: "#1c1d20" }}
             >
               I design and build beautiful, simple applications — offline-first

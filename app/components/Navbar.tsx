@@ -44,14 +44,17 @@ export default function Navbar() {
         role="navigation"
         aria-label="Main navigation"
       >
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-7lg mx-auto px-1 flex items-center justify-between">
           <Link
             href="/"
             className="flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E5A4E] rounded px-2 py-1"
             aria-label="Adel Mostafa - Home"
           >
             <span>
-              <span className="block text-xl font-bold tracking-tight" style={{ color: "#0E5A4E", lineHeight: 1 }}>
+              <span
+                className="block text-xl font-bold tracking-tight"
+                style={{ color: "#0E5A4E", lineHeight: 1 }}
+              >
                 Adel Mostafa
               </span>
             </span>
@@ -67,7 +70,12 @@ export default function Navbar() {
                 key={item.label}
                 href={item.href}
                 className={`text-xl font-medium transition-colors duration-300 hover:text-[#0E5A4E] relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E5A4E] rounded px-2 py-1`}
-                style={{ color: item.href === pathname ? "#0E5A4E" : linkColor(item.section) }}
+                style={{
+                  color:
+                    item.href === pathname
+                      ? "#0E5A4E"
+                      : linkColor(item.section),
+                }}
               >
                 {item.label}
               </Link>
