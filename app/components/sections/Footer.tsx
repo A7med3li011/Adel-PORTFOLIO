@@ -9,9 +9,6 @@ export default function Footer() {
         background: "var(--bg-primary)",
       }}
     >
-      <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-        &copy; Adel Mostafa
-      </p>
     </footer>
   );
 }

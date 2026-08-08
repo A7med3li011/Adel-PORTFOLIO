@@ -48,13 +48,9 @@ export default function Home() {
         className="py-16 px-6 text-center"
         style={{ background: "#fffaf6" }}
       >
-        <p className="text-lg mb-4" style={{ color: "#1c1d20" }}>
-          See the apps I&apos;ve shipped for clients across the US, UAE, Saudi
-          Arabia &amp; Egypt.
+        <p style={{ color: "#6a6d76", fontSize: "1.125rem" }}>
+          <span className="font-bold">&copy;</span> Adel Mostafa
         </p>
-        <a href="/projects" className="btn-pill" aria-label="View all projects">
-          View My Projects
-        </a>
       </section>
     </main>
   );
