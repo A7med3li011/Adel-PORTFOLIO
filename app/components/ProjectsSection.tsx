@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 
 type Project = {
@@ -22,7 +23,15 @@ type Project = {
 
 const INITIAL_COUNT = 3;
 
-export default function ProjectsSection({ projects }: { projects: Project[] }) {
+export default function ProjectsSection({
+  projects,
+  seeMoreHref,
+  expanded = false,
+}: {
+  projects: Project[];
+  seeMoreHref?: string;
+  expanded?: boolean;
+}) {
   const [lightbox, setLightbox] = useState<{ pi: number; ii: number } | null>(
     null,
   );
@@ -41,7 +50,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
   };
 
   // Always render all projects; collapse by clipping the second row
-  const hasMore = projects.length > INITIAL_COUNT;
+  const hasMore = !expanded && projects.length > INITIAL_COUNT;
 
   const open = (pi: number) => setLightbox({ pi, ii: 0 });
   const close = () => setLightbox(null);
@@ -96,6 +105,42 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
           />
         ))}
       </div>
+
+      {/* ── Remaining rows when expanded ────────────────── */}
+      {expanded && (peekProjects.length > 0 || restProjects.length > 0) && (
+        <>
+          {peekProjects.length > 0 && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+              {peekProjects.map((project, pi) => (
+                <ProjectCard
+                  key={project.name}
+                  project={project}
+                  pi={pi}
+                  onOpen={() => open(INITIAL_COUNT + pi)}
+                  imageLoadingStates={imageLoadingStates}
+                  handleImageLoad={handleImageLoad}
+                  handleImageError={handleImageError}
+                />
+              ))}
+            </div>
+          )}
+          {restProjects.length > 0 && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 pb-10">
+              {restProjects.map((project, pi) => (
+                <ProjectCard
+                  key={project.name}
+                  project={project}
+                  pi={pi}
+                  onOpen={() => open(INITIAL_COUNT * 2 + pi)}
+                  imageLoadingStates={imageLoadingStates}
+                  handleImageLoad={handleImageLoad}
+                  handleImageError={handleImageError}
+                />
+              ))}
+            </div>
+          )}
+        </>
+      )}
 
       {/* ── Second row: peek + fade + button ────────────── */}
       {hasMore && (
@@ -158,63 +203,97 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
           {/* Show More / Show Less button */}
           <div className=" absolute z-20 flex justify-center mt-4  w-full bottom-[-40px]  ">
             <div className="flex flex-col items-center gap-0">
-              <button
-                onClick={() => setShowAll((p) => !p)}
-                className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl font-semibold text-white text-sm overflow-hidden transition-all duration-300 hover:-translate-y-0.5 active:scale-95 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-[#0e5a4e] focus:ring-offset-2 focus:ring-offset-[#0f172a]"
-                style={{
-                  background: "#0e5a4e",
-                  boxShadow: "0 6px 24px rgba(14,90,78,0.35)",
-                  border: "1px solid rgba(255,255,255,0.15)",
-                }}
-                aria-expanded={showAll}
-                aria-label={
-                  showAll
-                    ? "Show fewer projects"
-                    : `Show ${projects.length - INITIAL_COUNT} more projects`
-                }
-              >
-                {/* Shimmer */}
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
+              {seeMoreHref ? (
+                <Link
+                  href={seeMoreHref}
+                  className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl font-semibold text-white text-sm overflow-hidden transition-all duration-300 hover:-translate-y-0.5 active:scale-95 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-[#0e5a4e] focus:ring-offset-2 focus:ring-offset-[#0f172a]"
+                  style={{
+                    background: "#0e5a4e",
+                    boxShadow: "0 6px 24px rgba(14,90,78,0.35)",
+                    border: "1px solid rgba(255,255,255,0.15)",
+                  }}
+                  aria-label={`See ${projects.length - INITIAL_COUNT} more projects`}
+                >
+                  {/* Shimmer */}
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
 
-                {showAll ? (
-                  <>
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 15l7-7 7 7"
-                      />
-                    </svg>
-                    Show Less
-                  </>
-                ) : (
-                  <>
-                    Show More Projects
-                    <svg
-                      className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                    <span className="px-2 py-0.5 rounded-full bg-white/20 text-xs font-bold">
-                      +{projects.length - INITIAL_COUNT}
-                    </span>
-                  </>
-                )}
-              </button>
+                  See More Projects
+                  <svg
+                    className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                  <span className="px-2 py-0.5 rounded-full bg-white/20 text-xs font-bold">
+                    +{projects.length - INITIAL_COUNT}
+                  </span>
+                </Link>
+              ) : (
+                <button
+                  onClick={() => setShowAll((p) => !p)}
+                  className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl font-semibold text-white text-sm overflow-hidden transition-all duration-300 hover:-translate-y-0.5 active:scale-95 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-[#0e5a4e] focus:ring-offset-2 focus:ring-offset-[#0f172a]"
+                  style={{
+                    background: "#0e5a4e",
+                    boxShadow: "0 6px 24px rgba(14,90,78,0.35)",
+                    border: "1px solid rgba(255,255,255,0.15)",
+                  }}
+                  aria-expanded={showAll}
+                  aria-label={
+                    showAll
+                      ? "Show fewer projects"
+                      : `Show ${projects.length - INITIAL_COUNT} more projects`
+                  }
+                >
+                  {/* Shimmer */}
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
+
+                  {showAll ? (
+                    <>
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 15l7-7 7 7"
+                        />
+                      </svg>
+                      Show Less
+                    </>
+                  ) : (
+                    <>
+                      Show More Projects
+                      <svg
+                        className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                      <span className="px-2 py-0.5 rounded-full bg-white/20 text-xs font-bold">
+                        +{projects.length - INITIAL_COUNT}
+                      </span>
+                    </>
+                  )}
+                </button>
+              )}
 
               {/* Soft glow shadow under the button */}
               <div

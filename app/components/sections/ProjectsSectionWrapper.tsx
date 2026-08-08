@@ -4,7 +4,11 @@ import { projects } from "../../data/projects";
 import ProjectsSection from "../ProjectsSection";
 import SectionTitle from "../ui/SectionTitle";
 
-export default function ProjectsSectionWrapper() {
+export default function ProjectsSectionWrapper({
+  seeMoreHref,
+}: {
+  seeMoreHref?: string;
+}) {
   return (
     <section
       id="projects"
@@ -13,7 +17,7 @@ export default function ProjectsSectionWrapper() {
     >
       <div className="max-w-6xl mx-auto">
         <SectionTitle label="Portfolio" title="Projects" />
-        <ProjectsSection projects={projects} />
+        <ProjectsSection projects={projects} seeMoreHref={seeMoreHref} />
       </div>
     </section>
   );
