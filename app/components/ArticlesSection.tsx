@@ -106,7 +106,7 @@ export default function ArticlesSection({ articles }: ArticlesSectionProps) {
         <div className="mt-10 flex justify-center">
           <button
             onClick={() => setShowAll((p) => !p)}
-            className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-semibold text-white text-sm overflow-hidden transition-all duration-300 hover:-translate-y-0.5 active:scale-95 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-[#0E5A4E] focus:ring-offset-2"
+            className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl font-semibold text-white text-sm overflow-hidden transition-all duration-300 hover:-translate-y-0.5 active:scale-95 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-[#0E5A4E] focus:ring-offset-2"
             style={{
               background: "#0E5A4E",
               boxShadow: "0 6px 24px rgba(14,90,78,0.35)",

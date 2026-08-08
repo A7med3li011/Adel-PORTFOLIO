@@ -224,7 +224,12 @@ export default function ExperienceSection() {
           <div className="mt-10 flex justify-center">
             <button
               onClick={() => setShowAll((p) => !p)}
-              className="btn-pill"
+              className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl font-semibold text-white text-sm overflow-hidden transition-all duration-300 hover:-translate-y-0.5 active:scale-95 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-[#0e5a4e] focus:ring-offset-2"
+              style={{
+                background: "#0e5a4e",
+                boxShadow: "0 6px 24px rgba(14,90,78,0.35)",
+                border: "1px solid rgba(255,255,255,0.15)",
+              }}
               aria-expanded={showAll}
               aria-label={
                 showAll
@@ -232,6 +237,7 @@ export default function ExperienceSection() {
                   : `Show ${experience.length - INITIAL_COUNT} more experiences`
               }
             >
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
               <span className="inline-flex items-center gap-2.5">
                 {showAll ? (
                   <>
@@ -255,7 +261,7 @@ export default function ExperienceSection() {
                   <>
                     Show More
                     <svg
-                      className="w-4 h-4"
+                      className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
