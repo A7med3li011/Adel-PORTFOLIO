@@ -15,27 +15,29 @@ export const experience: ExperienceItem[] = [
     role: "Flutter Developer",
     period: "January 2026 – Present",
     location: "Saudi Arabia (Remote)",
-    type: "Contract",
+    type: "Full-time Contract",
     url: "https://coladaapp.io/en/",
     points: [
-      "Building a cross-platform Flutter app that helps users discover the best offers, discounts, and deals at restaurants and cafes.",
+      "Building a cross-platform Flutter app (100K+ iOS & 50K+ Android downloads, 1,000+ active deals across Riyadh) that helps users discover the best offers, discounts, and deals at restaurants and cafes.",
       "Optimized app startup performance, cutting cold-start time from splash screen to fully rendered home screen from ~28–30s to ~13–16s by eliminating duplicate API calls and parallelizing previously sequential, independent requests — reducing total requests from 24 to 17 unique calls.",
-      "Developed multiple core features end-to-end, including a coupons system and a coffee subscription flow.",
+      "Developed multiple core features end-to-end, including a coupons and cashback system and a coffee subscription flow.",
       "Integrated Meta Ads to support user acquisition and in-app marketing.",
       "Delivered scalable, maintainable UIs in Flutter & Dart for both iOS and Android.",
     ],
   },
   {
     company: "MemoryChat",
-    role: "Flutter Developer",
+    role: "Software Engineer",
     period: "June 2025 – Present",
     location: "Alexandria, Egypt",
     type: "Side Project",
     url: "https://memorychat.app/ar/",
     points: [
-      "Own the full software lifecycle — development, database design (Supabase / PostgreSQL), and mobile application quality — for a cross-platform productivity app built on a zero-knowledge encryption architecture.",
+      "Own the full software development lifecycle — design, development, testing, deployment, and maintenance — including database design (Supabase / PostgreSQL) for a cross-platform productivity app built on a zero-knowledge encryption architecture.",
       "Reduced login time by 66% (~21s → ~7s) by profiling real bottlenecks and migrating RSA key generation from pure Dart to a native Go library, cutting key generation from ~7s to ~200ms.",
       "Replaced redundant database query patterns with upsert operations and parallelized previously sequential calls, eliminating unnecessary round-trips and redundant Google Drive delete operations.",
+      "Architected state management with BLoC and Clean Architecture (UI, domain/use cases, and data layers), and shipped multi-flavor builds with per-brand Firebase configurations (assets, store identifiers, environments).",
+      "Mentored 2 junior developers and led technical documentation efforts to accelerate onboarding and maintain code quality.",
       "Designed and maintained secure data flows for encrypted user data across devices.",
     ],
   },
@@ -108,7 +110,7 @@ export const experience: ExperienceItem[] = [
     ],
     points: [
       "Top Rated Flutter Developer on Upwork. Clients: Bidfood CRM (UAE) · T2 (Saudi Arabia) · CHAQT (UAE).",
-      "T2: AI automation chat app — admins send voice/text commands to trigger AI-driven task management via N8N workflows.",
+      "T2: AI automation chat app — admins send voice/text commands to trigger AI-driven task management workflows.",
       "Bidfood & CHAQT: Feature development and bug fixes on live production apps across the UAE market.",
       "Delivered apps end-to-end: UI, REST API integration, state management (BLoC / Riverpod), app store deployment, Node.js backend support.",
     ],
@@ -117,6 +119,8 @@ export const experience: ExperienceItem[] = [
 
 export const typeColors: Record<string, string> = {
   Contract: "bg-[#0E5A4E]/10 text-[#0E5A4E] border border-[#0E5A4E]/20",
+  "Full-time Contract":
+    "bg-[#0E5A4E]/10 text-[#0E5A4E] border border-[#0E5A4E]/20",
   "Part-time": "bg-[#0E5A4E]/10 text-[#0E5A4E] border border-[#0E5A4E]/20",
   "Full-time": "bg-[#0E5A4E]/10 text-[#0E5A4E] border border-[#0E5A4E]/20",
   "Side Project": "bg-[#0E5A4E]/10 text-[#0E5A4E] border border-[#0E5A4E]/20",
