@@ -57,6 +57,7 @@ export const projects: ProjectItem[] = [
       "/assets/images/colada/colada1.jpg",
       "/assets/images/colada/colada3.jpg",
       "/assets/images/colada/colada4.jpg",
+      "/assets/images/colada/colada5.jpg",
     ],
     demo: "https://coladaApp.io/en/",
     demoAndroid:
