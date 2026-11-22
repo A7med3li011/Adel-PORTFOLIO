@@ -8,6 +8,13 @@ export type ArticleItem = {
 
 export const articles: ArticleItem[] = [
   {
+    id: 4,
+    title: "Resumable File Uploads with TUS: How to Stop Restarting at 95%",
+    thumbnail: "/assets/images/articles/article4.png",
+    url: "https://medium.com/@adelmostafamohamed12/resumable-file-uploads-with-tus-how-to-stop-restarting-at-95-3188fef43d3c",
+    category: "Networking",
+  },
+  {
     id: 1,
     title: "From 21s to 7s: Optimizing a Zero-Knowledge Authentication Flow",
     thumbnail: "/assets/images/articles/article1.jpg",

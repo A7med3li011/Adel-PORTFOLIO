@@ -36,7 +36,7 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <ExperienceSection />
-      <ArticlesSectionWrapper />
+      <ArticlesSectionWrapper seeMoreHref="/articles" />
       <ProjectsSectionWrapper seeMoreHref="/projects" />
       <PackagesSection />
       <SkillsSection />

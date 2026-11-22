@@ -4,7 +4,11 @@ import { articles } from "../../data/articles";
 import ArticlesSection from "../ArticlesSection";
 import SectionTitle from "../ui/SectionTitle";
 
-export default function ArticlesSectionWrapper() {
+export default function ArticlesSectionWrapper({
+  seeMoreHref,
+}: {
+  seeMoreHref?: string;
+}) {
   return (
     <section
       id="articles"
@@ -13,7 +17,7 @@ export default function ArticlesSectionWrapper() {
     >
       <div className="max-w-6xl mx-auto">
         <SectionTitle label="Writing" title="Articles" />
-        <ArticlesSection articles={articles} />
+        <ArticlesSection articles={articles} seeMoreHref={seeMoreHref} />
       </div>
     </section>
   );
