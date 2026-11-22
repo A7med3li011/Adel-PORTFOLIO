@@ -1,14 +1,68 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { experience, typeColors } from "../../data/experience";
 import ScrollReveal from "../ui/ScrollReveal";
 import SectionTitle from "../ui/SectionTitle";
 
 const INITIAL_COUNT = 2;
 
+const noopSubscribe = () => () => {};
+
+const MONTHS = [
+  "january", "february", "march", "april", "may", "june",
+  "july", "august", "september", "october", "november", "december",
+];
+
+function parseMonth(text: string, now: Date): Date | null {
+  const t = text.trim().toLowerCase();
+  if (t === "present") return now;
+  const [month, year] = t.split(/\s+/);
+  const m = MONTHS.indexOf(month);
+  const y = Number(year);
+  if (m === -1 || !y) return null;
+  return new Date(y, m, 1);
+}
+
+/** "January 2026 – Present" → "11 months"; "May 2024 – June 2025" → "1 year 2 months" (inclusive) */
+function getDuration(period: string, now: Date): string | null {
+  const [startText, endText] = period.split(/\s*[–-]\s*/);
+  if (!startText || !endText) return null;
+  const start = parseMonth(startText, now);
+  const end = parseMonth(endText, now);
+  if (!start || !end) return null;
+
+  const total =
+    (end.getFullYear() - start.getFullYear()) * 12 +
+    (end.getMonth() - start.getMonth()) +
+    1;
+  if (total < 1) return null;
+
+  const years = Math.floor(total / 12);
+  const months = total % 12;
+  const parts: string[] = [];
+  if (years) parts.push(`${years} year${years > 1 ? "s" : ""}`);
+  if (months) parts.push(`${months} month${months > 1 ? "s" : ""}`);
+  return parts.join(" ");
+}
+
 export default function ExperienceSection() {
   const [showAll, setShowAll] = useState(false);
+  // "Present" depends on today's date; resolve it on the client only so the
+  // statically built HTML never goes stale or mismatches during hydration.
+  const monthKey = useSyncExternalStore(
+    noopSubscribe,
+    () => new Date().getFullYear() * 12 + new Date().getMonth(),
+    () => null,
+  );
+  const durationOf = (period: string) => {
+    if (monthKey === null) return null;
+    const d = getDuration(
+      period,
+      new Date(Math.floor(monthKey / 12), monthKey % 12, 1),
+    );
+    return d ? `(${d})` : null;
+  };
   const timelineRef = useRef<HTMLDivElement>(null);
   const timelineLineRef = useRef<HTMLDivElement>(null);
 
@@ -162,11 +216,19 @@ export default function ExperienceSection() {
                           </div>
                           <div className="text-right">
                             <p
-                              className="md:hidden text-sm font-semibold tracking-wide uppercase mb-2"
+                              className="md:hidden text-sm font-semibold tracking-wide uppercase"
                               style={{ color: "#0E5A4E" }}
                             >
                               {job.period}
                             </p>
+                            {durationOf(job.period) && (
+                              <p
+                                className="md:hidden text-xs font-medium mb-2"
+                                style={{ color: "#8a8a8a" }}
+                              >
+                                {durationOf(job.period)}
+                              </p>
+                            )}
                             <span
                               className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-1 ${typeColors[job.type] || "bg-[#0E5A4E]/10 text-[#0E5A4E] border border-[#0E5A4E]/20"}`}
                             >
@@ -197,13 +259,21 @@ export default function ExperienceSection() {
                     </div>
 
                     {/* Period on the opposite side */}
-                    <div className="hidden md:flex md:flex-1 items-center justify-center">
+                    <div className="hidden md:flex md:flex-1 flex-col items-center justify-center">
                       <p
                         className="text-lg font-semibold tracking-wide uppercase"
                         style={{ color: "#0E5A4E" }}
                       >
                         {job.period}
                       </p>
+                      {durationOf(job.period) && (
+                        <p
+                          className="text-sm font-medium mt-1"
+                          style={{ color: "#8a8a8a" }}
+                        >
+                          {durationOf(job.period)}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </ScrollReveal>
