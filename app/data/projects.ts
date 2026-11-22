@@ -66,8 +66,8 @@ export const projects: ProjectItem[] = [
       "https://apps.apple.com/us/app/colada-%D9%83%D9%88%D9%84%D8%A7%D8%AF%D8%A7/id1608914841",
     highlight: true,
     featured: true,
-    downloads: 150000,
-    impact: "150K+ downloads across platforms",
+    downloads: 250000,
+    impact: "250K+ downloads across platforms",
     category: "F&B",
     complexity: "Advanced",
     metrics: [

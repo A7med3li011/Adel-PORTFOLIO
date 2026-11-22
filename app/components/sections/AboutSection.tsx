@@ -69,7 +69,7 @@ export default function AboutSection() {
                 UAE, Saudi Arabia, and the USA
               </b>{" "}
               — including{" "}
-              <b style={{ color: "#1c1d20" }}>Colada</b> (150,000+ downloads),{" "}
+              <b style={{ color: "#1c1d20" }}>Colada</b> (250,000+ downloads),{" "}
               <b style={{ color: "#1c1d20" }}>Priceless Medical</b> (30+
               clinics), and <b style={{ color: "#1c1d20" }}>Tansieq</b> (Saudi
               Ministry of Hajj). I architected{" "}
